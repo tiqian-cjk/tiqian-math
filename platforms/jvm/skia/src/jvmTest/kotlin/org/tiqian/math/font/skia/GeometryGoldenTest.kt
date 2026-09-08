@@ -10,16 +10,15 @@ import org.tiqian.math.layout.MathLayoutOptions
 import java.io.File
 import java.util.Locale
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 /**
- * Reviewed platform snapshot: raster ink bounds are platform-specific even for identical fonts.
+ * One reviewed structural snapshot for every platform; reported paint bounds are excluded.
  * Outline/oracle invariant tests remain the authority for platform-independent correctness.
  */
 class GeometryGoldenTest {
     @Test
     fun twoFontGeometryAndDecisionSnapshotMatchesReviewedGolden() {
-        val goldenName = "geometry-v3-${platformId()}.txt"
+        val goldenName = "geometry-v3.txt"
         val actual = buildString {
             appendLine("geometry-v3")
             listOf(
@@ -35,13 +34,13 @@ class GeometryGoldenTest {
             return
         }
         val expected = checkNotNull(javaClass.getResourceAsStream("/goldens/$goldenName")) {
-            "Missing reviewed platform golden: $goldenName. Capture explicitly with " +
+            "Missing reviewed structural golden: $goldenName. Capture explicitly with " +
                 "TIQIAN_UPDATE_GOLDEN=1 ./gradlew :platforms:jvm:skia:jvmTest " +
                 "--tests 'org.tiqian.math.font.skia.GeometryGoldenTest' --rerun-tasks, " +
-                "review the generated file against geometry-v2.txt and the outline/oracle tests, " +
+                "review the generated file against the previous revision and outline/oracle tests, " +
                 "then rerun without TIQIAN_UPDATE_GOLDEN."
         }.bufferedReader().use { it.readText() }.normalizedGoldenText()
-        assertEquals(expected, actual, goldenName)
+        assertStructuralGeometryEquals(expected, actual)
     }
 
     private fun StringBuilder.appendFace(label: String, font: OpenTypeMathFont) {
@@ -133,12 +132,8 @@ class GeometryGoldenTest {
                 GoldenCase("adjustment", "a,b=c+d", MathMode.Inline, 40f),
             ).forEach { case ->
                 val result = engine.layout(case.source, MathLayoutOptions(case.mode, case.size))
-                appendLine(
-                    "case=${case.id} logical=${result.box.width.fmt()} visual=${result.box.visualLeft.fmt()}..${result.box.visualRight.fmt()} " +
-                        "ink=${result.box.inkBounds.left.fmt()},${result.box.inkBounds.top.fmt()},${result.box.inkBounds.right.fmt()},${result.box.inkBounds.bottom.fmt()} " +
-                        "safe=${result.lineMetrics.logicalAscentPx.fmt()}/${result.lineMetrics.logicalDescentPx.fmt()} " +
-                        "fragments=${result.fragments.size} breaks=${result.breakOpportunities.size} diagnostics=${result.diagnostics.map { it.code }}",
-                )
+                assertPaintBoundsContained(result)
+                appendLine("case=${case.id} ${structuralGeometrySnapshot(result)}")
                 when (case.id) {
                     "symbols" -> appendLine(
                         "  evidence=" + result.decisions.filter { it.name == "TeXMathSymbolResolution" }
@@ -288,7 +283,6 @@ class GeometryGoldenTest {
                                         "${decision.details["targetMetric"]}/" +
                                         "clean=${decision.details["cleanRadicandAscentPx"]}+" +
                                         "${decision.details["cleanRadicandDescentPx"]}/" +
-                                        "ink=${decision.details["radicandInkHeightPx"]}/" +
                                         "base=${decision.details["baseGlyphCoversTarget"]}/" +
                                         "${decision.details.getValue("targetHeightPx").toFloat().fmt()}/" +
                                         "${decision.details.getValue("achievedAdvancePx").toFloat().fmt()}/" +
@@ -320,7 +314,6 @@ class GeometryGoldenTest {
                                         "${decision.details["degreeRaiseReferenceMetric"]}/" +
                                         "${decision.details["degreeRaisePx"]}/" +
                                         "bottom=${decision.details["degreeLogicalBottomY"]}/" +
-                                        "${decision.details["degreeInkBottomY"]}/" +
                                         "B=${decision.details.getValue("unindexedAscentPx").toFloat().fmt()}/" +
                                         "${decision.details.getValue("unindexedDescentPx").toFloat().fmt()}/" +
                                         "degreeBaseline=${decision.details["degreeBaselineY"]}/" +
@@ -437,16 +430,6 @@ class GeometryGoldenTest {
     private fun Float.fmt(): String = String.format(Locale.ROOT, "%.3f", this)
 
     private fun String.normalizedGoldenText(): String = replace("\r\n", "\n").trimEnd()
-
-    private fun platformId(): String {
-        val name = System.getProperty("os.name").lowercase(Locale.ROOT)
-        return when {
-            name.startsWith("windows") -> "windows"
-            name.contains("mac") || name.contains("darwin") -> "macos"
-            name.contains("linux") -> "linux"
-            else -> error("No reviewed geometry golden platform for os.name=$name")
-        }
-    }
 
     private data class GoldenCase(val id: String, val source: String, val mode: MathMode, val size: Float)
 

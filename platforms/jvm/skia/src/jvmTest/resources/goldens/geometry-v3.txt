@@ -1,0 +1,718 @@
+geometry-v3
+face=Lete Sans Math upm=1000 line=750/-250/0
+case=symbols logical=293.391113 clean=28.959999/0.560000 fragments=9 breaks=4 diagnostics=[]
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=19.080000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=1..2 x=31.728891 baseline=0.000000 advance=27.400000 group=null
+  glyph=89 face=legacy-single-face style=Text size=40.000000 source=10..11 x=68.017776 baseline=0.000000 advance=19.920000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=12..13 x=96.826660 baseline=0.000000 advance=27.400000 group=null
+  glyph=4239 face=legacy-single-face style=Text size=40.000000 source=13..19 x=133.115555 baseline=0.000000 advance=22.480000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=19..20 x=166.804443 baseline=0.000000 advance=27.400000 group=null
+  glyph=161 face=legacy-single-face style=Text size=40.000000 source=20..26 x=203.093323 baseline=0.000000 advance=21.920000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=26..27 x=233.902206 baseline=0.000000 advance=27.400000 group=null
+  glyph=19 face=legacy-single-face style=Text size=40.000000 source=27..28 x=270.191101 baseline=0.000000 advance=23.200001 group=null
+  fragment=0/Ordinary source=0..1 width=19.080002 clean=20.240000/0.000000 kern=0.000000 ic=3.760000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=1..2 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=10..11 width=19.920000 clean=20.240000/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=3/Binary source=12..13 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=4/Ordinary source=13..19 width=22.480000 clean=20.559999/0.280000 kern=0.000000 ic=2.320000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=5/Binary source=19..20 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=6/Ordinary source=20..26 width=21.920000 clean=28.640001/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=7/Binary source=26..27 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=8/Ordinary source=27..28 width=23.200001 clean=28.959999/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=2, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=13, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=5, sourceOffset=20, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=7, sourceOffset=27, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=latin-x:Letters/Variable/MathNormal->Letters/MathNormal/U+1D465/3650,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/12,latin-x:Letters/Variable/MathNormal->Operators/Roman/U+0078/89,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/12,alpha:Letters/Fixed/MathNormal->Letters/MathNormal/U+1D6FC/4239,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/12,capital-gamma:Operators/Variable/MathNormal->Operators/MathNormal/U+0393/161,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/12,digit-2:Operators/Variable/MathNormal->Operators/MathNormal/U+0032/19
+case=group logical=72.480011 clean=29.440001/0.560000 fragments=3 breaks=0 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=20.040001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=2..3 x=22.280008 baseline=0.000000 advance=27.400000 group=null
+  glyph=3629 face=legacy-single-face style=Text size=40.000000 source=4..5 x=49.680008 baseline=0.000000 advance=21.120001 group=null
+  fragment=0/Ordinary source=0..1 width=20.040009 clean=20.559999/0.280000 kern=0.000000 ic=2.240000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Ordinary source=1..4 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=2/Ordinary source=4..5 width=21.120001 clean=29.440001/0.280000 kern=0.000000 ic=1.680000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=TeXBinaryAtomReclassification:2..3:{from=Binary, to=Ordinary, listRange=2..3},TeXOrdSubMlist:1..4:{outerClass=Ordinary, innerClasses=Ordinary, innerStyles=Text, innerBreaksExported=false, scriptBaseKind=CompoundBox}
+case=style logical=72.096024 clean=20.240000/4.788000 fragments=2 breaks=0 diagnostics=[]
+  glyph=2724 face=legacy-single-face style=Script size=28.000000 source=14..15 x=0.000000 baseline=0.000000 advance=14.728000 group=null
+  glyph=2793 face=legacy-single-face style=Script size=28.000000 source=15..16 x=17.360001 baseline=0.000000 advance=19.180000 group=null
+  glyph=2725 face=legacy-single-face style=Script size=28.000000 source=16..17 x=36.540009 baseline=0.000000 advance=13.076000 group=null
+  glyph=3652 face=legacy-single-face style=Text size=40.000000 source=18..19 x=51.296013 baseline=0.000000 advance=18.320000 group=null
+  fragment=0/Ordinary source=0..18 width=51.296013 clean=16.072001/4.788000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Ordinary source=18..19 width=18.320007 clean=20.240000/0.000000 kern=0.000000 ic=2.480000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=TeXMathStyleDeclaration:1..13:{from=Text, to=Script, listRange=1..17},TeXOrdSubMlist:0..18:{outerClass=Ordinary, innerClasses=Ordinary,Binary,Ordinary, innerStyles=Script,Script,Script, innerBreaksExported=false, scriptBaseKind=CompoundBox}
+case=tight logical=70.816193 clean=20.240000/10.000000 fragments=1 breaks=0 diagnostics=[]
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=19.080000 group=null
+  glyph=2711 face=legacy-single-face style=ScriptCramped size=28.000000 source=3..4 x=19.080000 baseline=10.000000 advance=13.804000 group=null
+  glyph=2869 face=legacy-single-face style=ScriptCramped size=28.000000 source=4..5 x=34.732002 baseline=10.000000 advance=19.180000 group=null
+  glyph=2549 face=legacy-single-face style=ScriptCramped size=28.000000 source=5..6 x=53.912010 baseline=10.000000 advance=16.240000 group=null
+  fragment=0/Ordinary source=0..7 width=70.816193 clean=20.240000/10.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=4..5:tight/None,5..6:tight/None
+case=cramped logical=52.466354 clean=32.447998/22.080002 fragments=1 breaks=0 diagnostics=[]
+  glyph=2701 face=legacy-single-face style=Script size=28.000000 source=6..7 x=18.407177 baseline=-18.000000 advance=14.084000 group=null
+  glyph=2724 face=legacy-single-face style=ScriptCramped size=28.000000 source=9..10 x=4.800000 baseline=22.080002 advance=14.728000 group=null
+  glyph=3225 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=12..13 x=22.160000 baseline=11.720002 advance=11.022000 group=null
+  glyph=3226 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=14..15 x=34.501999 baseline=3.580002 advance=10.472000 group=null
+  rule=4.800000,-12.520000,47.666355,-9.880000 source=0..17 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..17 width=52.466354 clean=32.447998/22.080002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=x:ScriptCramped@22.080,y:ScriptScriptCramped@11.720,z:ScriptScriptCramped@3.580
+case=side-script-ink logical=82.476189 clean=55.768005/24.082001 fragments=1 breaks=0 diagnostics=[]
+  glyph=557 face=legacy-single-face style=Text size=40.000000 source=0..5 x=0.000000 baseline=1.480000 advance=25.959999 group=1
+  glyph=3650 face=legacy-single-face style=TextCramped size=40.000000 source=6..7 x=25.960007 baseline=0.000000 advance=19.080000 group=null
+  glyph=557 face=legacy-single-face style=Script size=28.000000 source=21..26 x=48.800011 baseline=-26.984005 advance=18.172001 group=2
+  glyph=2726 face=legacy-single-face style=ScriptCramped size=28.000000 source=27..28 x=66.972015 baseline=-27.992004 advance=13.104000 group=null
+  glyph=557 face=legacy-single-face style=ScriptCramped size=28.000000 source=10..15 x=48.800011 baseline=18.482000 advance=18.172001 group=3
+  glyph=2725 face=legacy-single-face style=ScriptCramped size=28.000000 source=16..17 x=66.972015 baseline=15.080000 advance=13.076000 group=null
+  rule=26.559999,-36.600002,48.800011,-33.560001 source=0..5 group=1 role=MathRule layer=Foreground line=null
+  rule=67.392014,-53.640007,81.812012,-51.512005 source=21..26 group=2 role=MathRule layer=Foreground line=null
+  rule=67.392014,-8.174000,81.728012,-6.046000 source=10..15 group=3 role=MathRule layer=Foreground line=null
+  construction=1/Radical/BaseGlyph face=legacy-single-face source=0..5 policy=RequireOutlineUnion
+  construction=2/Radical/BaseGlyph face=legacy-single-face source=21..26 policy=RequireOutlineUnion
+  construction=3/Radical/BaseGlyph face=legacy-single-face source=10..15 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..30 width=82.476189 clean=55.768005/24.082001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=policy=XeTeXNativeGlyphOutlineOrCompletedChildBoxForOrdinarySideScripts/ExactOutlinePlacementWithCompletedChildBoxes kinds=CompoundBox/CompoundBox/CompoundBox base=39.640003/9.48:-39.640003/9.48 sup=27.776001/6.608:-27.776001/6.608 sub=25.382/9.002001:-25.382/9.002001 shifts=27.992004/15.08 gap=11.082005/11.082005
+case=script-binomial logical=53.513996 clean=32.447998/40.000000 fragments=1 breaks=0 diagnostics=[]
+  glyph=2701 face=legacy-single-face style=Script size=28.000000 source=6..7 x=18.930998 baseline=-18.000000 advance=14.084000 group=null
+  glyph=1835 face=legacy-single-face style=Text size=40.000000 source=9..21 x=4.800000 baseline=26.560001 advance=15.280000 group=null
+  glyph=3214 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=16..17 x=20.079998 baseline=13.960001 advance=12.342000 group=null
+  glyph=3211 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=19..20 x=20.289000 baseline=40.000000 advance=11.484000 group=null
+  glyph=1850 face=legacy-single-face style=Text size=40.000000 source=9..21 x=33.433998 baseline=26.560001 advance=15.280000 group=null
+  rule=4.800000,-12.520000,48.713997,-9.880000 source=0..22 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..22 width=53.513996 clean=32.447998/40.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=left:9/Variant/LaTeX2eXeTeXGenfracFixedStyleTarget/Text/1.45*28.000=40.600/46.040,right:10/Variant/LaTeX2eXeTeXGenfracFixedStyleTarget/Text/1.45*28.000=40.600/46.040 packing=15.280/28.634/43.914/TeXFractionNullDelimiterCancellationNoInkCollisionKern
+case=operator-inline logical=132.797699 clean=42.312004/17.224003 fragments=3 breaks=0 diagnostics=[]
+  glyph=548 face=legacy-single-face style=Text size=40.000000 source=0..4 x=0.000000 baseline=-0.000001 advance=35.160000 group=null
+  glyph=2714 face=legacy-single-face style=Script size=28.000000 source=7..8 x=35.160004 baseline=-19.712002 advance=14.448000 group=null
+  glyph=2709 face=legacy-single-face style=ScriptCramped size=28.000000 source=5..6 x=35.160004 baseline=14.559999 advance=7.616000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=8..9 x=58.226849 baseline=0.000000 advance=27.400000 group=null
+  glyph=574 face=legacy-single-face style=Text size=40.000000 source=9..13 x=92.293510 baseline=0.000002 advance=23.600000 group=null
+  glyph=2549 face=legacy-single-face style=Script size=28.000000 source=16..17 x=115.893517 baseline=-22.152004 advance=16.240000 group=null
+  glyph=2548 face=legacy-single-face style=ScriptCramped size=28.000000 source=14..15 x=107.893517 baseline=17.000002 advance=16.240000 group=null
+  fragment=0/Operator source=0..8 width=51.560181 clean=34.160000/14.559999 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=8..9 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=2/Operator source=9..17 width=40.504181 clean=42.312004/17.224003 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=op:sum/Text/BaseGlyph/0.000/40.320/axis=-11.200/ic=0.000/MathItalicsCorrectionInfo,policy:sum/Auto->NoLimits/auto-non-display,side:sum/Text,op:integral/Text/BaseGlyph/0.000/45.200/axis=-11.200/ic=8.000/MathItalicsCorrectionInfo,policy:integral/NoLimits->NoLimits/plain-tex-operator-default,side:integral/Text
+case=operator-display logical=136.573334 clean=90.039993/68.031998 fragments=3 breaks=0 diagnostics=[]
+  glyph=1740 face=legacy-single-face style=Display size=40.000000 source=0..4 x=0.000000 baseline=0.000001 advance=56.720001 group=null
+  glyph=2714 face=legacy-single-face style=Script size=28.000000 source=7..8 x=20.492001 baseline=-47.040001 advance=14.448000 group=null
+  glyph=2709 face=legacy-single-face style=ScriptCramped size=28.000000 source=5..6 x=24.020000 baseline=45.192001 advance=7.616000 group=null
+  glyph=12 face=legacy-single-face style=Display size=40.000000 source=8..9 x=63.386669 baseline=0.000000 advance=27.400000 group=null
+  glyph=1721 face=legacy-single-face style=Display size=40.000000 source=9..13 x=97.453331 baseline=-0.000001 advance=39.119999 group=null
+  glyph=2549 face=legacy-single-face style=Script size=28.000000 source=23..24 x=116.893326 baseline=-61.879997 advance=16.240000 group=null
+  glyph=2548 face=legacy-single-face style=ScriptCramped size=28.000000 source=21..22 x=100.893326 baseline=59.807999 advance=16.240000 group=null
+  fragment=0/Operator source=0..8 width=56.720001 clean=69.487999/53.192001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=8..9 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=2/Operator source=9..24 width=39.119999 clean=90.039993/68.031998 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=op:sum/Display/Variant/56.000/59.720/axis=-11.200/ic=0.000/MathItalicsCorrectionInfo,policy:sum/Auto->Limits/auto-display,limits:6.000/6.000/6.000/26.552,op:integral/Display/Variant/56.000/89.400/axis=-11.200/ic=16.000/MathItalicsCorrectionInfo,policy:integral/Limits->Limits/explicit-postfix-modifier,limits:6.000/6.000/6.000/26.328
+case=operator-limit-skew logical=121.884010 clean=95.612000/73.211998 fragments=1 breaks=0 diagnostics=[]
+  glyph=1721 face=legacy-single-face style=Display size=40.000000 source=0..4 x=41.382004 baseline=-0.000001 advance=39.119999 group=null
+  glyph=2701 face=legacy-single-face style=Script size=28.000000 source=24..25 x=8.000000 baseline=-66.947998 advance=14.084000 group=null
+  glyph=2702 face=legacy-single-face style=Script size=28.000000 source=25..26 x=23.652000 baseline=-66.947998 advance=14.784000 group=null
+  glyph=2703 face=legacy-single-face style=Script size=28.000000 source=26..27 x=39.612000 baseline=-66.947998 advance=12.628000 group=null
+  glyph=2704 face=legacy-single-face style=Script size=28.000000 source=27..28 x=53.640007 baseline=-66.947998 advance=15.232000 group=null
+  glyph=2705 face=legacy-single-face style=Script size=28.000000 source=28..29 x=70.552010 baseline=-66.947998 advance=13.412000 group=null
+  glyph=2706 face=legacy-single-face style=Script size=28.000000 source=29..30 x=85.532013 baseline=-66.947998 advance=10.836000 group=null
+  glyph=2707 face=legacy-single-face style=Script size=28.000000 source=30..31 x=97.488014 baseline=-66.947998 advance=14.252000 group=null
+  glyph=2708 face=legacy-single-face style=Script size=28.000000 source=31..32 x=114.008011 baseline=-66.947998 advance=14.420000 group=null
+  glyph=2701 face=legacy-single-face style=ScriptCramped size=28.000000 source=13..14 x=-8.000000 baseline=60.143997 advance=14.084000 group=null
+  glyph=2702 face=legacy-single-face style=ScriptCramped size=28.000000 source=14..15 x=7.651999 baseline=60.143997 advance=14.784000 group=null
+  glyph=2703 face=legacy-single-face style=ScriptCramped size=28.000000 source=15..16 x=23.612000 baseline=60.143997 advance=12.628000 group=null
+  glyph=2704 face=legacy-single-face style=ScriptCramped size=28.000000 source=16..17 x=37.640007 baseline=60.143997 advance=15.232000 group=null
+  glyph=2705 face=legacy-single-face style=ScriptCramped size=28.000000 source=17..18 x=54.552010 baseline=60.143997 advance=13.412000 group=null
+  glyph=2706 face=legacy-single-face style=ScriptCramped size=28.000000 source=18..19 x=69.532013 baseline=60.143997 advance=10.836000 group=null
+  glyph=2707 face=legacy-single-face style=ScriptCramped size=28.000000 source=19..20 x=81.488014 baseline=60.143997 advance=14.252000 group=null
+  glyph=2708 face=legacy-single-face style=ScriptCramped size=28.000000 source=20..21 x=98.008011 baseline=60.143997 advance=14.420000 group=null
+  fragment=0/Operator source=0..33 width=121.884010 clean=95.612000/73.211998 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=policy=max-unskewed-operator-and-limits widths=39.120/121.884/121.884 x=41.382/8.000/-8.000 ic=16.000
+case=radical-inline logical=141.881958 clean=46.804001/2.316002 fragments=1 breaks=0 diagnostics=[]
+  glyph=557 face=legacy-single-face style=Text size=40.000000 source=0..5 x=7.799999 baseline=-5.683998 advance=25.959999 group=1
+  glyph=3650 face=legacy-single-face style=TextCramped size=40.000000 source=9..10 x=33.760006 baseline=0.000000 advance=19.080000 group=null
+  glyph=2550 face=legacy-single-face style=ScriptCramped size=28.000000 source=11..12 x=56.600006 baseline=-14.800000 advance=16.240000 group=null
+  glyph=12 face=legacy-single-face style=TextCramped size=40.000000 source=12..13 x=82.393082 baseline=0.000000 advance=27.400000 group=null
+  glyph=18 face=legacy-single-face style=TextCramped size=40.000000 source=13..14 x=118.681961 baseline=0.000000 advance=23.200001 group=null
+  glyph=3051 face=legacy-single-face style=ScriptScript size=22.000000 source=6..7 x=11.040000 baseline=-28.472319 advance=12.760000 group=null
+  rule=34.360001,-43.764000,141.881958,-40.723999 source=0..5 group=1 role=MathRule layer=Foreground line=null
+  construction=1/Radical/BaseGlyph face=legacy-single-face source=0..5 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..15 width=141.881958 clean=46.804001/2.316002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=noad:0..15/Text/TextCramped/ScriptScript/CompoundBox,construction:BaseGlyph/NormalGlyphHeight/TeXCleanBoxHeightPlusGapAndRule/clean=35.128002+0.56/base=true/42.568/46.080/557/0.0,geometry:XeTeXMakeRadicalCleanBoxNominalDelimiterAndOverbar/3.840/excess=3.512/5.596/MinimumGapPlusHalfPositiveConstructionExcess/3.040/extra=3.040/false/delimiter=3.04+43.04@-40.724/rule=-43.764..-40.724/11.040/-16.000/horizontal=TeXMakeRadicalSignedBeforeAndWidthPlusBeforeAfterClamp/used=11.04/lower=-23.8/after=-16.000/x=11.04/7.799999/64/raise=44.488(46.804+2.316002)/UnindexedRadicalBoxHeightMinusDepth/28.472319/bottom=-26.472319/B=46.804/2.316/degreeBaseline=-28.472319/141.882/seam=Available(GlyphOutlineCrossSection)/GlyphOutlineCrossSection/-38.080/-35.000/26.560->34.360/advance=25.960/bounds=[Outline]/logical=MeasuredMathRunLogicalWidthIndependentOfBoundsSource
+case=radical-display logical=129.537796 clean=64.899994/47.740002 fragments=1 breaks=0 diagnostics=[]
+  glyph=1794 face=legacy-single-face style=Display size=40.000000 source=0..5 x=0.000000 baseline=21.020008 advance=29.680000 group=2
+  glyph=3628 face=legacy-single-face style=TextCramped size=40.000000 source=12..13 x=34.480000 baseline=-23.200001 advance=20.040001 group=null
+  glyph=12 face=legacy-single-face style=TextCramped size=40.000000 source=13..14 x=65.648895 baseline=-23.200001 advance=27.400000 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=14..15 x=101.937790 baseline=-23.200001 advance=21.120001 group=null
+  glyph=557 face=legacy-single-face style=TextCramped size=40.000000 source=17..22 x=55.208889 baseline=39.240002 advance=25.959999 group=1
+  glyph=3650 face=legacy-single-face style=TextCramped size=40.000000 source=23..24 x=81.168900 baseline=37.760002 advance=19.080000 group=null
+  rule=81.768890,1.160000,104.008904,4.200001 source=17..22 group=1 role=MathRule layer=Foreground line=null
+  rule=34.480000,-12.520000,124.737793,-9.880000 source=6..26 group=null role=MathRule layer=Foreground line=null
+  rule=30.280001,-61.859997,129.537796,-58.819996 source=0..5 group=2 role=MathRule layer=Foreground line=null
+  construction=2/Radical/Variant face=legacy-single-face source=0..5 policy=RequireOutlineUnion
+  construction=1/Radical/BaseGlyph face=legacy-single-face source=17..22 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..27 width=129.537796 clean=64.899994/47.740002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=noad:17..25/TextCramped/TextCramped/null/CompoundBox,construction:BaseGlyph/NormalGlyphHeight/TeXCleanBoxHeightPlusGapAndRule/clean=20.24+0.0/base=true/27.120/46.080/557/0.0,geometry:XeTeXMakeRadicalCleanBoxNominalDelimiterAndOverbar/3.840/excess=18.960/13.320/MinimumGapPlusHalfPositiveConstructionExcess/3.040/extra=3.040/false/delimiter=3.04+43.04@-33.56/rule=-36.600002..-33.56/0.000/0.000/horizontal=null/used=null/lower=null/after=0.000/x=null/0.0/64/raise=null(null+null)/null/null/bottom=null/B=39.640/9.480/degreeBaseline=null/48.800/seam=Available(GlyphOutlineCrossSection)/GlyphOutlineCrossSection/-38.080/-35.000/26.560->26.560/advance=25.960/bounds=[Outline]/logical=MeasuredMathRunLogicalWidthIndependentOfBoundsSource,noad:0..27/Display/DisplayCramped/null/CompoundBox,construction:Variant/MathGlyphVariantRecord/TeXCleanBoxHeightPlusGapAndRule/clean=52.64+47.24/base=false/108.600/109.600/1794/0.0,geometry:XeTeXMakeRadicalCleanBoxNominalDelimiterAndOverbar/5.680/excess=1.000/6.180/MinimumGapPlusHalfPositiveConstructionExcess/3.040/extra=3.040/false/delimiter=3.04+106.56@-58.819996/rule=-61.859997..-58.819996/0.000/0.000/horizontal=null/used=null/lower=null/after=0.000/x=null/0.0/64/raise=null(null+null)/null/null/bottom=null/B=64.900/47.740/degreeBaseline=null/129.538/seam=Available(GlyphOutlineCrossSection)/GlyphOutlineCrossSection/-82.880/-79.800/30.280->30.280/advance=29.680/bounds=[Outline]/logical=MeasuredMathRunLogicalWidthIndependentOfBoundsSource
+case=content-delimiters logical=95.600006 clean=44.140003/21.740002 fragments=1 breaks=0 diagnostics=[]
+  glyph=2016 face=legacy-single-face style=Text size=40.000000 source=0..12 x=0.000000 baseline=-0.020000 advance=15.560000 group=1
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=13..14 x=15.560000 baseline=0.000000 advance=20.040001 group=null
+  glyph=1911 face=legacy-single-face style=Text size=40.000000 source=14..22 x=37.840008 baseline=-0.020000 advance=16.639999 group=2
+  glyph=2702 face=legacy-single-face style=Script size=28.000000 source=28..29 x=59.280006 baseline=-18.000000 advance=14.784000 group=null
+  glyph=2703 face=legacy-single-face style=ScriptCramped size=28.000000 source=31..32 x=60.246002 baseline=19.200001 advance=12.628000 group=null
+  glyph=2031 face=legacy-single-face style=Text size=40.000000 source=33..46 x=80.040009 baseline=-0.020000 advance=15.560000 group=3
+  rule=59.280006,-12.520000,75.240005,-9.880000 source=22..33 group=null role=MathRule layer=Foreground line=null
+  construction=1/Delimiter/Variant face=legacy-single-face source=0..12 policy=RequireOutlineUnion
+  construction=2/Delimiter/Variant face=legacy-single-face source=14..22 policy=RequireOutlineUnion
+  construction=3/Delimiter/Variant face=legacy-single-face source=33..46 policy=RequireOutlineUnion
+  fragment=0/Inner source=0..46 width=95.600006 clean=44.140003/21.740002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=group=38.664+19.396/axis=11.2/targets=55.13399,41.192->55.13399/UnbreakableContentDrivenFencedInnerNoad Left:\langle/U+27E8/Variant/2016@0.0/65.92/-0.019999504/15.56/ReplayableOutlineUnion,Middle:|/U+007C/Variant/1911@0.0/65.92/-0.019999504/16.64/ReplayableOutlineUnion,Right:\rangle/U+27E9/Variant/2031@0.0/65.92/-0.019999504/15.56/ReplayableOutlineUnion
+case=fixed-delimiters logical=278.075531 clean=66.639999/44.240002 fragments=11 breaks=2 diagnostics=[]
+  glyph=1835 face=legacy-single-face style=Text size=40.000000 source=0..6 x=0.000000 baseline=0.000001 advance=15.280000 group=1
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=6..7 x=15.280000 baseline=0.000000 advance=19.080000 group=null
+  glyph=1850 face=legacy-single-face style=Text size=40.000000 source=7..13 x=38.120003 baseline=0.000001 advance=15.280000 group=2
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=13..14 x=62.288891 baseline=0.000000 advance=27.400000 group=null
+  glyph=1866 face=legacy-single-face style=Text size=40.000000 source=14..20 x=98.577774 baseline=-0.020000 advance=15.520000 group=3
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=20..21 x=114.097778 baseline=0.000000 advance=19.080000 group=null
+  glyph=1881 face=legacy-single-face style=Text size=40.000000 source=21..27 x=136.937775 baseline=-0.020000 advance=15.520000 group=4
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=27..28 x=161.346664 baseline=0.000000 advance=27.400000 group=null
+  glyph=2225 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=38.751442 advance=26.559999 group=5
+  glyph=2225 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=28.982458 advance=26.559999 group=5
+  glyph=2225 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=19.213474 advance=26.559999 group=5
+  glyph=2225 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=9.444492 advance=26.559999 group=5
+  glyph=2225 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=-0.324493 advance=26.559999 group=5
+  glyph=2225 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=-10.093475 advance=26.559999 group=5
+  glyph=2225 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=-19.862461 advance=26.559999 group=5
+  glyph=2221 face=legacy-single-face style=Text size=40.000000 source=28..41 x=197.635544 baseline=-29.631439 advance=26.559999 group=5
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=42..43 x=224.195541 baseline=0.000000 advance=19.080000 group=null
+  glyph=2230 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=38.751442 advance=31.040001 group=6
+  glyph=2226 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=9.622459 advance=31.040001 group=6
+  glyph=2226 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=-0.146523 advance=31.040001 group=6
+  glyph=2226 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=-9.915508 advance=31.040001 group=6
+  glyph=2226 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=-19.684490 advance=31.040001 group=6
+  glyph=2226 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=-29.453468 advance=31.040001 group=6
+  glyph=2226 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=-39.222458 advance=31.040001 group=6
+  glyph=2226 face=legacy-single-face style=Text size=40.000000 source=43..58 x=247.035538 baseline=-48.991440 advance=31.040001 group=6
+  construction=1/Delimiter/Variant face=legacy-single-face source=0..6 policy=RequireOutlineUnion
+  construction=2/Delimiter/Variant face=legacy-single-face source=7..13 policy=RequireOutlineUnion
+  construction=3/Delimiter/Variant face=legacy-single-face source=14..20 policy=RequireOutlineUnion
+  construction=4/Delimiter/Variant face=legacy-single-face source=21..27 policy=RequireOutlineUnion
+  construction=5/Delimiter/Assembly face=legacy-single-face source=28..41 policy=RequireOutlineUnion
+  construction=6/Delimiter/Assembly face=legacy-single-face source=43..58 policy=RequireOutlineUnion
+  fragment=0/Opening source=0..6 width=15.280000 clean=34.200001/11.800000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Ordinary source=6..7 width=19.080002 clean=20.240000/0.000000 kern=0.000000 ic=3.760000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=2/Closing source=7..13 width=15.280000 clean=34.200001/11.800000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=3/Binary source=13..14 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=4/Opening source=14..20 width=15.520000 clean=44.464001/22.063999 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=5/Ordinary source=20..21 width=19.080002 clean=20.240000/0.000000 kern=0.000000 ic=3.760000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=6/Closing source=21..27 width=15.520000 clean=44.464001/22.063999 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=7/Binary source=27..28 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=8/Ordinary source=28..41 width=26.559999 clean=66.639999/44.240002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=9/Ordinary source=42..43 width=19.080002 clean=20.240000/0.000000 kern=0.000000 ic=3.760000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=10/Ordinary source=43..58 width=31.040001 clean=66.639999/44.240002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=14, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=7, sourceOffset=28, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=Opening:(/Big/Variant/1835@0.0/44.352->39.96115/15.28/ReplayableOutlineUnion,Closing:)/Big/Variant/1850@0.0/44.352->39.96115/15.28/ReplayableOutlineUnion,Opening:[/BigCapital/Variant/1866@0.0/66.528->59.941727/15.52/ReplayableOutlineUnion,Closing:]/BigCapital/Variant/1881@0.0/66.528->59.941727/15.52/ReplayableOutlineUnion,Ordinary:\uparrow/BiggCapital/Assembly/2225,2225,2225,2225,2225,2225,2225,2221@-0.0,-9.768984,-19.537968,-29.30695,-39.075935,-48.844917,-58.613903,-68.38288/110.880005->99.902885/26.56/ReplayableOutlineUnion,Ordinary:\Downarrow/BiggCapital/Assembly/2230,2226,2226,2226,2226,2226,2226,2226@-0.0,-29.128983,-38.897964,-48.66695,-58.435932,-68.20491,-77.9739,-87.74288/110.880005->99.902885/31.04/ReplayableOutlineUnion noads=Text:29.68+7.2799997/44.352*1.0/33.376+10.976001/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.68+7.2799997/44.352*1.0/33.376+10.976001/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.68+7.2799997/44.352*1.5/44.464+22.064/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.68+7.2799997/44.352*1.5/44.464+22.064/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.68+7.2799997/44.352*2.5/66.64+44.24/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.68+7.2799997/44.352*2.5/66.64+44.24/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall
+case=extensible-arrow logical=149.272018 clean=54.848000/34.664001 fragments=3 breaks=1 diagnostics=[]
+  glyph=3625 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=26.160000 group=null
+  glyph=549 face=legacy-single-face style=Display size=40.000000 source=1..13 x=39.671116 baseline=0.000000 advance=27.400000 group=1
+  glyph=549 face=legacy-single-face style=Display size=40.000000 source=1..13 x=55.296009 baseline=0.000000 advance=27.400000 group=1
+  glyph=430 face=legacy-single-face style=Display size=40.000000 source=1..13 x=70.920898 baseline=0.000000 advance=41.599998 group=1
+  glyph=2716 face=legacy-single-face style=Script size=28.000000 source=19..20 x=60.144592 baseline=-32.400002 advance=14.756000 group=null
+  glyph=3211 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=21..22 x=73.780594 baseline=-25.400002 advance=11.484000 group=null
+  glyph=2711 face=legacy-single-face style=ScriptCramped size=28.000000 source=14..15 x=48.226669 baseline=26.664000 advance=13.804000 group=null
+  glyph=2869 face=legacy-single-face style=ScriptCramped size=28.000000 source=15..16 x=63.878670 baseline=26.664000 advance=19.180000 group=null
+  glyph=2549 face=legacy-single-face style=ScriptCramped size=28.000000 source=16..17 x=83.058685 baseline=26.664000 advance=16.240000 group=null
+  glyph=3626 face=legacy-single-face style=Text size=40.000000 source=23..24 x=123.632019 baseline=0.000000 advance=23.080000 group=null
+  construction=1/ExtensibleArrow/Assembly face=legacy-single-face source=1..13 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..1 width=26.160004 clean=28.640001/0.000000 kern=0.000000 ic=2.400000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=1/Relation source=1..23 width=72.849792 clean=54.848000/34.664001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=2/Ordinary source=23..24 width=23.080002 clean=28.640001/0.000000 kern=0.000000 ic=2.560000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=23, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation), priority=Relation, operatorStaysOnPreviousLine=true)
+  evidence=Right/head=430/relbar=549/leaders=1@15.624893/AmsmathArrowfillCLeadersRelbar/target=72.850/up=32.4/down=26.664/outer=8.0,8.0/box=72.84979,54.848,34.664
+case=over-under logical=228.631104 clean=45.191998/34.860001 fragments=7 breaks=3 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=20.040001 group=null
+  glyph=30 face=legacy-single-face style=Text size=40.000000 source=13..14 x=33.391121 baseline=0.000000 advance=27.400000 group=null
+  glyph=2721 face=legacy-single-face style=Script size=28.000000 source=10..11 x=39.125122 baseline=-22.716000 advance=14.364000 group=null
+  glyph=3629 face=legacy-single-face style=Text size=40.000000 source=15..16 x=71.902237 baseline=0.000000 advance=21.120001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=16..17 x=103.591125 baseline=0.000000 advance=27.400000 group=null
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=30..31 x=139.880005 baseline=0.000000 advance=19.080000 group=null
+  glyph=2704 face=legacy-single-face style=ScriptCramped size=28.000000 source=27..28 x=142.844009 baseline=26.664000 advance=15.232000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=32..33 x=162.720001 baseline=0.000000 advance=27.400000 group=null
+  glyph=30 face=legacy-single-face style=Text size=40.000000 source=46..47 x=201.231110 baseline=0.000000 advance=27.400000 group=null
+  glyph=2719 face=legacy-single-face style=Script size=28.000000 source=43..44 x=207.931107 baseline=-22.743999 advance=12.208000 group=null
+  fragment=0/Ordinary source=0..1 width=20.040009 clean=20.559999/0.280000 kern=0.000000 ic=2.240000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=1/Relation source=1..15 width=27.400000 clean=44.940002/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=2/Ordinary source=15..16 width=21.120001 clean=29.440001/0.280000 kern=0.000000 ic=1.680000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=3/Binary source=16..17 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=4/Ordinary source=17..32 width=22.840002 clean=20.240000/34.860001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=5/Ordinary source=32..33 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=6/Relation source=33..48 width=27.400000 clean=45.191998/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=15, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation), priority=Relation, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=17, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=6, sourceOffset=48, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None), priority=Relation, operatorStaysOnPreviousLine=true)
+  evidence=Overset/Relation/Script/5.999999/null/27.4/OpenTypeMathUpperLowerLimitConstants,Underset/Ordinary/ScriptCramped/null/6.0/22.840002/OpenTypeMathUpperLowerLimitConstants,StackRel/Relation/Script/5.999999/null/27.4/OpenTypeMathUpperLowerLimitConstants
+case=common-fractions logical=173.577789 clean=60.520000/28.280001 fragments=3 breaks=1 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=7..8 x=5.059996 baseline=-23.200001 advance=20.040001 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=10..11 x=4.800000 baseline=28.000000 advance=21.120001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=12..13 x=41.288891 baseline=0.000000 advance=27.400000 group=null
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=23..24 x=82.377777 baseline=-32.520000 advance=19.080000 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=26..27 x=82.377777 baseline=28.000000 advance=21.120001 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=27..28 x=105.177773 baseline=28.000000 advance=21.120001 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=28..29 x=127.977776 baseline=28.000000 advance=21.120001 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=29..30 x=150.777771 baseline=28.000000 advance=21.120001 group=null
+  rule=4.800000,-12.520000,27.600000,-9.880000 source=0..12 group=null role=MathRule layer=Foreground line=null
+  rule=82.377777,-12.520000,173.577789,-9.880000 source=13..31 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..12 width=32.400002 clean=43.760002/28.280001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=12..13 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=13..31 width=96.000008 clean=60.520000/28.280001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=13, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=TeXFractionNullDelimiters:{leftSpacePx=4.7999997, rightSpacePx=4.7999997, parameter=nullDelimiterSpacePx, styleInvariant=true, rightSpacePolicy=TeXFractionNullDelimiterSpace},TeXFractionCommand:{origin=DisplayFraction, commandRange=SourceRange(start=0, endExclusive=6), outerStyle=Text, fractionStyle=Display, styleOverride=Display, numeratorAlignment=Center, alignmentRange=null, numeratorStrut=false, retainRightNullDelimiterSpace=true},AmsmathContinuedFractionNumeratorStrut:{style=Display, fontSizePx=40.0, strutAscentEm=0.7, strutDescentEm=0.3, minimumAscentPx=28.0, minimumDescentPx=12.0, inputAscentPx=20.24, inputDescentPx=0.0, outputAscentPx=28.0, outputDescentPx=12.0, policy=AmsmathCfracTextSizeStrut},TeXFractionNullDelimiters:{leftSpacePx=4.7999997, rightSpacePx=0.0, parameter=nullDelimiterSpacePx, styleInvariant=true, rightSpacePolicy=AmsmathCfracTrailingNullDelimiterSpaceCancellation},TeXFractionCommand:{origin=ContinuedFraction, commandRange=SourceRange(start=13, endExclusive=19), outerStyle=Text, fractionStyle=Display, styleOverride=Display, numeratorAlignment=Left, alignmentRange=SourceRange(start=19, endExclusive=22), numeratorStrut=true, retainRightNullDelimiterSpace=false}
+case=primitive-mathop logical=204.948639 clean=57.119999/41.431999 fragments=3 breaks=0 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=8..9 x=0.000000 baseline=0.000000 advance=20.040001 group=null
+  glyph=3629 face=legacy-single-face style=Text size=40.000000 source=9..10 x=22.280008 baseline=0.000000 advance=21.120001 group=null
+  glyph=3630 face=legacy-single-face style=Text size=40.000000 source=10..11 x=45.080009 baseline=0.000000 advance=18.040001 group=null
+  glyph=2549 face=legacy-single-face style=Script size=28.000000 source=15..16 x=65.120018 baseline=-17.792000 advance=16.240000 group=null
+  glyph=2548 face=legacy-single-face style=ScriptCramped size=28.000000 source=13..14 x=65.120018 baseline=10.000000 advance=16.240000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=16..17 x=88.690857 baseline=0.000000 advance=27.400000 group=null
+  glyph=3650 face=legacy-single-face style=Display size=40.000000 source=39..40 x=116.090858 baseline=0.000000 advance=19.080000 group=null
+  glyph=12 face=legacy-single-face style=Display size=40.000000 source=40..41 x=147.819748 baseline=0.000000 advance=27.400000 group=null
+  glyph=3651 face=legacy-single-face style=Display size=40.000000 source=41..42 x=184.108643 baseline=0.000000 advance=18.440001 group=null
+  glyph=2549 face=legacy-single-face style=Script size=28.000000 source=46..47 x=152.399750 baseline=-28.959999 advance=16.240000 group=null
+  glyph=2548 face=legacy-single-face style=ScriptCramped size=28.000000 source=44..45 x=152.399750 baseline=33.208000 advance=16.240000 group=null
+  fragment=0/Operator source=0..16 width=82.024193 clean=37.952000/10.224000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=16..17 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=2/Ordinary source=17..48 width=88.857780 clean=57.119999/41.431999 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=TeXMathOperatorNoad:{commandRange=SourceRange(start=0, endExclusive=7), nucleusRange=SourceRange(start=7, endExclusive=12), limitsPolicy=Auto, limitsPolicyExplicit=false, modifierRange=null, atomClass=Operator, nucleusPolicy=XeTeXCleanBoxSubMlistCurrentStyle, italicCorrectionPx=0.0},TeXOperatorLimitsPolicy:{identity=mathop, declaredPolicy=Auto, effectivePolicy=NoLimits, explicit=false, modifierRange=null, style=Text, reason=auto-non-display, upperPresent=true, lowerPresent=true},TeXMathOperatorNoad:{commandRange=SourceRange(start=31, endExclusive=38), nucleusRange=SourceRange(start=38, endExclusive=43), limitsPolicy=Auto, limitsPolicyExplicit=false, modifierRange=null, atomClass=Operator, nucleusPolicy=XeTeXCleanBoxSubMlistCurrentStyle, italicCorrectionPx=0.0},TeXOperatorLimitsPolicy:{identity=mathop, declaredPolicy=Auto, effectivePolicy=Limits, explicit=false, modifierRange=null, style=Display, reason=auto-display, upperPresent=true, lowerPresent=true},OpenTypeMathOperatorLimits:{style=Display, upperStyle=Script, lowerStyle=ScriptCramped, upperLimitGapMinPx=6.0, upperLimitBaselineRiseMinPx=6.0, lowerLimitGapMinPx=6.0, lowerLimitBaselineDropMinPx=24.0, upperOuterPaddingPx=8.0, lowerOuterPaddingPx=8.0, outerLimitPaddingPolicy=XeTeXBigOpSpacing5FromOpenTypeMATHStackGapMin, upperShiftPx=28.96, lowerShiftPx=33.208, actualUpperGapPx=6.0, actualUpperBaselineRisePx=6.0, actualLowerGapPx=5.999998, actualLowerBaselineDropPx=26.328, operatorItalicCorrectionPx=0.0, upperCenterOffsetPx=0.0, lowerCenterOffsetPx=-0.0, logicalWidthPx=88.85778, logicalWidthPolicy=max-unskewed-operator-and-limits, operatorWidthPx=88.85778, upperWidthPx=16.240005, lowerWidthPx=16.240005, operatorX=0.0, upperX=36.308887, lowerX=36.308887}
+case=growing-braces logical=420.382202 clean=78.727997/56.264000 fragments=3 breaks=0 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=TextCramped size=40.000000 source=11..12 x=0.000000 baseline=0.000000 advance=20.040001 group=null
+  glyph=12 face=legacy-single-face style=TextCramped size=40.000000 source=12..13 x=31.168898 baseline=0.000000 advance=27.400000 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=13..14 x=67.457787 baseline=0.000000 advance=21.120001 group=null
+  glyph=12 face=legacy-single-face style=TextCramped size=40.000000 source=14..15 x=99.146683 baseline=0.000000 advance=27.400000 group=null
+  glyph=3630 face=legacy-single-face style=TextCramped size=40.000000 source=15..16 x=135.435577 baseline=0.000000 advance=18.040001 group=null
+  glyph=12 face=legacy-single-face style=TextCramped size=40.000000 source=16..17 x=164.364471 baseline=0.000000 advance=27.400000 group=null
+  glyph=3631 face=legacy-single-face style=TextCramped size=40.000000 source=17..18 x=200.653351 baseline=0.000000 advance=21.600000 group=null
+  glyph=12 face=legacy-single-face style=TextCramped size=40.000000 source=18..19 x=233.542236 baseline=0.000000 advance=27.400000 group=null
+  glyph=3632 face=legacy-single-face style=TextCramped size=40.000000 source=19..20 x=269.831116 baseline=0.000000 advance=18.719999 group=null
+  glyph=2464 face=legacy-single-face style=Text size=40.000000 source=0..10 x=0.000000 baseline=-8.360001 advance=56.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=53.079109 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=66.158218 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=79.237335 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=92.316444 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2466 face=legacy-single-face style=Text size=40.000000 source=0..10 x=105.395554 baseline=-8.360001 advance=80.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=182.474670 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=195.553772 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=208.632874 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2465 face=legacy-single-face style=Text size=40.000000 source=0..10 x=221.711975 baseline=-8.360001 advance=16.000000 group=1
+  glyph=2467 face=legacy-single-face style=Text size=40.000000 source=0..10 x=234.791077 baseline=-8.360001 advance=56.000000 group=1
+  glyph=2714 face=legacy-single-face style=Script size=28.000000 source=23..24 x=137.527557 baseline=-56.279999 advance=14.448000 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=25..26 x=297.457764 baseline=0.000000 advance=27.400000 group=null
+  glyph=3650 face=legacy-single-face style=TextCramped size=40.000000 source=38..39 x=331.524414 baseline=0.000000 advance=19.080000 group=null
+  glyph=12 face=legacy-single-face style=TextCramped size=40.000000 source=39..40 x=363.253296 baseline=0.000000 advance=27.400000 group=null
+  glyph=3651 face=legacy-single-face style=TextCramped size=40.000000 source=40..41 x=399.542175 baseline=0.000000 advance=18.440001 group=null
+  glyph=2305 face=legacy-single-face style=Text size=40.000000 source=26..37 x=333.533295 baseline=6.880000 advance=84.800003 group=null
+  glyph=2711 face=legacy-single-face style=ScriptCramped size=28.000000 source=44..45 x=368.127319 baseline=48.264000 advance=13.804000 group=null
+  construction=1/Accent/Assembly face=legacy-single-face source=0..10 policy=RequireOutlineUnion
+  fragment=0/Operator source=0..25 width=290.791107 clean=78.727997/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=25..26 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=2/Operator source=26..46 width=88.857780 clean=22.959999/56.264000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=OpenTypeMathAccent:{identity=overbrace, wide=true, placement=Top, style=Text, nucleusStyle=TextCramped, nucleusBoxPolicy=XeTeXNativeGlyphOutlineOrCompletedChildBox, baseWidthPx=290.7911, baseInkAscentPx=31.0, baseCleanAscentPx=29.44, accentBaseHeightPx=21.08, verticalPlacementPolicy=XeTeXMakeMathAccentMinCleanBoxHeightAndAccentBaseHeight, flattenedAccentBaseHeightPx=27.56, baseAttachmentPx=145.39555, baseAttachmentPolicy=CompoundBoxLogicalCenter, baseAttachmentIgnoredDeviceAdjustment=null, accentAttachmentPx=145.39555, accentAttachmentPolicy=AssemblyLogicalCenter, accentAttachmentIgnoredDeviceAdjustment=null, accentX=0.0, accentBaselineY=-8.360001, construction=Assembly, constructionPolicy=Tectonic0.17.0XeTeXHorizontalAccentAssemblyStretchGlue, glyphIds=2464,2465,2465,2465,2465,2466,2465,2465,2465,2465,2467, componentOffsetsDesignUnits=0.0,1326.9778,1653.9556,1980.9333,2307.9111,2634.889,4561.8667,4888.844,5215.822,5542.7993,5869.777, connectorOverlapsDesignUnits=[73.02226, 73.02226, 73.02226, 73.02226, 73.02226, 73.02226, 73.02226, 73.02226, 73.02226, 73.02226], targetWidthPx=290.7911, achievedWidthPx=290.7911, reachesTarget=true, coveragePolicy=CoversTarget, assemblyValidation=MathGlyphAssemblyValidation(valid=true, invalidReasons=[], extenderCount=2, nonExtenderCount=3, extenderNonOverlappingAdvance=760, checkedConnectionCount=6, validationPolicy=TiqianOpenTypeTerminalConnectorCompatibility, specificationDivergence=MathMLCore5.3.1RequiresEveryTerminalConnectorAtLeastMinimum), paintPolicy=SemanticOutlineUnion, logicalAdvancePx=290.7911, cleanAscentPx=50.28, cleanDescentPx=0.56},TeXBraceOperatorNoad:{kind=Over, commandRange=SourceRange(start=0, endExclusive=10), baseRange=SourceRange(start=10, endExclusive=21), limitsPolicy=Limits, limitsPolicyExplicit=false, modifierRange=null, accentIdentity=OverBrace, atomClass=Operator, constructionPolicy=XeTeXGrowingTopOrBottomMathAccentWrappedInLimitsOpNoad},OpenTypeMathOperatorLimits:{style=Text, upperStyle=Script, lowerStyle=null, upperLimitGapMinPx=6.0, upperLimitBaselineRiseMinPx=6.0, lowerLimitGapMinPx=6.0, lowerLimitBaselineDropMinPx=24.0, upperOuterPaddingPx=8.0, lowerOuterPaddingPx=0.0, outerLimitPaddingPolicy=XeTeXBigOpSpacing5FromOpenTypeMATHStackGapMin, upperShiftPx=56.28, lowerShiftPx=null, actualUpperGapPx=6.0, actualUpperBaselineRisePx=6.0, actualLowerGapPx=null, actualLowerBaselineDropPx=null, operatorItalicCorrectionPx=0.0, upperCenterOffsetPx=0.0, lowerCenterOffsetPx=-0.0, logicalWidthPx=290.7911, logicalWidthPolicy=max-unskewed-operator-and-limits, operatorWidthPx=290.7911, upperWidthPx=15.736, lowerWidthPx=null, operatorX=0.0, upperX=137.52756, lowerX=null},OpenTypeMathAccent:{identity=underbrace, wide=true, placement=Bottom, style=Text, nucleusStyle=TextCramped, nucleusBoxPolicy=XeTeXNativeGlyphOutlineOrCompletedChildBox, baseWidthPx=88.85778, baseInkAscentPx=24.0, baseCleanAscentPx=22.96, accentBaseHeightPx=21.08, verticalPlacementPolicy=XeTeXBottomMathAccentAfterCompletedNucleusDepth, flattenedAccentBaseHeightPx=27.56, baseAttachmentPx=44.42889, baseAttachmentPolicy=XeTeXBottomAccentNucleusLogicalCenter, baseAttachmentIgnoredDeviceAdjustment=null, accentAttachmentPx=42.42, accentAttachmentPolicy=OpenTypeAdvanceCenterFallback, accentAttachmentIgnoredDeviceAdjustment=null, accentX=2.008892, accentBaselineY=6.88, construction=Variant, constructionPolicy=XeTeXMathAccentLargestVariantNotWiderThanNucleus, glyphIds=2305, componentOffsetsDesignUnits=0.0, connectorOverlapsDesignUnits=[], targetWidthPx=88.85778, achievedWidthPx=84.84, reachesTarget=false, coveragePolicy=TeXLargestAvailableAccentVariantAllowsBaseOverhang, assemblyValidation=null, paintPolicy=DirectSingleGlyphReplay, logicalAdvancePx=88.85778, cleanAscentPx=22.96, cleanDescentPx=21.6},TeXBraceOperatorNoad:{kind=Under, commandRange=SourceRange(start=26, endExclusive=37), baseRange=SourceRange(start=37, endExclusive=42), limitsPolicy=Limits, limitsPolicyExplicit=false, modifierRange=null, accentIdentity=UnderBrace, atomClass=Operator, constructionPolicy=XeTeXGrowingTopOrBottomMathAccentWrappedInLimitsOpNoad},OpenTypeMathOperatorLimits:{style=Text, upperStyle=null, lowerStyle=ScriptCramped, upperLimitGapMinPx=6.0, upperLimitBaselineRiseMinPx=6.0, lowerLimitGapMinPx=6.0, lowerLimitBaselineDropMinPx=24.0, upperOuterPaddingPx=0.0, lowerOuterPaddingPx=8.0, outerLimitPaddingPolicy=XeTeXBigOpSpacing5FromOpenTypeMATHStackGapMin, upperShiftPx=null, lowerShiftPx=48.264, actualUpperGapPx=null, actualUpperBaselineRisePx=null, actualLowerGapPx=6.0, actualLowerBaselineDropPx=26.664, operatorItalicCorrectionPx=0.0, upperCenterOffsetPx=0.0, lowerCenterOffsetPx=-0.0, logicalWidthPx=88.85778, logicalWidthPolicy=max-unskewed-operator-and-limits, operatorWidthPx=88.85778, upperWidthPx=null, lowerWidthPx=15.652, operatorX=0.0, upperX=null, lowerX=36.60289}
+case=scoped-color logical=224.653351 clean=29.440001/0.560000 fragments=3 breaks=1 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=12..13 x=0.000000 baseline=0.000000 advance=20.040001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=13..14 x=31.168898 baseline=0.000000 advance=27.400000 group=null
+  glyph=3629 face=legacy-single-face style=Text size=40.000000 source=27..28 x=67.457787 baseline=0.000000 advance=21.120001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=29..30 x=99.146683 baseline=0.000000 advance=27.400000 group=null
+  glyph=3630 face=legacy-single-face style=Text size=40.000000 source=30..31 x=135.435577 baseline=0.000000 advance=18.040001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=32..33 x=164.364471 baseline=0.000000 advance=27.400000 group=null
+  glyph=3631 face=legacy-single-face style=Text size=40.000000 source=33..34 x=200.653351 baseline=0.000000 advance=21.600000 group=null
+  fragment=0/Ordinary source=0..32 width=155.475586 clean=29.440001/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=32..33 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=33..34 width=21.600006 clean=29.440001/0.280000 kern=0.000000 ic=2.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=33, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=1..12:red/ffff0000/TeXDeclarationUntilCurrentMathListGroupEnd/XColorBaseNamesHtmlHexTripletsAndCssSvgKeywords,15..27:blue/ff0000ff/TeXDeclarationUntilCurrentMathListGroupEnd/XColorBaseNamesHtmlHexTripletsAndCssSvgKeywords glyphPaint=12:ffff0000,13:ffff0000,27:ff0000ff,29:ffff0000,30:ffff0000,32:host,33:host
+case=boxed logical=109.450584 clean=48.276398/32.796398 fragments=3 breaks=1 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=28..29 x=9.576393 baseline=-23.200001 advance=20.040001 group=null
+  glyph=3629 face=legacy-single-face style=TextCramped size=40.000000 source=31..32 x=9.316397 baseline=28.000000 advance=21.120001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=35..36 x=50.321686 baseline=0.000000 advance=27.400000 group=null
+  glyph=3650 face=legacy-single-face style=Text size=40.000000 source=36..37 x=86.610580 baseline=0.000000 advance=19.080000 group=null
+  rule=9.316397,-12.520000,32.116398,-9.880000 source=22..33 group=null role=MathRule layer=Foreground line=null
+  rule=0.000000,-48.276398,41.432796,-47.745056 source=15..21 group=null role=MathRule layer=Foreground line=null
+  rule=0.000000,32.265057,41.432796,32.796398 source=15..21 group=null role=MathRule layer=Foreground line=null
+  rule=0.000000,-48.276398,0.531341,32.796398 source=15..21 group=null role=MathRule layer=Foreground line=null
+  rule=40.901455,-48.276398,41.432796,32.796398 source=15..21 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..35 width=41.432796 clean=48.276398/32.796398 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=35..36 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=36..37 width=19.080002 clean=20.240000/0.000000 kern=0.000000 ic=3.760000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=36, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=styles=Text->Display/fbox=3.9850564+0.53134084/content=32.4,43.760002,28.28/box=41.432796,48.276398,32.7964/rules=5/paint=[ff800080, ff800080, ff800080, ff800080, ff800080]
+case=adjustment logical=199.666687 clean=29.440001/5.440001 fragments=7 breaks=3 diagnostics=[]
+  glyph=3628 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=20.040001 group=null
+  glyph=13 face=legacy-single-face style=Text size=40.000000 source=1..2 x=22.280008 baseline=0.000000 advance=9.080000 group=null
+  glyph=3629 face=legacy-single-face style=Text size=40.000000 source=2..3 x=38.026676 baseline=0.000000 advance=21.120001 group=null
+  glyph=30 face=legacy-single-face style=Text size=40.000000 source=3..4 x=71.937790 baseline=0.000000 advance=27.400000 group=null
+  glyph=3630 face=legacy-single-face style=Text size=40.000000 source=4..5 x=110.448906 baseline=0.000000 advance=18.040001 group=null
+  glyph=12 face=legacy-single-face style=Text size=40.000000 source=5..6 x=139.377808 baseline=0.000000 advance=27.400000 group=null
+  glyph=3631 face=legacy-single-face style=Text size=40.000000 source=6..7 x=175.666687 baseline=0.000000 advance=21.600000 group=null
+  fragment=0/Ordinary source=0..1 width=20.040009 clean=20.559999/0.280000 kern=0.000000 ic=2.240000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Punctuation source=1..2 width=9.080002 clean=4.720000/5.440001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=0.0, maximumPx=13.333334, shrinkPx=6.666667, stretchPx=6.666667, priority=Punctuation)
+  fragment=2/Ordinary source=2..3 width=21.120001 clean=29.440001/0.280000 kern=0.000000 ic=1.680000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=3/Relation source=3..4 width=27.400000 clean=16.520000/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=4/Ordinary source=4..5 width=18.040009 clean=20.559999/0.280001 kern=0.000000 ic=2.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=5/Binary source=5..6 width=27.400000 clean=22.959999/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=6/Ordinary source=6..7 width=21.600006 clean=29.440001/0.280000 kern=0.000000 ic=2.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=2, kind=PunctuationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=0.0, maximumPx=13.333334, shrinkPx=6.666667, stretchPx=6.666667, priority=Punctuation), priority=Punctuation, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=4, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation), priority=Relation, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=5, sourceOffset=6, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=0:ic=2.240/None/0.000/0.000/0.000/None,1:ic=0.000/Thin/6.667/0.000/13.333/Punctuation,2:ic=1.680/Thick/11.111/0.000/22.222/Relation,3:ic=0.000/Thick/11.111/0.000/22.222/Relation,4:ic=2.000/Medium/8.889/0.000/13.333/BinaryOperator,5:ic=0.000/Medium/8.889/0.000/13.333/BinaryOperator,6:ic=2.400/None/0.000/0.000/0.000/None
+face=STIX Two Math upm=1000 line=762/-238/250
+case=symbols logical=294.191101 clean=26.280001/1.600000 fragments=9 breaks=4 diagnostics=[]
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=22.360001 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=1..2 x=31.648890 baseline=0.000000 advance=28.799999 group=null
+  glyph=279 face=legacy-single-face style=Text size=40.000000 source=10..11 x=69.337784 baseline=0.000000 advance=19.160000 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=12..13 x=97.386673 baseline=0.000000 advance=28.799999 group=null
+  glyph=4015 face=legacy-single-face style=Text size=40.000000 source=13..19 x=135.075562 baseline=0.000000 advance=23.400000 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=19..20 x=167.364441 baseline=0.000000 advance=28.799999 group=null
+  glyph=847 face=legacy-single-face style=Text size=40.000000 source=20..26 x=205.053329 baseline=0.000000 advance=22.760000 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=26..27 x=236.702209 baseline=0.000000 advance=28.799999 group=null
+  glyph=1139 face=legacy-single-face style=Text size=40.000000 source=27..28 x=274.391083 baseline=0.000000 advance=19.799999 group=null
+  fragment=0/Ordinary source=0..1 width=22.360001 clean=19.160000/0.400000 kern=0.000000 ic=0.400000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=1..2 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=10..11 width=19.160004 clean=18.920000/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=3/Binary source=12..13 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=4/Ordinary source=13..19 width=23.400000 clean=19.160000/0.560000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=5/Binary source=19..20 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=6/Ordinary source=20..26 width=22.760000 clean=26.280001/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=7/Binary source=26..27 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=8/Ordinary source=27..28 width=19.800003 clean=25.760000/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=2, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=13, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=5, sourceOffset=20, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=7, sourceOffset=27, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=latin-x:Letters/Variable/MathNormal->Letters/MathNormal/U+1D465/3354,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/1196,latin-x:Letters/Variable/MathNormal->Operators/Roman/U+0078/279,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/1196,alpha:Letters/Fixed/MathNormal->Letters/MathNormal/U+1D6FC/4015,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/1196,capital-gamma:Operators/Variable/MathNormal->Operators/MathNormal/U+0393/847,plus:Operators/Fixed/MathNormal->Operators/MathNormal/U+002B/1196,digit-2:Operators/Variable/MathNormal->Operators/MathNormal/U+0032/1139
+case=group logical=71.920006 clean=28.199999/1.600000 fragments=3 breaks=0 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=22.200001 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=2..3 x=22.200001 baseline=0.000000 advance=28.799999 group=null
+  glyph=3327 face=legacy-single-face style=Text size=40.000000 source=4..5 x=51.000004 baseline=0.000000 advance=20.719999 group=null
+  fragment=0/Ordinary source=0..1 width=22.200001 clean=19.160000/0.480000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Ordinary source=1..4 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=2/Ordinary source=4..5 width=20.720001 clean=28.199999/0.480000 kern=0.000000 ic=0.200000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=TeXBinaryAtomReclassification:2..3:{from=Binary, to=Ordinary, listRange=2..3},TeXOrdSubMlist:1..4:{outerClass=Ordinary, innerClasses=Ordinary, innerStyles=Text, innerBreaksExported=false, scriptBaseKind=CompoundBox}
+case=style logical=77.128006 clean=18.680000/6.104000 fragments=2 breaks=0 diagnostics=[]
+  glyph=4450 face=legacy-single-face style=Script size=28.000000 source=14..15 x=0.000000 baseline=0.000000 advance=17.780001 group=null
+  glyph=4283 face=legacy-single-face style=Script size=28.000000 source=15..16 x=18.060001 baseline=0.000000 advance=21.615999 group=null
+  glyph=4451 face=legacy-single-face style=Script size=28.000000 source=16..17 x=39.676003 baseline=0.000000 advance=16.492001 group=null
+  glyph=3356 face=legacy-single-face style=Text size=40.000000 source=18..19 x=57.008007 baseline=0.000000 advance=19.719999 group=null
+  fragment=0/Ordinary source=0..18 width=57.008007 clean=16.212000/6.104000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Ordinary source=18..19 width=19.720001 clean=18.680000/0.000000 kern=0.000000 ic=0.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=TeXMathStyleDeclaration:1..13:{from=Text, to=Script, listRange=1..17},TeXOrdSubMlist:0..18:{outerClass=Ordinary, innerClasses=Ordinary,Binary,Ordinary, innerStyles=Script,Script,Script, innerBreaksExported=false, scriptBaseKind=CompoundBox}
+case=tight logical=76.112175 clean=19.160000/8.764239 fragments=1 breaks=0 diagnostics=[]
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=22.360001 group=null
+  glyph=4434 face=legacy-single-face style=ScriptCramped size=28.000000 source=3..4 x=22.360001 baseline=8.400000 advance=17.219999 group=null
+  glyph=4284 face=legacy-single-face style=ScriptCramped size=28.000000 source=4..5 x=39.580002 baseline=8.400000 advance=21.615999 group=null
+  glyph=4274 face=legacy-single-face style=ScriptCramped size=28.000000 source=5..6 x=61.195999 baseline=8.400000 advance=14.252000 group=null
+  fragment=0/Ordinary source=0..7 width=76.112175 clean=19.160000/8.764239 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=4..5:tight/None,5..6:tight/None
+case=cramped logical=59.062355 clean=37.875999/23.680000 fragments=1 breaks=0 diagnostics=[]
+  glyph=4421 face=legacy-single-face style=Script size=28.000000 source=6..7 x=21.005177 baseline=-23.400000 advance=17.052000 group=null
+  glyph=4450 face=legacy-single-face style=ScriptCramped size=28.000000 source=9..10 x=4.800000 baseline=23.400000 advance=17.780001 group=null
+  glyph=4700 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=12..13 x=22.860001 baseline=14.892000 advance=14.366000 group=null
+  glyph=4701 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=14..15 x=37.776001 baseline=9.348000 advance=14.718000 group=null
+  rule=4.800000,-11.679999,54.262356,-8.960000 source=0..17 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..17 width=59.062355 clean=37.875999/23.680000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=x:ScriptCramped@23.400,y:ScriptScriptCramped@14.892,z:ScriptScriptCramped@9.348
+case=side-script-ink logical=94.748177 clean=60.292004/26.042000 fragments=1 breaks=0 diagnostics=[]
+  glyph=1657 face=legacy-single-face style=Text size=40.000000 source=0..5 x=0.000000 baseline=0.700001 advance=31.760000 group=1
+  glyph=3354 face=legacy-single-face style=TextCramped size=40.000000 source=6..7 x=31.760000 baseline=0.000000 advance=22.360001 group=null
+  glyph=1657 face=legacy-single-face style=Script size=28.000000 source=21..26 x=54.520000 baseline=-32.572006 advance=22.232000 group=2
+  glyph=4452 face=legacy-single-face style=ScriptCramped size=28.000000 source=27..28 x=76.751999 baseline=-32.460003 advance=16.351999 group=null
+  glyph=1657 face=legacy-single-face style=ScriptCramped size=28.000000 source=10..15 x=54.520000 baseline=18.622000 advance=22.232000 group=3
+  glyph=4451 face=legacy-single-face style=ScriptCramped size=28.000000 source=16..17 x=76.751999 baseline=15.779999 advance=16.492001 group=null
+  rule=33.160000,-36.180000,54.520000,-33.459999 source=0..5 group=1 role=MathRule layer=Foreground line=null
+  rule=77.732002,-58.388004,93.384003,-56.484005 source=21..26 group=2 role=MathRule layer=Foreground line=null
+  rule=77.732002,-7.194000,94.084000,-5.290001 source=10..15 group=3 role=MathRule layer=Foreground line=null
+  construction=1/Radical/BaseGlyph face=legacy-single-face source=0..5 policy=RequireOutlineUnion
+  construction=2/Radical/BaseGlyph face=legacy-single-face source=21..26 policy=RequireOutlineUnion
+  construction=3/Radical/BaseGlyph face=legacy-single-face source=10..15 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..30 width=94.748177 clean=60.292004/26.042000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=policy=XeTeXNativeGlyphOutlineOrCompletedChildBoxForOrdinarySideScripts/ExactOutlinePlacementWithCompletedChildBoxes kinds=CompoundBox/CompoundBox/CompoundBox base=38.9/11.299999:-38.9/11.299999 sup=27.832/7.3079987:-27.832/7.3079987 sub=24.877998/10.262001:-24.877998/10.262001 shifts=32.460003/15.779999 gap=16.054005/16.054005
+case=script-binomial logical=55.942001 clean=37.875999/43.694168 fragments=1 breaks=0 diagnostics=[]
+  glyph=4421 face=legacy-single-face style=Script size=28.000000 source=6..7 x=19.445000 baseline=-23.400000 advance=17.052000 group=null
+  glyph=1301 face=legacy-single-face style=Text size=40.000000 source=9..21 x=4.800000 baseline=27.464001 advance=15.240000 group=null
+  glyph=4686 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=16..17 x=20.039999 baseline=13.824001 advance=15.862000 group=null
+  glyph=4683 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=19..20 x=20.358999 baseline=43.363998 advance=15.224000 group=null
+  glyph=1313 face=legacy-single-face style=Text size=40.000000 source=9..21 x=35.902000 baseline=27.464001 advance=15.240000 group=null
+  rule=4.800000,-11.679999,51.142002,-8.960000 source=0..22 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..22 width=55.942001 clean=37.875999/43.694168 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=left:1064/Variant/LaTeX2eXeTeXGenfracFixedStyleTarget/Text/1.45*28.000=40.600/47.480,right:1065/Variant/LaTeX2eXeTeXGenfracFixedStyleTarget/Text/1.45*28.000=40.600/47.480 packing=15.240/31.102/46.342/TeXFractionNullDelimiterCancellationNoInkCollisionKern
+case=operator-inline logical=140.825684 clean=41.615997/15.012000 fragments=3 breaks=0 diagnostics=[]
+  glyph=1646 face=legacy-single-face style=Text size=40.000000 source=0..4 x=0.000000 baseline=0.360001 advance=37.439999 group=null
+  glyph=4437 face=legacy-single-face style=Script size=28.000000 source=7..8 x=37.440002 baseline=-24.480000 advance=18.312000 group=null
+  glyph=4430 face=legacy-single-face style=ScriptCramped size=28.000000 source=5..6 x=37.440002 baseline=14.760000 advance=9.128000 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=8..9 x=63.082848 baseline=0.000000 advance=28.799999 group=null
+  glyph=1698 face=legacy-single-face style=Text size=40.000000 source=9..13 x=98.549515 baseline=-0.299999 advance=27.360001 group=null
+  glyph=4274 face=legacy-single-face style=Script size=28.000000 source=16..17 x=125.909515 baseline=-22.939999 advance=14.252000 group=null
+  glyph=4273 face=legacy-single-face style=ScriptCramped size=28.000000 source=14..15 x=116.709518 baseline=13.220001 advance=16.240000 group=null
+  fragment=0/Operator source=0..8 width=56.416180 clean=38.956001/15.012000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=8..9 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=2/Operator source=9..17 width=42.276176 clean=41.615997/13.584002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=op:sum/Text/BaseGlyph/0.000/41.200/axis=-10.320/ic=0.000/MathItalicsCorrectionInfo,policy:sum/Auto->NoLimits/auto-non-display,side:sum/Text,op:integral/Text/BaseGlyph/0.000/38.120/axis=-10.320/ic=9.200/MathItalicsCorrectionInfo,policy:integral/NoLimits->NoLimits/plain-tex-operator-default,side:integral/Text
+case=operator-display logical=127.893333 clean=93.916000/69.763992 fragments=3 breaks=0 diagnostics=[]
+  glyph=1647 face=legacy-single-face style=Display size=40.000000 source=0..4 x=0.000000 baseline=-0.059999 advance=44.480000 group=null
+  glyph=4437 face=legacy-single-face style=Script size=28.000000 source=7..8 x=13.084000 baseline=-48.820000 advance=18.312000 group=null
+  glyph=4430 face=legacy-single-face style=ScriptCramped size=28.000000 source=5..6 x=17.395996 baseline=42.980000 advance=9.128000 group=null
+  glyph=1196 face=legacy-single-face style=Display size=40.000000 source=8..9 x=51.146667 baseline=0.000000 advance=28.799999 group=null
+  glyph=1699 face=legacy-single-face style=Display size=40.000000 source=9..13 x=86.613335 baseline=-0.080000 advance=41.279999 group=null
+  glyph=4274 face=legacy-single-face style=Script size=28.000000 source=23..24 x=110.927338 baseline=-69.239998 advance=14.252000 group=null
+  glyph=4273 face=legacy-single-face style=ScriptCramped size=28.000000 source=21..22 x=88.333328 baseline=63.399998 advance=16.240000 group=null
+  fragment=0/Operator source=0..8 width=44.480000 clean=69.296005/49.231998 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=8..9 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=2/Operator source=9..24 width=41.279999 clean=93.916000/69.763992 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=op:sum/Display/Variant/72.000/53.040/axis=-10.320/ic=0.000/MathItalicsCorrectionInfo,policy:sum/Auto->Limits/auto-display,limits:11.720/12.000/6.668/26.800,op:integral/Display/Variant/72.000/93.880/axis=-10.320/ic=21.600/MathItalicsCorrectionInfo,policy:integral/Limits->Limits/explicit-postfix-modifier,limits:12.000/12.000/8.068/26.800
+case=operator-limit-skew logical=131.852020 clean=96.379997/75.615997 fragments=1 breaks=0 diagnostics=[]
+  glyph=1699 face=legacy-single-face style=Display size=40.000000 source=0..4 x=45.286011 baseline=-0.080000 advance=41.279999 group=null
+  glyph=4421 face=legacy-single-face style=Script size=28.000000 source=24..25 x=10.800000 baseline=-69.239998 advance=17.052000 group=null
+  glyph=4422 face=legacy-single-face style=Script size=28.000000 source=25..26 x=27.852001 baseline=-69.239998 advance=16.576000 group=null
+  glyph=4423 face=legacy-single-face style=Script size=28.000000 source=26..27 x=44.428005 baseline=-69.239998 advance=13.440000 group=null
+  glyph=4424 face=legacy-single-face style=Script size=28.000000 source=27..28 x=57.868008 baseline=-69.239998 advance=17.024000 group=null
+  glyph=4425 face=legacy-single-face style=Script size=28.000000 source=28..29 x=75.452011 baseline=-69.239998 advance=13.524000 group=null
+  glyph=4426 face=legacy-single-face style=Script size=28.000000 source=29..30 x=88.976013 baseline=-69.239998 advance=19.152000 group=null
+  glyph=4427 face=legacy-single-face style=Script size=28.000000 source=30..31 x=108.408020 baseline=-69.239998 advance=16.212000 group=null
+  glyph=4429 face=legacy-single-face style=Script size=28.000000 source=31..32 x=124.620026 baseline=-69.239998 advance=18.032000 group=null
+  glyph=4421 face=legacy-single-face style=ScriptCramped size=28.000000 source=13..14 x=-10.800000 baseline=63.399998 advance=17.052000 group=null
+  glyph=4422 face=legacy-single-face style=ScriptCramped size=28.000000 source=14..15 x=6.252002 baseline=63.399998 advance=16.576000 group=null
+  glyph=4423 face=legacy-single-face style=ScriptCramped size=28.000000 source=15..16 x=22.828007 baseline=63.399998 advance=13.440000 group=null
+  glyph=4424 face=legacy-single-face style=ScriptCramped size=28.000000 source=16..17 x=36.268009 baseline=63.399998 advance=17.024000 group=null
+  glyph=4425 face=legacy-single-face style=ScriptCramped size=28.000000 source=17..18 x=53.852009 baseline=63.399998 advance=13.524000 group=null
+  glyph=4426 face=legacy-single-face style=ScriptCramped size=28.000000 source=18..19 x=67.376007 baseline=63.399998 advance=19.152000 group=null
+  glyph=4427 face=legacy-single-face style=ScriptCramped size=28.000000 source=19..20 x=86.808014 baseline=63.399998 advance=16.212000 group=null
+  glyph=4429 face=legacy-single-face style=ScriptCramped size=28.000000 source=20..21 x=103.020020 baseline=63.399998 advance=18.032000 group=null
+  fragment=0/Operator source=0..33 width=131.852020 clean=96.379997/75.615997 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=policy=max-unskewed-operator-and-limits widths=41.280/131.852/131.852 x=45.286/10.800/-10.800 ic=21.600
+case=radical-inline logical=137.775940 clean=43.153999/7.046001 fragments=1 breaks=0 diagnostics=[]
+  glyph=1657 face=legacy-single-face style=Text size=40.000000 source=0..5 x=1.542000 baseline=-3.553997 advance=31.760000 group=1
+  glyph=3354 face=legacy-single-face style=TextCramped size=40.000000 source=9..10 x=33.302002 baseline=0.000000 advance=22.360001 group=null
+  glyph=4275 face=legacy-single-face style=ScriptCramped size=28.000000 source=11..12 x=56.062000 baseline=-10.080000 advance=14.672000 group=null
+  glyph=1196 face=legacy-single-face style=TextCramped size=40.000000 source=12..13 x=80.287064 baseline=0.000000 advance=28.799999 group=null
+  glyph=1138 face=legacy-single-face style=TextCramped size=40.000000 source=13..14 x=117.975952 baseline=0.000000 advance=19.799999 group=null
+  glyph=4525 face=legacy-single-face style=ScriptScript size=22.000000 source=6..7 x=2.600000 baseline=-19.859400 advance=12.342000 group=null
+  rule=34.702000,-40.433998,137.775940,-37.713997 source=0..5 group=1 role=MathRule layer=Foreground line=null
+  construction=1/Radical/BaseGlyph face=legacy-single-face source=0..5 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..15 width=137.775940 clean=43.153999/7.046001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=noad:0..15/Text/TextCramped/ScriptScript/CompoundBox,construction:BaseGlyph/NormalGlyphHeight/TeXCleanBoxHeightPlusGapAndRule/clean=28.868+1.5999999/base=true/36.588/47.480/1657/0.0,geometry:XeTeXMakeRadicalCleanBoxNominalDelimiterAndOverbar/3.400/excess=10.892/8.846/MinimumGapPlusHalfPositiveConstructionExcess/2.720/extra=3.120/false/delimiter=2.72+44.76@-37.713997/rule=-40.434..-37.713997/2.600/-13.400/horizontal=TeXMakeRadicalSignedBeforeAndWidthPlusBeforeAfterClamp/used=2.6/lower=-14.941999/after=-13.400/x=2.6/1.5419998/55/raise=36.107998(43.154+7.0460014)/UnindexedRadicalBoxHeightMinusDepth/19.8594/bottom=-17.8594/B=43.154/7.046/degreeBaseline=-19.8594/137.776/seam=Available(GlyphOutlineCrossSection)/GlyphOutlineCrossSection/-36.880/-34.160/33.160->34.702/advance=31.760/bounds=[Outline]/logical=MeasuredMathRunLogicalWidthIndependentOfBoundsSource
+case=radical-display logical=146.097794 clean=68.599998/49.800003 fragments=1 breaks=0 diagnostics=[]
+  glyph=1660 face=legacy-single-face style=Display size=40.000000 source=0..5 x=0.000000 baseline=39.159996 advance=46.799999 group=2
+  glyph=3326 face=legacy-single-face style=TextCramped size=40.000000 source=12..13 x=51.599998 baseline=-25.600000 advance=22.200001 group=null
+  glyph=1196 face=legacy-single-face style=TextCramped size=40.000000 source=13..14 x=82.688889 baseline=-25.600000 advance=28.799999 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=14..15 x=120.377792 baseline=-25.600000 advance=20.719999 group=null
+  glyph=1657 face=legacy-single-face style=TextCramped size=40.000000 source=17..22 x=69.188889 baseline=36.640003 advance=31.760000 group=1
+  glyph=3354 face=legacy-single-face style=TextCramped size=40.000000 source=23..24 x=100.948891 baseline=35.940002 advance=22.360001 group=null
+  rule=102.348892,-0.239998,123.708893,2.480003 source=17..22 group=1 role=MathRule layer=Foreground line=null
+  rule=51.599998,-11.679999,141.297791,-8.960000 source=6..26 group=null role=MathRule layer=Foreground line=null
+  rule=48.200001,-65.879997,146.097794,-63.159996 source=0..5 group=2 role=MathRule layer=Foreground line=null
+  construction=2/Radical/Variant face=legacy-single-face source=0..5 policy=RequireOutlineUnion
+  construction=1/Radical/BaseGlyph face=legacy-single-face source=17..22 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..27 width=146.097794 clean=68.599998/49.800003 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=noad:17..25/TextCramped/TextCramped/null/CompoundBox,construction:BaseGlyph/NormalGlyphHeight/TeXCleanBoxHeightPlusGapAndRule/clean=19.16+0.39999998/base=true/25.680/47.480/1657/0.0,geometry:XeTeXMakeRadicalCleanBoxNominalDelimiterAndOverbar/3.400/excess=21.800/14.300/MinimumGapPlusHalfPositiveConstructionExcess/2.720/extra=3.120/false/delimiter=2.72+44.76@-33.46/rule=-36.18..-33.46/0.000/0.000/horizontal=null/used=null/lower=null/after=0.000/x=null/0.0/55/raise=null(null+null)/null/null/bottom=null/B=38.900/11.300/degreeBaseline=null/54.520/seam=Available(GlyphOutlineCrossSection)/GlyphOutlineCrossSection/-36.880/-34.160/33.160->33.160/advance=31.760/bounds=[Outline]/logical=MeasuredMathRunLogicalWidthIndependentOfBoundsSource,noad:0..27/Display/DisplayCramped/null/CompoundBox,construction:Variant/MathGlyphVariantRecord/TeXCleanBoxHeightPlusGapAndRule/clean=53.8+47.24/base=false/110.560/115.680/1660/0.0,geometry:XeTeXMakeRadicalCleanBoxNominalDelimiterAndOverbar/6.800/excess=5.120/9.360/MinimumGapPlusHalfPositiveConstructionExcess/2.720/extra=3.120/false/delimiter=2.72+112.96@-63.159996/rule=-65.88..-63.159996/0.000/0.000/horizontal=null/used=null/lower=null/after=0.000/x=null/0.0/55/raise=null(null+null)/null/null/bottom=null/B=68.600/49.800/degreeBaseline=null/146.098/seam=Available(GlyphOutlineCrossSection)/GlyphOutlineCrossSection/-105.040/-102.320/48.200->48.200/advance=46.800/bounds=[Outline]/logical=MeasuredMathRunLogicalWidthIndependentOfBoundsSource
+case=content-delimiters logical=92.976006 clean=44.288002/23.792000 fragments=1 breaks=0 diagnostics=[]
+  glyph=2495 face=legacy-single-face style=Text size=40.000000 source=0..12 x=0.000000 baseline=0.480001 advance=16.959999 group=1
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=13..14 x=16.959999 baseline=0.000000 advance=22.200001 group=null
+  glyph=1062 face=legacy-single-face style=Text size=40.000000 source=14..22 x=39.160000 baseline=11.614913 advance=10.680000 group=2
+  glyph=1062 face=legacy-single-face style=Text size=40.000000 source=14..22 x=39.160000 baseline=-12.814915 advance=10.680000 group=2
+  glyph=4422 face=legacy-single-face style=Script size=28.000000 source=28..29 x=54.639999 baseline=-23.400000 advance=16.576000 group=null
+  glyph=4423 face=legacy-single-face style=ScriptCramped size=28.000000 source=31..32 x=56.208000 baseline=23.400000 advance=13.440000 group=null
+  glyph=2500 face=legacy-single-face style=Text size=40.000000 source=33..46 x=76.016006 baseline=0.480001 advance=16.959999 group=3
+  rule=54.639999,-11.679999,71.216003,-8.960000 source=22..33 group=null role=MathRule layer=Foreground line=null
+  construction=1/Delimiter/Variant face=legacy-single-face source=0..12 policy=RequireOutlineUnion
+  construction=2/Delimiter/Assembly face=legacy-single-face source=14..22 policy=RequireOutlineUnion
+  construction=3/Delimiter/Variant face=legacy-single-face source=33..46 policy=RequireOutlineUnion
+  fragment=0/Inner source=0..46 width=92.976006 clean=44.288002/23.792000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=group=44.288002+23.792/axis=10.32/targets=61.469826,48.224->61.469826/UnbreakableContentDrivenFencedInnerNoad Left:\langle/U+27E8/Variant/2495@0.0/66.68/0.48000145/16.96/ReplayableOutlineUnion,Middle:|/U+007C/Assembly/1062,1062@-8.8,-33.229828/61.469826/20.414913/10.68/ReplayableOutlineUnion,Right:\rangle/U+27E9/Variant/2500@0.0/66.68/0.48000145/16.96/ReplayableOutlineUnion
+case=fixed-delimiters logical=274.355530 clean=66.239998/45.599998 fragments=11 breaks=2 diagnostics=[]
+  glyph=1301 face=legacy-single-face style=Text size=40.000000 source=0..6 x=0.000000 baseline=0.480000 advance=15.240000 group=1
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=6..7 x=15.240000 baseline=0.000000 advance=22.360001 group=null
+  glyph=1313 face=legacy-single-face style=Text size=40.000000 source=7..13 x=38.000000 baseline=0.480000 advance=15.240000 group=2
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=13..14 x=62.128887 baseline=0.000000 advance=28.799999 group=null
+  glyph=1327 face=legacy-single-face style=Text size=40.000000 source=14..20 x=99.817780 baseline=0.480001 advance=16.360001 group=3
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=20..21 x=116.177780 baseline=0.000000 advance=22.360001 group=null
+  glyph=1339 face=legacy-single-face style=Text size=40.000000 source=21..27 x=138.937775 baseline=0.480001 advance=16.360001 group=4
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=27..28 x=164.186661 baseline=0.000000 advance=28.799999 group=null
+  glyph=4822 face=legacy-single-face style=Text size=40.000000 source=28..41 x=201.875549 baseline=40.063915 advance=20.920000 group=5
+  glyph=4822 face=legacy-single-face style=Text size=40.000000 source=28..41 x=201.875549 baseline=23.251959 advance=20.920000 group=5
+  glyph=4822 face=legacy-single-face style=Text size=40.000000 source=28..41 x=201.875549 baseline=6.440002 advance=20.920000 group=5
+  glyph=4822 face=legacy-single-face style=Text size=40.000000 source=28..41 x=201.875549 baseline=-10.371960 advance=20.920000 group=5
+  glyph=1508 face=legacy-single-face style=Text size=40.000000 source=28..41 x=201.875549 baseline=-33.583912 advance=20.920000 group=5
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=42..43 x=222.795547 baseline=0.000000 advance=22.360001 group=null
+  glyph=1580 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=33.663918 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=14.697941 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=6.291962 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=-2.114014 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=-10.519993 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=-18.925968 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=-27.331944 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=-35.737919 advance=28.799999 group=6
+  glyph=1578 face=legacy-single-face style=Text size=40.000000 source=43..58 x=245.555542 baseline=-44.143894 advance=28.799999 group=6
+  construction=1/Delimiter/Variant face=legacy-single-face source=0..6 policy=RequireOutlineUnion
+  construction=2/Delimiter/Variant face=legacy-single-face source=7..13 policy=RequireOutlineUnion
+  construction=3/Delimiter/Variant face=legacy-single-face source=14..20 policy=RequireOutlineUnion
+  construction=4/Delimiter/Variant face=legacy-single-face source=21..27 policy=RequireOutlineUnion
+  construction=5/Delimiter/Assembly face=legacy-single-face source=28..41 policy=RequireOutlineUnion
+  construction=6/Delimiter/Assembly face=legacy-single-face source=43..58 policy=RequireOutlineUnion
+  fragment=0/Opening source=0..6 width=15.240000 clean=34.040001/13.400001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Ordinary source=6..7 width=22.360001 clean=19.160000/0.400000 kern=0.000000 ic=0.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=2/Closing source=7..13 width=15.240000 clean=34.040001/13.400001 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=3/Binary source=13..14 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=4/Opening source=14..20 width=16.360001 clean=43.872002/23.232002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=5/Ordinary source=20..21 width=22.360001 clean=19.160000/0.400000 kern=0.000000 ic=0.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=6/Closing source=21..27 width=16.360001 clean=43.872002/23.232002 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=7/Binary source=27..28 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=8/Ordinary source=28..41 width=20.920000 clean=66.239998/45.599998 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=9/Ordinary source=42..43 width=22.360001 clean=19.160000/0.400000 kern=0.000000 ic=0.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=10/Ordinary source=43..58 width=28.799999 clean=66.239998/45.599998 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=14, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=7, sourceOffset=28, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=Opening:(/Big/Variant/1301@0.0/44.736->40.307137/15.24/ReplayableOutlineUnion,Closing:)/Big/Variant/1313@0.0/44.736->40.307137/15.24/ReplayableOutlineUnion,Opening:[/BigCapital/Variant/1327@0.0/67.104004->60.46071/16.36/ReplayableOutlineUnion,Closing:]/BigCapital/Variant/1339@0.0/67.104004->60.46071/16.36/ReplayableOutlineUnion,Ordinary:\uparrow/BiggCapital/Assembly/4822,4822,4822,4822,1508@-0.0,-16.811956,-33.623913,-50.435875,-73.64783/111.84->100.76784/20.92/ReplayableOutlineUnion,Ordinary:\Downarrow/BiggCapital/Assembly/1580,1578,1578,1578,1578,1578,1578,1578,1578@-6.3999996,-25.365974,-33.771954,-42.17793,-50.583908,-58.989883,-67.39586,-75.801834,-84.20781/111.84->100.76784/28.8/ReplayableOutlineUnion noads=Text:29.44+7.8399997/44.736*1.0/32.688+12.048/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.44+7.8399997/44.736*1.0/32.688+12.048/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.44+7.8399997/44.736*1.5/43.872+23.232002/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.44+7.8399997/44.736*1.5/43.872+23.232002/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.44+7.8399997/44.736*2.5/66.24+45.6/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall,Text:29.44+7.8399997/44.736*2.5/66.24+45.6/AmsmathFixedVCenterThenXeTeXDelimiterFactorShortfall
+case=extensible-arrow logical=154.447998 clean=51.400169/33.164238 fragments=3 breaks=1 diagnostics=[]
+  glyph=3323 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=25.480000 group=null
+  glyph=1197 face=legacy-single-face style=Display size=40.000000 source=1..13 x=39.791111 baseline=0.000000 advance=28.799999 group=1
+  glyph=1197 face=legacy-single-face style=Display size=40.000000 source=1..13 x=58.264000 baseline=0.000000 advance=28.799999 group=1
+  glyph=1510 face=legacy-single-face style=Display size=40.000000 source=1..13 x=76.736893 baseline=0.000000 advance=37.919998 group=1
+  glyph=4439 face=legacy-single-face style=Script size=28.000000 source=19..20 x=58.462578 baseline=-30.924168 advance=16.968000 group=null
+  glyph=4683 face=legacy-single-face style=ScriptScriptCramped size=22.000000 source=21..22 x=75.430573 baseline=-24.090168 advance=15.224000 group=null
+  glyph=4434 face=legacy-single-face style=ScriptCramped size=28.000000 source=14..15 x=48.346664 baseline=26.799999 advance=17.219999 group=null
+  glyph=4284 face=legacy-single-face style=ScriptCramped size=28.000000 source=15..16 x=65.566666 baseline=26.799999 advance=21.615999 group=null
+  glyph=4274 face=legacy-single-face style=ScriptCramped size=28.000000 source=16..17 x=87.182663 baseline=26.799999 advance=14.252000 group=null
+  glyph=3324 face=legacy-single-face style=Text size=40.000000 source=23..24 x=125.768005 baseline=0.000000 advance=24.280001 group=null
+  construction=1/ExtensibleArrow/Assembly face=legacy-single-face source=1..13 policy=RequireOutlineUnion
+  fragment=0/Ordinary source=0..1 width=25.480000 clean=26.280001/0.000000 kern=0.000000 ic=3.200000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=1/Relation source=1..23 width=74.865776 clean=51.400169/33.164238 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=2/Ordinary source=23..24 width=24.280001 clean=26.280001/0.000000 kern=0.000000 ic=4.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=23, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation), priority=Relation, operatorStaysOnPreviousLine=true)
+  evidence=Right/head=1510/relbar=1197/leaders=1@18.47289/AmsmathArrowfillCLeadersRelbar/target=74.866/up=30.924168/down=26.8/outer=6.0,6.0/box=74.865776,51.40017,33.164238
+case=over-under logical=232.191116 clean=48.276001/33.591999 fragments=7 breaks=3 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=22.200001 group=null
+  glyph=1202 face=legacy-single-face style=Text size=40.000000 source=13..14 x=33.311111 baseline=0.000000 advance=28.799999 group=null
+  glyph=4444 face=legacy-single-face style=Script size=28.000000 source=10..11 x=38.751114 baseline=-27.799999 advance=17.920000 group=null
+  glyph=3327 face=legacy-single-face style=Text size=40.000000 source=15..16 x=73.222229 baseline=0.000000 advance=20.719999 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=16..17 x=103.031113 baseline=0.000000 advance=28.799999 group=null
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=30..31 x=140.720001 baseline=0.000000 advance=22.360001 group=null
+  glyph=4424 face=legacy-single-face style=ScriptCramped size=28.000000 source=27..28 x=143.307999 baseline=27.199999 advance=17.024000 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=32..33 x=163.479996 baseline=0.000000 advance=28.799999 group=null
+  glyph=1202 face=legacy-single-face style=Text size=40.000000 source=46..47 x=203.391113 baseline=0.000000 advance=28.799999 group=null
+  glyph=4442 face=legacy-single-face style=Script size=28.000000 source=43..44 x=211.351105 baseline=-27.799999 advance=12.880000 group=null
+  fragment=0/Ordinary source=0..1 width=22.200001 clean=19.160000/0.480000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=1/Relation source=1..15 width=28.800003 clean=48.247997/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=2/Ordinary source=15..16 width=20.720001 clean=28.199999/0.480000 kern=0.000000 ic=0.200000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=3/Binary source=16..17 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=4/Ordinary source=17..32 width=22.760000 clean=19.160000/33.591999 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=5/Ordinary source=32..33 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=6/Relation source=33..48 width=28.800003 clean=48.276001/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=15, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation), priority=Relation, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=17, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=6, sourceOffset=48, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None), priority=Relation, operatorStaysOnPreviousLine=true)
+  evidence=Overset/Relation/Script/11.719999/null/28.800003/OpenTypeMathUpperLowerLimitConstants,Underset/Ordinary/ScriptCramped/null/5.9119987/22.76/OpenTypeMathUpperLowerLimitConstants,StackRel/Relation/Script/11.635999/null/28.800003/OpenTypeMathUpperLowerLimitConstants
+case=common-fractions logical=166.857788 clean=57.680000/26.080000 fragments=3 breaks=1 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=7..8 x=4.800000 baseline=-25.600000 advance=22.200001 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=10..11 x=5.439999 baseline=25.600000 advance=20.719999 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=12..13 x=40.688889 baseline=0.000000 advance=28.799999 group=null
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=23..24 x=83.177780 baseline=-29.680000 advance=22.360001 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=26..27 x=83.177780 baseline=25.600000 advance=20.719999 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=27..28 x=104.097778 baseline=25.600000 advance=20.719999 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=28..29 x=125.017776 baseline=25.600000 advance=20.719999 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=29..30 x=145.937775 baseline=25.600000 advance=20.719999 group=null
+  rule=4.800000,-11.679999,27.000000,-8.960000 source=0..12 group=null role=MathRule layer=Foreground line=null
+  rule=83.177780,-11.679999,166.857788,-8.960000 source=13..31 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..12 width=31.799999 clean=44.760002/26.080000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=12..13 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=13..31 width=88.480011 clean=57.680000/26.080000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=13, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=TeXFractionNullDelimiters:{leftSpacePx=4.7999997, rightSpacePx=4.7999997, parameter=nullDelimiterSpacePx, styleInvariant=true, rightSpacePolicy=TeXFractionNullDelimiterSpace},TeXFractionCommand:{origin=DisplayFraction, commandRange=SourceRange(start=0, endExclusive=6), outerStyle=Text, fractionStyle=Display, styleOverride=Display, numeratorAlignment=Center, alignmentRange=null, numeratorStrut=false, retainRightNullDelimiterSpace=true},AmsmathContinuedFractionNumeratorStrut:{style=Display, fontSizePx=40.0, strutAscentEm=0.7, strutDescentEm=0.3, minimumAscentPx=28.0, minimumDescentPx=12.0, inputAscentPx=19.16, inputDescentPx=0.39999998, outputAscentPx=28.0, outputDescentPx=12.0, policy=AmsmathCfracTextSizeStrut},TeXFractionNullDelimiters:{leftSpacePx=4.7999997, rightSpacePx=0.0, parameter=nullDelimiterSpacePx, styleInvariant=true, rightSpacePolicy=AmsmathCfracTrailingNullDelimiterSpaceCancellation},TeXFractionCommand:{origin=ContinuedFraction, commandRange=SourceRange(start=13, endExclusive=19), outerStyle=Text, fractionStyle=Display, styleOverride=Display, numeratorAlignment=Left, alignmentRange=SourceRange(start=19, endExclusive=22), numeratorStrut=true, retainRightNullDelimiterSpace=false}
+case=primitive-mathop logical=202.388626 clean=58.996002/41.963997 fragments=3 breaks=0 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=8..9 x=0.000000 baseline=0.000000 advance=22.200001 group=null
+  glyph=3327 face=legacy-single-face style=Text size=40.000000 source=9..10 x=22.200001 baseline=0.000000 advance=20.719999 group=null
+  glyph=3328 face=legacy-single-face style=Text size=40.000000 source=10..11 x=43.120003 baseline=0.000000 advance=16.559999 group=null
+  glyph=4274 face=legacy-single-face style=Script size=28.000000 source=15..16 x=59.680000 baseline=-21.759998 advance=14.252000 group=null
+  glyph=4273 face=legacy-single-face style=ScriptCramped size=28.000000 source=13..14 x=59.680000 baseline=8.400000 advance=16.240000 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=16..17 x=83.250839 baseline=0.000000 advance=28.799999 group=null
+  glyph=3354 face=legacy-single-face style=Display size=40.000000 source=39..40 x=112.050842 baseline=0.000000 advance=22.360001 group=null
+  glyph=1196 face=legacy-single-face style=Display size=40.000000 source=40..41 x=143.699738 baseline=0.000000 advance=28.799999 group=null
+  glyph=3355 face=legacy-single-face style=Display size=40.000000 source=41..42 x=181.388626 baseline=0.000000 advance=20.400000 group=null
+  glyph=4274 face=legacy-single-face style=Script size=28.000000 source=46..47 x=150.093735 baseline=-34.320000 advance=14.252000 group=null
+  glyph=4273 face=legacy-single-face style=ScriptCramped size=28.000000 source=44..45 x=149.099731 baseline=35.599998 advance=16.240000 group=null
+  fragment=0/Operator source=0..16 width=76.584175 clean=40.435997/8.764000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=16..17 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=2/Ordinary source=17..48 width=90.337784 clean=58.996002/41.963997 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=TeXMathOperatorNoad:{commandRange=SourceRange(start=0, endExclusive=7), nucleusRange=SourceRange(start=7, endExclusive=12), limitsPolicy=Auto, limitsPolicyExplicit=false, modifierRange=null, atomClass=Operator, nucleusPolicy=XeTeXCleanBoxSubMlistCurrentStyle, italicCorrectionPx=0.0},TeXOperatorLimitsPolicy:{identity=mathop, declaredPolicy=Auto, effectivePolicy=NoLimits, explicit=false, modifierRange=null, style=Text, reason=auto-non-display, upperPresent=true, lowerPresent=true},TeXMathOperatorNoad:{commandRange=SourceRange(start=31, endExclusive=38), nucleusRange=SourceRange(start=38, endExclusive=43), limitsPolicy=Auto, limitsPolicyExplicit=false, modifierRange=null, atomClass=Operator, nucleusPolicy=XeTeXCleanBoxSubMlistCurrentStyle, italicCorrectionPx=0.0},TeXOperatorLimitsPolicy:{identity=mathop, declaredPolicy=Auto, effectivePolicy=Limits, explicit=false, modifierRange=null, style=Display, reason=auto-display, upperPresent=true, lowerPresent=true},OpenTypeMathOperatorLimits:{style=Display, upperStyle=Script, lowerStyle=ScriptCramped, upperLimitGapMinPx=5.4, upperLimitBaselineRiseMinPx=12.0, lowerLimitGapMinPx=5.4, lowerLimitBaselineDropMinPx=26.8, upperOuterPaddingPx=6.0, lowerOuterPaddingPx=6.0, outerLimitPaddingPolicy=XeTeXBigOpSpacing5FromOpenTypeMATHStackGapMin, upperShiftPx=34.32, lowerShiftPx=35.6, actualUpperGapPx=11.999998, actualUpperBaselineRisePx=11.999998, actualLowerGapPx=8.067999, actualLowerBaselineDropPx=26.8, operatorItalicCorrectionPx=0.0, upperCenterOffsetPx=0.0, lowerCenterOffsetPx=-0.0, logicalWidthPx=90.33778, logicalWidthPolicy=max-unskewed-operator-and-limits, operatorWidthPx=90.33778, upperWidthPx=14.252, lowerWidthPx=16.240005, operatorX=0.0, upperX=38.042892, lowerX=37.04889}
+case=growing-braces logical=418.462219 clean=80.276001/53.964237 fragments=3 breaks=0 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=TextCramped size=40.000000 source=11..12 x=0.000000 baseline=0.000000 advance=22.200001 group=null
+  glyph=1196 face=legacy-single-face style=TextCramped size=40.000000 source=12..13 x=31.088890 baseline=0.000000 advance=28.799999 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=13..14 x=68.777786 baseline=0.000000 advance=20.719999 group=null
+  glyph=1196 face=legacy-single-face style=TextCramped size=40.000000 source=14..15 x=98.586670 baseline=0.000000 advance=28.799999 group=null
+  glyph=3328 face=legacy-single-face style=TextCramped size=40.000000 source=15..16 x=136.275558 baseline=0.000000 advance=16.559999 group=null
+  glyph=1196 face=legacy-single-face style=TextCramped size=40.000000 source=16..17 x=161.724442 baseline=0.000000 advance=28.799999 group=null
+  glyph=3329 face=legacy-single-face style=TextCramped size=40.000000 source=17..18 x=199.413330 baseline=0.000000 advance=22.240000 group=null
+  glyph=1196 face=legacy-single-face style=TextCramped size=40.000000 source=18..19 x=231.342224 baseline=0.000000 advance=28.799999 group=null
+  glyph=3330 face=legacy-single-face style=TextCramped size=40.000000 source=19..20 x=269.031097 baseline=0.000000 advance=16.959999 group=null
+  glyph=2106 face=legacy-single-face style=Text size=40.000000 source=0..10 x=0.000000 baseline=-8.999998 advance=38.240002 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=32.757423 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=55.050983 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=77.344543 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=99.638115 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2107 face=legacy-single-face style=Text size=40.000000 source=0..10 x=124.155548 baseline=-8.999998 advance=37.680000 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=156.352966 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=178.646530 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=200.940079 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2073 face=legacy-single-face style=Text size=40.000000 source=0..10 x=223.233627 baseline=-8.999998 advance=30.000000 group=1
+  glyph=2108 face=legacy-single-face style=Text size=40.000000 source=0..10 x=247.751068 baseline=-8.999998 advance=38.240002 group=1
+  glyph=4437 face=legacy-single-face style=Script size=28.000000 source=23..24 x=133.839539 baseline=-59.800003 advance=18.312000 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=25..26 x=292.657745 baseline=0.000000 advance=28.799999 group=null
+  glyph=3354 face=legacy-single-face style=TextCramped size=40.000000 source=38..39 x=328.124420 baseline=0.000000 advance=22.360001 group=null
+  glyph=1196 face=legacy-single-face style=TextCramped size=40.000000 source=39..40 x=359.773315 baseline=0.000000 advance=28.799999 group=null
+  glyph=3355 face=legacy-single-face style=TextCramped size=40.000000 source=40..41 x=397.462219 baseline=0.000000 advance=20.400000 group=null
+  glyph=2121 face=legacy-single-face style=Text size=40.000000 source=26..37 x=329.673309 baseline=8.800000 advance=87.199997 group=null
+  glyph=4434 face=legacy-single-face style=ScriptCramped size=28.000000 source=44..45 x=364.683319 baseline=47.599998 advance=17.219999 group=null
+  construction=1/Accent/Assembly face=legacy-single-face source=0..10 policy=RequireOutlineUnion
+  fragment=0/Operator source=0..25 width=285.991089 clean=80.276001/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=1/Ordinary source=25..26 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=6.666667, maximumPx=6.666667, shrinkPx=0.0, stretchPx=0.0, priority=Other)
+  fragment=2/Operator source=26..46 width=90.337784 clean=22.320002/53.964237 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  evidence=OpenTypeMathAccent:{identity=overbrace, wide=true, placement=Top, style=Text, nucleusStyle=TextCramped, nucleusBoxPolicy=XeTeXNativeGlyphOutlineOrCompletedChildBox, baseWidthPx=285.9911, baseInkAscentPx=30.0, baseCleanAscentPx=28.199999, accentBaseHeightPx=19.2, verticalPlacementPolicy=XeTeXMakeMathAccentMinCleanBoxHeightAndAccentBaseHeight, flattenedAccentBaseHeightPx=26.24, baseAttachmentPx=142.99554, baseAttachmentPolicy=CompoundBoxLogicalCenter, baseAttachmentIgnoredDeviceAdjustment=null, accentAttachmentPx=142.99554, accentAttachmentPolicy=AssemblyLogicalCenter, accentAttachmentIgnoredDeviceAdjustment=null, accentX=0.0, accentBaselineY=-8.999998, construction=Assembly, constructionPolicy=Tectonic0.17.0XeTeXHorizontalAccentAssemblyStretchGlue, glyphIds=2106,2073,2073,2073,2073,2107,2073,2073,2073,2073,2108, componentOffsetsDesignUnits=0.0,818.93555,1376.2747,1933.6138,2490.953,3103.8887,3908.8242,4466.163,5023.502,5580.841,6193.7764, connectorOverlapsDesignUnits=[137.06435, 192.66089, 192.66089, 192.66089, 137.06435, 137.06435, 192.66089, 192.66089, 192.66089, 137.06435], targetWidthPx=285.9911, achievedWidthPx=285.9911, reachesTarget=true, coveragePolicy=CoversTarget, assemblyValidation=MathGlyphAssemblyValidation(valid=true, invalidReasons=[], extenderCount=2, nonExtenderCount=3, extenderNonOverlappingAdvance=1302, checkedConnectionCount=6, validationPolicy=TiqianOpenTypeTerminalConnectorCompatibility, specificationDivergence=MathMLCore5.3.1RequiresEveryTerminalConnectorAtLeastMinimum), paintPolicy=SemanticOutlineUnion, logicalAdvancePx=285.9911, cleanAscentPx=47.800003, cleanDescentPx=1.5999999},TeXBraceOperatorNoad:{kind=Over, commandRange=SourceRange(start=0, endExclusive=10), baseRange=SourceRange(start=10, endExclusive=21), limitsPolicy=Limits, limitsPolicyExplicit=false, modifierRange=null, accentIdentity=OverBrace, atomClass=Operator, constructionPolicy=XeTeXGrowingTopOrBottomMathAccentWrappedInLimitsOpNoad},OpenTypeMathOperatorLimits:{style=Text, upperStyle=Script, lowerStyle=null, upperLimitGapMinPx=5.4, upperLimitBaselineRiseMinPx=12.0, lowerLimitGapMinPx=5.4, lowerLimitBaselineDropMinPx=26.8, upperOuterPaddingPx=6.0, lowerOuterPaddingPx=0.0, outerLimitPaddingPolicy=XeTeXBigOpSpacing5FromOpenTypeMATHStackGapMin, upperShiftPx=59.800003, lowerShiftPx=null, actualUpperGapPx=11.72, actualUpperBaselineRisePx=12.0, actualLowerGapPx=null, actualLowerBaselineDropPx=null, operatorItalicCorrectionPx=0.0, upperCenterOffsetPx=0.0, lowerCenterOffsetPx=-0.0, logicalWidthPx=285.9911, logicalWidthPolicy=max-unskewed-operator-and-limits, operatorWidthPx=285.9911, upperWidthPx=18.312, lowerWidthPx=null, operatorX=0.0, upperX=133.83954, lowerX=null},OpenTypeMathAccent:{identity=underbrace, wide=true, placement=Bottom, style=Text, nucleusStyle=TextCramped, nucleusBoxPolicy=XeTeXNativeGlyphOutlineOrCompletedChildBox, baseWidthPx=90.33778, baseInkAscentPx=24.0, baseCleanAscentPx=22.320002, accentBaseHeightPx=19.2, verticalPlacementPolicy=XeTeXBottomMathAccentAfterCompletedNucleusDepth, flattenedAccentBaseHeightPx=26.24, baseAttachmentPx=45.16889, baseAttachmentPolicy=XeTeXBottomAccentNucleusLogicalCenter, baseAttachmentIgnoredDeviceAdjustment=null, accentAttachmentPx=43.62, accentAttachmentPolicy=OpenTypeAdvanceCenterFallback, accentAttachmentIgnoredDeviceAdjustment=null, accentX=1.548893, accentBaselineY=8.8, construction=Variant, constructionPolicy=XeTeXMathAccentLargestVariantNotWiderThanNucleus, glyphIds=2121, componentOffsetsDesignUnits=0.0, connectorOverlapsDesignUnits=[], targetWidthPx=90.33778, achievedWidthPx=87.24, reachesTarget=false, coveragePolicy=TeXLargestAvailableAccentVariantAllowsBaseOverhang, assemblyValidation=null, paintPolicy=DirectSingleGlyphReplay, logicalAdvancePx=90.33778, cleanAscentPx=22.320002, cleanDescentPx=20.8},TeXBraceOperatorNoad:{kind=Under, commandRange=SourceRange(start=26, endExclusive=37), baseRange=SourceRange(start=37, endExclusive=42), limitsPolicy=Limits, limitsPolicyExplicit=false, modifierRange=null, accentIdentity=UnderBrace, atomClass=Operator, constructionPolicy=XeTeXGrowingTopOrBottomMathAccentWrappedInLimitsOpNoad},OpenTypeMathOperatorLimits:{style=Text, upperStyle=null, lowerStyle=ScriptCramped, upperLimitGapMinPx=5.4, upperLimitBaselineRiseMinPx=12.0, lowerLimitGapMinPx=5.4, lowerLimitBaselineDropMinPx=26.8, upperOuterPaddingPx=0.0, lowerOuterPaddingPx=6.0, outerLimitPaddingPolicy=XeTeXBigOpSpacing5FromOpenTypeMATHStackGapMin, upperShiftPx=null, lowerShiftPx=47.6, actualUpperGapPx=null, actualUpperBaselineRisePx=null, actualLowerGapPx=5.9119987, actualLowerBaselineDropPx=26.8, operatorItalicCorrectionPx=0.0, upperCenterOffsetPx=0.0, lowerCenterOffsetPx=-0.0, logicalWidthPx=90.33778, logicalWidthPolicy=max-unskewed-operator-and-limits, operatorWidthPx=90.33778, upperWidthPx=null, lowerWidthPx=17.220001, operatorX=0.0, upperX=null, lowerX=36.55889}
+case=scoped-color logical=222.453339 clean=28.199999/1.600000 fragments=3 breaks=1 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=12..13 x=0.000000 baseline=0.000000 advance=22.200001 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=13..14 x=31.088890 baseline=0.000000 advance=28.799999 group=null
+  glyph=3327 face=legacy-single-face style=Text size=40.000000 source=27..28 x=68.777786 baseline=0.000000 advance=20.719999 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=29..30 x=98.586670 baseline=0.000000 advance=28.799999 group=null
+  glyph=3328 face=legacy-single-face style=Text size=40.000000 source=30..31 x=136.275558 baseline=0.000000 advance=16.559999 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=32..33 x=161.724442 baseline=0.000000 advance=28.799999 group=null
+  glyph=3329 face=legacy-single-face style=Text size=40.000000 source=33..34 x=199.413330 baseline=0.000000 advance=22.240000 group=null
+  fragment=0/Ordinary source=0..32 width=152.835556 clean=28.199999/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=32..33 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=33..34 width=22.240005 clean=28.199999/0.480000 kern=0.000000 ic=0.800000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=33, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=1..12:red/ffff0000/TeXDeclarationUntilCurrentMathListGroupEnd/XColorBaseNamesHtmlHexTripletsAndCssSvgKeywords,15..27:blue/ff0000ff/TeXDeclarationUntilCurrentMathListGroupEnd/XColorBaseNamesHtmlHexTripletsAndCssSvgKeywords glyphPaint=12:ffff0000,13:ffff0000,27:ff0000ff,29:ffff0000,30:ffff0000,32:host,33:host
+case=boxed logical=110.170570 clean=49.276398/30.596397 fragments=3 breaks=1 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=28..29 x=9.316397 baseline=-25.600000 advance=22.200001 group=null
+  glyph=3327 face=legacy-single-face style=TextCramped size=40.000000 source=31..32 x=9.956396 baseline=25.600000 advance=20.719999 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=35..36 x=49.721684 baseline=0.000000 advance=28.799999 group=null
+  glyph=3354 face=legacy-single-face style=Text size=40.000000 source=36..37 x=87.410568 baseline=0.000000 advance=22.360001 group=null
+  rule=9.316397,-11.679999,31.516397,-8.960000 source=22..33 group=null role=MathRule layer=Foreground line=null
+  rule=0.000000,-49.276398,40.832794,-48.745056 source=15..21 group=null role=MathRule layer=Foreground line=null
+  rule=0.000000,30.065056,40.832794,30.596397 source=15..21 group=null role=MathRule layer=Foreground line=null
+  rule=0.000000,-49.276398,0.531341,30.596397 source=15..21 group=null role=MathRule layer=Foreground line=null
+  rule=40.301453,-49.276398,40.832794,30.596397 source=15..21 group=null role=MathRule layer=Foreground line=null
+  fragment=0/Ordinary source=0..35 width=40.832794 clean=49.276398/30.596397 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=1/Binary source=35..36 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=2/Ordinary source=36..37 width=22.360001 clean=19.160000/0.400000 kern=0.000000 ic=0.400000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=36, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=styles=Text->Display/fbox=3.9850564+0.53134084/content=31.8,44.760002,26.08/box=40.832794,49.276398,30.596397/rules=5/paint=[ff800080, ff800080, ff800080, ff800080, ff800080]
+case=adjustment logical=196.786682 clean=28.199999/5.280000 fragments=7 breaks=3 diagnostics=[]
+  glyph=3326 face=legacy-single-face style=Text size=40.000000 source=0..1 x=0.000000 baseline=0.000000 advance=22.200001 group=null
+  glyph=1048 face=legacy-single-face style=Text size=40.000000 source=1..2 x=22.200001 baseline=0.000000 advance=9.800000 group=null
+  glyph=3327 face=legacy-single-face style=Text size=40.000000 source=2..3 x=38.666672 baseline=0.000000 advance=20.719999 group=null
+  glyph=1202 face=legacy-single-face style=Text size=40.000000 source=3..4 x=70.697784 baseline=0.000000 advance=28.799999 group=null
+  glyph=3328 face=legacy-single-face style=Text size=40.000000 source=4..5 x=110.608902 baseline=0.000000 advance=16.559999 group=null
+  glyph=1196 face=legacy-single-face style=Text size=40.000000 source=5..6 x=136.057785 baseline=0.000000 advance=28.799999 group=null
+  glyph=3329 face=legacy-single-face style=Text size=40.000000 source=6..7 x=173.746674 baseline=0.000000 advance=22.240000 group=null
+  fragment=0/Ordinary source=0..1 width=22.200001 clean=19.160000/0.480000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  fragment=1/Punctuation source=1..2 width=9.800003 clean=4.840000/5.280000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=0.0, maximumPx=13.333334, shrinkPx=6.666667, stretchPx=6.666667, priority=Punctuation)
+  fragment=2/Ordinary source=2..3 width=20.720001 clean=28.199999/0.480000 kern=0.000000 ic=0.200000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=3/Relation source=3..4 width=28.800003 clean=15.800000/0.000000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation)
+  fragment=4/Ordinary source=4..5 width=16.559999 clean=19.160000/0.480000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=5/Binary source=5..6 width=28.800003 clean=22.320002/1.600000 kern=0.000000 ic=0.000000 glue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator)
+  fragment=6/Ordinary source=6..7 width=22.240005 clean=28.199999/0.480000 kern=0.000000 ic=0.800000 glue=MathGlueAdjustment(kind=None, naturalPx=0.0, minimumPx=0.0, maximumPx=0.0, shrinkPx=0.0, stretchPx=0.0, priority=None)
+  break=MathBreakOpportunity(afterFragmentIndex=1, sourceOffset=2, kind=PunctuationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thin, naturalPx=6.666667, minimumPx=0.0, maximumPx=13.333334, shrinkPx=6.666667, stretchPx=6.666667, priority=Punctuation), priority=Punctuation, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=3, sourceOffset=4, kind=RelationTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Thick, naturalPx=11.111112, minimumPx=0.0, maximumPx=22.222223, shrinkPx=11.111112, stretchPx=11.111112, priority=Relation), priority=Relation, operatorStaysOnPreviousLine=true)
+  break=MathBreakOpportunity(afterFragmentIndex=5, sourceOffset=6, kind=BinaryOperatorTrailing, discardedTrailingGlue=MathGlueAdjustment(kind=Medium, naturalPx=8.888889, minimumPx=0.0, maximumPx=13.333334, shrinkPx=8.888889, stretchPx=4.4444447, priority=BinaryOperator), priority=BinaryOperator, operatorStaysOnPreviousLine=true)
+  evidence=0:ic=0.000/None/0.000/0.000/0.000/None,1:ic=0.000/Thin/6.667/0.000/13.333/Punctuation,2:ic=0.200/Thick/11.111/0.000/22.222/Relation,3:ic=0.000/Thick/11.111/0.000/22.222/Relation,4:ic=0.000/Medium/8.889/0.000/13.333/BinaryOperator,5:ic=0.000/Medium/8.889/0.000/13.333/BinaryOperator,6:ic=0.800/None/0.000/0.000/0.000/None
