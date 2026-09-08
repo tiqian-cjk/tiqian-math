@@ -105,6 +105,13 @@ enum class DiagnosticCode {
     MissingNegatedAtom,
     UnsupportedNegatedSymbol,
     MisplacedHorizontalRule,
+    SourceLengthLimitExceeded,
+    TokenCountLimitExceeded,
+    AstNodeCountLimitExceeded,
+    RecursionDepthLimitExceeded,
+    BreakpointCountLimitExceeded,
+    ExtenderCountLimitExceeded,
+    InvalidResolvedDimension,
 }
 
 data class MathDiagnostic(

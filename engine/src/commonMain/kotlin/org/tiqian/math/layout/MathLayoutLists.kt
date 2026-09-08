@@ -1,23 +1,6 @@
 package org.tiqian.math.layout
 
 import org.tiqian.math.core.*
-import org.tiqian.math.font.opentype.MathConstructionKind
-import org.tiqian.math.font.opentype.MathDeviceAdjustment
-import org.tiqian.math.font.opentype.MathGlyphComponent
-import org.tiqian.math.font.opentype.MathHorizontalConstructionRequest
-import org.tiqian.math.font.opentype.MathKernCorner
-import org.tiqian.math.font.opentype.MathVerticalConstruction
-import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
-import org.tiqian.math.font.opentype.MathVerticalAssemblyPolicy
-import org.tiqian.math.font.opentype.OpenTypeMathConstants
-import org.tiqian.math.font.opentype.OpenTypeMathException
-import org.tiqian.math.font.opentype.OpenTypeMathFont
-import org.tiqian.math.parser.MacroExpansionLimits
-import org.tiqian.math.parser.MathFormulaParser
-import org.tiqian.math.parser.MathMacroDefinition
-import org.tiqian.math.parser.MathParser
-import kotlin.math.floor
-import kotlin.math.max
 import org.tiqian.math.layout.MathLayoutPass.Companion.binaryLeftCanceller
 import org.tiqian.math.layout.MathLayoutPass.Companion.binaryRightCanceller
 import org.tiqian.math.layout.MathLayoutPass.HorizontalItem
@@ -208,12 +191,25 @@ private fun MathLayoutPass.flattenPendingListChildren(
                     "versionPolicy" to "UnicodeMathBoldVersionCompatibilityForLegacyBf",
                 )
             } else if (child is MathSizeDeclaration) {
-                currentSizeScale = child.scale
+                val resolvedFontSizePx = baseFontSizePx * child.scale
+                currentSizeScale = if (
+                    validatedResolvedDimension(
+                        sourceText = "\\${child.sourceName} font size",
+                        resolvedPx = resolvedFontSizePx,
+                        range = child.range,
+                    ) != null
+                ) {
+                    child.scale
+                } else {
+                    1f
+                }
                 decision(
                     "LatexSizeDeclaration",
                     child.range,
                     "sourceName" to child.sourceName,
                     "scale" to child.scale,
+                    "resolvedFontSizePx" to resolvedFontSizePx,
+                    "acceptedScale" to currentSizeScale,
                     "listRange" to "${list.range.start}..${list.range.endExclusive}",
                     "scopePolicy" to "TeXDeclarationUntilCurrentMathListGroupEnd",
                     "scalePolicy" to "AbsoluteLatexTenPointClassRatios",

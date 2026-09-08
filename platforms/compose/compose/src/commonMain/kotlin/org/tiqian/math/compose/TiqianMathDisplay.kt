@@ -3,6 +3,7 @@ package org.tiqian.math.compose
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -11,6 +12,8 @@ import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Constraints
 import org.tiqian.math.core.MathLayoutResult
+import org.tiqian.math.layout.MathFormulaCapabilityResult
+import org.tiqian.math.layout.MathFormulaStrictException
 import org.tiqian.math.layout.MathComposeFontFace
 import org.tiqian.math.layout.MathTextRunProvider
 import org.tiqian.math.layout.breakResponsiveDisplayLines
@@ -30,6 +33,8 @@ internal fun ScrollableDisplayTiqianMath(
     horizontalInsetPx: Float,
     displayContentWidthPx: Float?,
     modifier: Modifier,
+    onMathLayout: (MathLayoutResult) -> Unit,
+    fallback: (@Composable (MathFormulaCapabilityResult.FallbackRequired) -> Unit)?,
 ) {
     val unbroken = RenderPlan.unbroken(result, requestedLineHeightPx)
     val contentWidth = displayContentWidthPx ?: unbroken.width
@@ -42,6 +47,13 @@ internal fun ScrollableDisplayTiqianMath(
             null
         }
     }
+    val failure = lineBreakFailure(result, broken)
+    if (failure != null) {
+        val errorPresentation = fallback ?: throw MathFormulaStrictException(failure)
+        errorPresentation(failure)
+        return
+    }
+    SideEffect { onMathLayout(result) }
     // PinnedClauseLikeTag: when the block must scroll, its fitting clause lines anchor to the
     // viewport like an equation tag instead of traveling with the scrolled content.
     val plans = if (broken != null) {

@@ -1,13 +1,12 @@
 package org.tiqian.math.font.android
 
 import android.content.Context
-import android.graphics.Path
 import org.tiqian.math.core.*
 import org.tiqian.math.layout.*
 import kotlin.math.abs
-import kotlin.math.max
 import org.tiqian.math.font.opentype.MathVerticalAssemblyPolicy
 import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
+import org.tiqian.math.font.opentype.OpenTypeMathException
 import org.tiqian.math.font.opentype.LeteSansMathPrebakedData
 import org.tiqian.math.font.opentype.PrebakedOpenTypeMathFamilySpec
 
@@ -258,18 +257,24 @@ private fun AndroidMathFontFace.operatorConstructionAvailable(
     val glyphId = resolved.constructionBaseGlyphId ?: return false
     val target = mathFont.scaleDesignUnits(mathFont.constants.displayOperatorMinHeight, fontSizePx)
     val normal = measureGlyphOutlineBounds(glyphId, fontSizePx, request.style, request.sourceRange)
-    return mathFont.verticalConstruction(
-        MathVerticalConstructionRequest(
-            glyphId,
-            target,
-            fontSizePx,
-            normal.glyphs.maxOfOrNull { it.inkBounds.height } ?: normal.ascent + normal.descent,
-            normal.width,
-            MathVerticalAssemblyPolicy.MathMLCoreUniformOverlap,
-        ),
-        glyphVerticalExtentPx = { id ->
-            measureGlyphOutlineBounds(id, fontSizePx, request.style, request.sourceRange)
-                .glyphs.singleOrNull()?.inkBounds?.height ?: 0f
-        },
-    ) { id -> measureGlyph(id, fontSizePx, request.style, request.sourceRange).width }?.reachesTarget == true
+    val constructionRequest = MathVerticalConstructionRequest(
+        baseGlyphId = glyphId,
+        targetSizePx = target,
+        fontSizePx = fontSizePx,
+        normalGlyphHeightPx = normal.glyphs.maxOfOrNull { it.inkBounds.height }
+            ?: normal.ascent + normal.descent,
+        normalGlyphAdvanceWidthPx = normal.width,
+        assemblyPolicy = MathVerticalAssemblyPolicy.MathMLCoreUniformOverlap,
+        resourceLimits = request.resourceLimits,
+    )
+    return try {
+        mathFont.verticalConstructionAvailable(constructionRequest)
+    } catch (failure: OpenTypeMathException) {
+        when (failure.diagnosticCode) {
+            DiagnosticCode.ExtenderCountLimitExceeded,
+            DiagnosticCode.InvalidResolvedDimension,
+            -> false
+            else -> throw failure
+        }
+    }
 }

@@ -23,6 +23,7 @@ class MathLayoutResultTest {
             decisions = emptyList(),
             debugDumpRenderer = renderer,
             fontSizePx = 24f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(0, renderCount)

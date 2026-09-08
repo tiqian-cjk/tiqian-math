@@ -1,6 +1,8 @@
 package org.tiqian.math.font.opentype
 
 import org.tiqian.math.core.DiagnosticCode
+import org.tiqian.math.core.MathResourceLimits
+import kotlin.math.abs
 import kotlin.math.ceil
 
 data class OpenTypeMathFont(
@@ -25,20 +27,6 @@ data class OpenTypeMathFont(
     /** Base glyph to ordered OpenType `ssty` alternates (feature values 1, 2, ...). */
     val scriptStyleAlternates: Map<UShort, List<UShort>> = emptyMap(),
 ) {
-    /** Compatibility view: only truly unsupported VariationIndex records remain here. */
-    val unsupportedItalicCorrectionAdjustments: Set<UShort>
-        get() = unsupportedItalicCorrectionVariationAdjustments
-
-    /** Compatibility view: only truly unsupported VariationIndex records remain here. */
-    val unsupportedTopAccentAttachmentAdjustments: Set<UShort>
-        get() = unsupportedTopAccentAttachmentVariationAdjustments
-
-    val verticalVariants: Map<UShort, List<MathGlyphVariant>>
-        get() = verticalConstructions.mapValues { it.value.variants }
-
-    val horizontalVariants: Map<UShort, List<MathGlyphVariant>>
-        get() = horizontalConstructions.mapValues { it.value.variants }
-
     fun scaleDesignUnits(value: Int, fontSizePx: Float): Float = value * fontSizePx / unitsPerEm
 
     fun scaleDesignUnits(value: Float, fontSizePx: Float): Float = value * fontSizePx / unitsPerEm
@@ -91,8 +79,20 @@ data class OpenTypeMathFont(
         glyphGrowthExtentPx: (UShort) -> Float,
         glyphOrthogonalExtentPx: (UShort) -> Float,
     ): MathVerticalConstruction? {
+        val resourceLimits = request.resourceLimits
+        val target = resolvedConstructionDesignUnits(
+            valuePx = request.targetSizePx,
+            fontSizePx = request.fontSizePx,
+            resourceLimits = resourceLimits,
+            label = "horizontal construction target",
+        )
+        val normalGlyphAdvance = resolvedConstructionDesignUnits(
+            valuePx = request.normalGlyphWidthPx,
+            fontSizePx = request.fontSizePx,
+            resourceLimits = resourceLimits,
+            label = "horizontal normal glyph width",
+        )
         val construction = horizontalConstructions[request.baseGlyphId] ?: return null
-        val target = request.targetSizePx * unitsPerEm / request.fontSizePx
         val firstAtOrAbove = construction.variants.indexOfFirst { it.advanceMeasurement >= target }
         if (firstAtOrAbove >= 0) {
             // XeTeX make_math_accent keeps the largest variant whose advance does not exceed
@@ -104,7 +104,7 @@ data class OpenTypeMathFont(
                 return MathVerticalConstruction(
                     kind = MathConstructionKind.BaseGlyph,
                     components = listOf(MathGlyphComponent(request.baseGlyphId, 0f)),
-                    advanceMeasurement = request.normalGlyphWidthPx * unitsPerEm / request.fontSizePx,
+                    advanceMeasurement = normalGlyphAdvance,
                     reachesTarget = request.normalGlyphWidthPx >= request.targetSizePx,
                     constructionPolicy = "XeTeXMathAccentNormalGlyphBeforeFirstWiderVariant",
                     orthogonalAdvancePx = request.normalGlyphOrthogonalExtentPx,
@@ -129,6 +129,7 @@ data class OpenTypeMathFont(
                 fontSizePx = request.fontSizePx,
                 glyphVerticalExtentPx = glyphGrowthExtentPx,
                 glyphAdvanceWidthPx = glyphOrthogonalExtentPx,
+                resourceLimits = resourceLimits,
             ).copy(
                 constructionPolicy = "Tectonic0.17.0XeTeXHorizontalAccentAssemblyStretchGlue",
             )
@@ -149,33 +150,35 @@ data class OpenTypeMathFont(
         )
     }
 
-    fun horizontalAssemblyValidation(baseGlyphId: UShort): MathGlyphAssemblyValidation? =
-        horizontalConstructions[baseGlyphId]?.assembly?.let(::validateAssembly)
-
-    fun verticalVariant(baseGlyphId: UShort, minimumAdvancePx: Float, fontSizePx: Float): MathGlyphVariant? {
-        val variants = verticalVariants[baseGlyphId].orEmpty()
-        if (variants.isEmpty()) return null
-        val minimumDesignUnits = minimumAdvancePx * unitsPerEm / fontSizePx
-        return variants.firstOrNull { it.advanceMeasurement >= minimumDesignUnits } ?: variants.last()
-    }
-
     fun verticalConstruction(
         request: MathVerticalConstructionRequest,
         glyphVerticalExtentPx: ((UShort) -> Float)? = null,
         glyphAdvanceWidthPx: (UShort) -> Float,
     ): MathVerticalConstruction? {
+        val resourceLimits = request.resourceLimits
+        val target = resolvedConstructionDesignUnits(
+            valuePx = request.targetSizePx,
+            fontSizePx = request.fontSizePx,
+            resourceLimits = resourceLimits,
+            label = "vertical construction target",
+        )
+        val normalGlyphAdvance = resolvedConstructionDesignUnits(
+            valuePx = request.normalGlyphHeightPx,
+            fontSizePx = request.fontSizePx,
+            resourceLimits = resourceLimits,
+            label = "vertical normal glyph height",
+        )
         if (request.normalGlyphHeightPx >= request.targetSizePx) {
             return MathVerticalConstruction(
                 kind = MathConstructionKind.BaseGlyph,
                 components = listOf(MathGlyphComponent(request.baseGlyphId, 0f)),
-                advanceMeasurement = request.normalGlyphHeightPx * unitsPerEm / request.fontSizePx,
+                advanceMeasurement = normalGlyphAdvance,
                 reachesTarget = true,
                 constructionPolicy = "MathMLCore5.3.2NormalGlyph",
                 orthogonalAdvancePx = request.normalGlyphAdvanceWidthPx,
             )
         }
         val construction = verticalConstructions[request.baseGlyphId] ?: return null
-        val target = request.targetSizePx * unitsPerEm / request.fontSizePx
         construction.variants.firstOrNull { it.advanceMeasurement >= target }?.let { variant ->
             return MathVerticalConstruction(
                 MathConstructionKind.Variant,
@@ -191,7 +194,13 @@ data class OpenTypeMathFont(
         if (assembly != null && assemblyValidation?.valid == true) {
             return when (request.assemblyPolicy) {
                 MathVerticalAssemblyPolicy.MathMLCoreUniformOverlap ->
-                    assemble(assembly, assemblyValidation, target, glyphAdvanceWidthPx)
+                    assemble(
+                        assembly,
+                        assemblyValidation,
+                        target,
+                        glyphAdvanceWidthPx,
+                        resourceLimits,
+                    )
                 MathVerticalAssemblyPolicy.TectonicXeTeXStretchGlue ->
                     assembleXeTeX(
                         assembly = assembly,
@@ -202,6 +211,7 @@ data class OpenTypeMathFont(
                             "XeTeX assembly requires exact glyph vertical extents"
                         },
                         glyphAdvanceWidthPx = glyphAdvanceWidthPx,
+                        resourceLimits = resourceLimits,
                     )
             }
         }
@@ -219,6 +229,43 @@ data class OpenTypeMathFont(
             },
             orthogonalAdvancePx = glyphAdvanceWidthPx(last.glyphId),
         )
+    }
+
+    /**
+     * Checks whether a selection plan exists within the request budget, without materializing
+     * assembly parts.
+     */
+    fun verticalConstructionAvailable(request: MathVerticalConstructionRequest): Boolean {
+        val resourceLimits = request.resourceLimits
+        val target = resolvedConstructionDesignUnits(
+            valuePx = request.targetSizePx,
+            fontSizePx = request.fontSizePx,
+            resourceLimits = resourceLimits,
+            label = "vertical construction target",
+        )
+        resolvedConstructionDesignUnits(
+            valuePx = request.normalGlyphHeightPx,
+            fontSizePx = request.fontSizePx,
+            resourceLimits = resourceLimits,
+            label = "vertical normal glyph height",
+        )
+        if (request.normalGlyphHeightPx >= request.targetSizePx) return true
+
+        val construction = verticalConstructions[request.baseGlyphId] ?: return false
+        if (construction.variants.any { it.advanceMeasurement >= target }) return true
+
+        val assembly = construction.assembly
+        val validation = assembly?.let(::validateAssembly)
+        if (assembly != null && validation?.valid == true) {
+            when (request.assemblyPolicy) {
+                MathVerticalAssemblyPolicy.MathMLCoreUniformOverlap ->
+                    mathMlExtenderRepetitions(assembly, validation, target, resourceLimits)
+                MathVerticalAssemblyPolicy.TectonicXeTeXStretchGlue ->
+                    xeTeXExtenderRepetitions(assembly, validation, target, resourceLimits)
+            }
+            return true
+        }
+        return false
     }
 
     fun verticalAssemblyValidation(baseGlyphId: UShort): MathGlyphAssemblyValidation? =
@@ -270,21 +317,11 @@ data class OpenTypeMathFont(
         validation: MathGlyphAssemblyValidation,
         target: Float,
         glyphAdvanceWidthPx: (UShort) -> Float,
+        resourceLimits: MathResourceLimits,
     ): MathVerticalConstruction {
         check(validation.valid)
-        val extenders = assembly.parts.filter { it.extender }
-        val nonExtenders = assembly.parts.filterNot { it.extender }
-        val extenderAdvance = extenders.sumOf { it.fullAdvance }.toFloat()
-        val nonExtenderAdvance = nonExtenders.sumOf { it.fullAdvance }.toFloat()
+        val rMin = mathMlExtenderRepetitions(assembly, validation, target, resourceLimits)
         val minimumOverlap = assembly.minimumConnectorOverlap.toFloat()
-        val extenderGrowth = validation.extenderNonOverlappingAdvance.toFloat()
-        // MathML Core 5.3.1 r_min: the smallest whole extender repetition count whose
-        // assembly reaches T when every connection uses the minimum overlap.
-        val repetitionsNumerator = target - nonExtenderAdvance +
-            minimumOverlap * (validation.nonExtenderCount - 1)
-        val rMin = ceil(repetitionsNumerator / extenderGrowth)
-            .toInt()
-            .coerceAtLeast(if (validation.nonExtenderCount == 0) 1 else 0)
         val sequence = buildList {
             assembly.parts.forEach { part ->
                 if (!part.extender) add(part) else repeat(rMin) { add(part) }
@@ -332,6 +369,32 @@ data class OpenTypeMathFont(
         )
     }
 
+    /** Resolves MathML Core r_min and checks the extender budget before list materialization. */
+    private fun mathMlExtenderRepetitions(
+        assembly: MathGlyphAssembly,
+        validation: MathGlyphAssemblyValidation,
+        target: Float,
+        resourceLimits: MathResourceLimits,
+    ): Int {
+        check(validation.valid)
+        val nonExtenderAdvance = assembly.parts.sumOf { part ->
+            if (part.extender) 0L else part.fullAdvance.toLong()
+        }
+        val repetitionsNumerator = target.toDouble() - nonExtenderAdvance.toDouble() +
+            assembly.minimumConnectorOverlap.toDouble() * (validation.nonExtenderCount - 1)
+        val minimumRepetitions = if (validation.nonExtenderCount == 0) 1L else 0L
+        val calculatedRepetitions = ceil(
+            repetitionsNumerator / validation.extenderNonOverlappingAdvance.toDouble(),
+        ).coerceAtLeast(minimumRepetitions.toDouble())
+        if (!calculatedRepetitions.isFinite() || calculatedRepetitions > Int.MAX_VALUE.toDouble()) {
+            throw extenderLimitException(Long.MAX_VALUE, resourceLimits.maximumExtenderCount)
+        }
+        val repetitions = calculatedRepetitions.toLong()
+        val extenderCount = repetitions * validation.extenderCount.toLong()
+        checkExtenderLimit(extenderCount, resourceLimits.maximumExtenderCount)
+        return repetitions.toInt()
+    }
+
     /**
      * Replays Tectonic 0.17.0/XeTeX `build_opentype_assembly`: extender repetition is selected
      * from OpenType full advances at minimum overlap, then TeX glue starts at each connection's
@@ -345,27 +408,15 @@ data class OpenTypeMathFont(
         fontSizePx: Float,
         glyphVerticalExtentPx: (UShort) -> Float,
         glyphAdvanceWidthPx: (UShort) -> Float,
+        resourceLimits: MathResourceLimits,
     ): MathVerticalConstruction {
         check(validation.valid)
-        var repetitions = -1
-        var maximumSize: Float
-        do {
-            repetitions += 1
-            maximumSize = 0f
-            var previousEndConnector = 0f
-            assembly.parts.forEach { part ->
-                val count = if (part.extender) repetitions else 1
-                repeat(count) {
-                    val overlap = minOf(
-                        part.startConnectorLength.toFloat(),
-                        assembly.minimumConnectorOverlap.toFloat(),
-                        previousEndConnector,
-                    )
-                    maximumSize += part.fullAdvance - overlap
-                    previousEndConnector = part.endConnectorLength.toFloat()
-                }
-            }
-        } while (maximumSize < target)
+        val repetitions = xeTeXExtenderRepetitions(
+            assembly = assembly,
+            validation = validation,
+            target = target,
+            resourceLimits = resourceLimits,
+        )
 
         val sequence = buildList {
             assembly.parts.forEach { part ->
@@ -374,7 +425,12 @@ data class OpenTypeMathFont(
         }
         check(sequence.isNotEmpty())
         val glyphExtents = sequence.map { part ->
-            glyphVerticalExtentPx(part.glyphId) * unitsPerEm / fontSizePx
+            resolvedConstructionDesignUnits(
+                valuePx = glyphVerticalExtentPx(part.glyphId),
+                fontSizePx = fontSizePx,
+                resourceLimits = resourceLimits,
+                label = "assembly glyph extent",
+            )
         }
         val maximumOverlaps = mutableListOf<Float>()
         val minimumOverlaps = mutableListOf<Float>()
@@ -427,12 +483,126 @@ data class OpenTypeMathFont(
         )
     }
 
+    /**
+     * Closed-form XeTeX repetition search at minimum connector overlap.
+     *
+     * Repetition zero is structurally special because extender records disappear, and is only
+     * valid when a non-extender remains. From one repetition onward, every additional round
+     * contributes the validated non-overlapping extender advance exactly once. Exact integer
+     * design-unit sums avoid the old Float
+     * accumulation boundary drift, keep selection O(part count), and let the selected extender
+     * total be checked before the O(output size) sequence is materialized.
+     */
+    private fun xeTeXExtenderRepetitions(
+        assembly: MathGlyphAssembly,
+        validation: MathGlyphAssemblyValidation,
+        target: Float,
+        resourceLimits: MathResourceLimits,
+    ): Int {
+        val zeroRepetitionAdvance = xeTeXMinimumOverlapAdvance(assembly, repetitions = 0)
+        val repetitions = if (
+            validation.nonExtenderCount > 0 &&
+            zeroRepetitionAdvance.toDouble() >= target.toDouble()
+        ) {
+            0L
+        } else {
+            val oneRepetitionAdvance = xeTeXMinimumOverlapAdvance(assembly, repetitions = 1)
+            if (oneRepetitionAdvance.toDouble() >= target.toDouble()) {
+                1L
+            } else {
+                val additional = ceil(
+                    (target.toDouble() - oneRepetitionAdvance.toDouble()) /
+                        validation.extenderNonOverlappingAdvance.toDouble(),
+                )
+                if (!additional.isFinite() || additional > Int.MAX_VALUE.toDouble()) {
+                    throw extenderLimitException(Long.MAX_VALUE, resourceLimits.maximumExtenderCount)
+                }
+                1L + additional.toLong()
+            }
+        }
+        val extenderCount = repetitions * validation.extenderCount.toLong()
+        checkExtenderLimit(extenderCount, resourceLimits.maximumExtenderCount)
+        if (repetitions > Int.MAX_VALUE.toLong()) {
+            throw extenderLimitException(extenderCount, resourceLimits.maximumExtenderCount)
+        }
+        return repetitions.toInt()
+    }
+
+    private fun xeTeXMinimumOverlapAdvance(
+        assembly: MathGlyphAssembly,
+        repetitions: Int,
+    ): Long {
+        var advance = 0L
+        var previousEndConnector = 0
+        assembly.parts.forEach { part ->
+            val count = if (part.extender) repetitions else 1
+            if (count == 0) return@forEach
+            val firstOverlap = minOf(
+                part.startConnectorLength,
+                assembly.minimumConnectorOverlap,
+                previousEndConnector,
+            )
+            advance += part.fullAdvance.toLong() - firstOverlap.toLong()
+            if (count > 1) {
+                val repeatedOverlap = minOf(
+                    part.startConnectorLength,
+                    assembly.minimumConnectorOverlap,
+                    part.endConnectorLength,
+                )
+                advance += (count - 1).toLong() *
+                    (part.fullAdvance.toLong() - repeatedOverlap.toLong())
+            }
+            previousEndConnector = part.endConnectorLength
+        }
+        return advance
+    }
+
     private companion object {
         const val ASSEMBLY_REACH_EPSILON_DESIGN_UNITS = 0.01f
     }
+
+    private fun resolvedConstructionDesignUnits(
+        valuePx: Float,
+        fontSizePx: Float,
+        resourceLimits: MathResourceLimits,
+        label: String,
+    ): Float {
+        if (
+            !valuePx.isFinite() || valuePx < 0f ||
+            valuePx > resourceLimits.maximumResolvedDimensionPx ||
+            !fontSizePx.isFinite() || fontSizePx <= 0f ||
+            fontSizePx > resourceLimits.maximumResolvedDimensionPx
+        ) {
+            throw OpenTypeMathException(
+                DiagnosticCode.InvalidResolvedDimension,
+                "$label is outside the finite resource dimension range",
+            )
+        }
+        val resolved = valuePx * unitsPerEm / fontSizePx
+        val maximumDesignUnits = resourceLimits.maximumResolvedDimensionPx * unitsPerEm
+        if (!resolved.isFinite() || abs(resolved) > maximumDesignUnits) {
+            throw OpenTypeMathException(
+                DiagnosticCode.InvalidResolvedDimension,
+                "$label resolved to $resolved design units, exceeding finite limit $maximumDesignUnits",
+            )
+        }
+        return resolved
+    }
+
+    private fun checkExtenderLimit(actual: Long, limit: Int) {
+        if (actual > limit.toLong()) throw extenderLimitException(actual, limit)
+    }
+
+    private fun extenderLimitException(actual: Long, limit: Int): OpenTypeMathException =
+        OpenTypeMathException(
+            DiagnosticCode.ExtenderCountLimitExceeded,
+            "Math resource extenderCount=$actual exceeds limit $limit",
+            resourceActual = actual,
+        )
 }
 
 class OpenTypeMathException(
     val diagnosticCode: DiagnosticCode,
     message: String,
+    internal val resourceActual: Long? = null,
 ) : IllegalArgumentException(message)

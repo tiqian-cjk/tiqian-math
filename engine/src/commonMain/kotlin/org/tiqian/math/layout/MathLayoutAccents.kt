@@ -2,21 +2,10 @@ package org.tiqian.math.layout
 
 import org.tiqian.math.core.*
 import org.tiqian.math.font.opentype.MathConstructionKind
-import org.tiqian.math.font.opentype.MathDeviceAdjustment
 import org.tiqian.math.font.opentype.MathGlyphComponent
 import org.tiqian.math.font.opentype.MathHorizontalConstructionRequest
-import org.tiqian.math.font.opentype.MathKernCorner
 import org.tiqian.math.font.opentype.MathVerticalConstruction
-import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
-import org.tiqian.math.font.opentype.MathVerticalAssemblyPolicy
-import org.tiqian.math.font.opentype.OpenTypeMathConstants
 import org.tiqian.math.font.opentype.OpenTypeMathException
-import org.tiqian.math.font.opentype.OpenTypeMathFont
-import org.tiqian.math.parser.MacroExpansionLimits
-import org.tiqian.math.parser.MathFormulaParser
-import org.tiqian.math.parser.MathMacroDefinition
-import org.tiqian.math.parser.MathParser
-import kotlin.math.floor
 import kotlin.math.max
 import org.tiqian.math.layout.MathLayoutPass.AccentAttachmentEvidence
 import org.tiqian.math.layout.MathLayoutPass.LaidNode
@@ -89,26 +78,48 @@ internal fun MathLayoutPass.layoutAccent(
     val normalMeasuredGlyph = normalOutline.glyphs.single()
     val normalWidth = normalMeasuredGlyph.inkBounds.width.coerceAtLeast(normal.width)
     val targetWidth = base.box.width
+    val resolvedTargetWidth = validatedResolvedDimension(
+        sourceText = "horizontalConstructionTargetPx",
+        resolvedPx = targetWidth,
+        range = node.commandRange,
+    )
     val hasHorizontalConstruction = normalGlyph.glyphId in constructionMathFont.horizontalConstructions
-    val construction = if (node.identity.wide || hasHorizontalConstruction) {
-        constructionMathFont.horizontalConstruction(
-            MathHorizontalConstructionRequest(
-                baseGlyphId = normalGlyph.glyphId,
-                targetSizePx = targetWidth,
-                fontSizePx = size,
-                normalGlyphWidthPx = normalWidth,
-                normalGlyphOrthogonalExtentPx = normalMeasuredGlyph.inkBounds.height,
-            ),
-            glyphGrowthExtentPx = { glyphId ->
+    var constructionBlockedByResource = resolvedTargetWidth == null
+    val construction = if ((node.identity.wide || hasHorizontalConstruction) && resolvedTargetWidth != null) {
+        try {
+            constructionMathFont.horizontalConstruction(
+                request = MathHorizontalConstructionRequest(
+                    baseGlyphId = normalGlyph.glyphId,
+                    targetSizePx = resolvedTargetWidth,
+                    fontSizePx = size,
+                    normalGlyphWidthPx = normalWidth,
+                    normalGlyphOrthogonalExtentPx = normalMeasuredGlyph.inkBounds.height,
+                    resourceLimits = limitsForNextConstruction(),
+                ),
+                glyphGrowthExtentPx = { glyphId ->
+                    measureGlyphOutlineForFace(
+                        constructionFaceId, glyphId, size, style, node.commandRange,
+                    ).glyphs.single().inkBounds.width
+                },
+            ) { glyphId ->
                 measureGlyphOutlineForFace(
                     constructionFaceId, glyphId, size, style, node.commandRange,
-                ).glyphs.single().inkBounds.width
-            },
-        ) { glyphId ->
-            measureGlyphOutlineForFace(
-                constructionFaceId, glyphId, size, style, node.commandRange,
-            )
-                .glyphs.single().inkBounds.height
+                )
+                    .glyphs.single().inkBounds.height
+            }
+        } catch (failure: OpenTypeMathException) {
+            constructionBlockedByResource =
+                failure.diagnosticCode == DiagnosticCode.ExtenderCountLimitExceeded ||
+                failure.diagnosticCode == DiagnosticCode.InvalidResolvedDimension
+            recordConstructionFailure(failure, node.commandRange)
+            null
+        }?.let { candidate ->
+            if (consumeConstructionExtenders(candidate, node.commandRange)) {
+                candidate
+            } else {
+                constructionBlockedByResource = true
+                null
+            }
         }
     } else {
         null
@@ -125,7 +136,7 @@ internal fun MathLayoutPass.layoutAccent(
         },
         orthogonalAdvancePx = normalMeasuredGlyph.inkBounds.height,
     ).also { fallback ->
-        if (node.identity.wide) {
+        if (node.identity.wide && !constructionBlockedByResource) {
             diagnostics += MathDiagnostic(
                 DiagnosticCode.MissingMathConstruction,
                 "${node.identity.debugName} has no horizontal MATH construction covering ${targetWidth}px",

@@ -9,6 +9,7 @@ import org.tiqian.math.core.MathHostTextFaceDecision
 import org.tiqian.math.core.MathAlphabet
 import org.tiqian.math.core.MathFamily
 import org.tiqian.math.core.MathLargeOperatorIdentity
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.MathStyle
 import org.tiqian.math.core.MathStyleLevel
 import org.tiqian.math.core.MathSymbolIdentity
@@ -81,6 +82,7 @@ data class MeasuredOutlineConstructionRun(
         is MathConstructionOutlineEvidence.Available -> MathConstructionOutlineCapability.Replayable
         is MathConstructionOutlineEvidence.Unavailable ->
             MathConstructionOutlineCapability.Unavailable(evidence.reason)
+        // is MathConstructionOutlineEvidence.MathConstructionTopStroke -> TODO()
     },
 )
 
@@ -152,11 +154,12 @@ data class MathOperatorGlyphRequest(
     val identity: MathLargeOperatorIdentity,
     val style: MathStyle,
     val sourceRange: SourceRange,
+    val resourceLimits: MathResourceLimits,
 )
 
 /**
  * The style-shaped run is used for normal operators. [constructionBaseGlyphId] deliberately
- * bypasses `ssty`, since MathVariants coverage is keyed by the base large-operator glyph.
+ * bypassing `ssty` since MathVariants coverage is keyed by the base large-operator glyph.
  */
 data class ResolvedMathOperator(
     val run: MeasuredMathRun,
@@ -165,8 +168,7 @@ data class ResolvedMathOperator(
 )
 
 /**
- * One shaping result for consecutive compatible Ord noads. [glyphSourceRanges] is parallel to
- * [MeasuredMathRun.glyphs] and maps backend shaping clusters back to the untouched input.
+ * One shaping result for consecutive compatible Ord noads.
  */
 data class ResolvedMathSymbolRun(
     val run: MeasuredMathRun,

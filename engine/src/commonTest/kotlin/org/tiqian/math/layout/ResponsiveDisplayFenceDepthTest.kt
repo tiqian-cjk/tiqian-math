@@ -7,6 +7,7 @@ import org.tiqian.math.core.MathFormulaLineMetrics
 import org.tiqian.math.core.MathGlueAdjustment
 import org.tiqian.math.core.MathInlineFragment
 import org.tiqian.math.core.MathRect
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.SourceRange
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -39,6 +40,7 @@ class ResponsiveDisplayFenceDepthTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 200f,
             defaultContinuationIndentPx = 0f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         val lines = resolution.layout.lines
@@ -69,6 +71,7 @@ class ResponsiveDisplayFenceDepthTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 160f,
             defaultContinuationIndentPx = 0f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         val lines = resolution.layout.lines
@@ -106,6 +109,7 @@ class ResponsiveDisplayFenceDepthTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 200f,
             defaultContinuationIndentPx = 40f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         val lines = resolution.layout.lines
@@ -139,6 +143,7 @@ class ResponsiveDisplayFenceDepthTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 200f,
             defaultContinuationIndentPx = 40f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(1, resolution.layout.lines.size, "a single absorbing overflow line expected")

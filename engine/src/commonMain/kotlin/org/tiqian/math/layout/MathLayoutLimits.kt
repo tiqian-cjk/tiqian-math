@@ -1,21 +1,6 @@
 package org.tiqian.math.layout
 
 import org.tiqian.math.core.*
-import org.tiqian.math.font.opentype.MathConstructionKind
-import org.tiqian.math.font.opentype.MathDeviceAdjustment
-import org.tiqian.math.font.opentype.MathGlyphComponent
-import org.tiqian.math.font.opentype.MathHorizontalConstructionRequest
-import org.tiqian.math.font.opentype.MathKernCorner
-import org.tiqian.math.font.opentype.MathVerticalConstruction
-import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
-import org.tiqian.math.font.opentype.MathVerticalAssemblyPolicy
-import org.tiqian.math.font.opentype.OpenTypeMathConstants
-import org.tiqian.math.font.opentype.OpenTypeMathException
-import org.tiqian.math.font.opentype.OpenTypeMathFont
-import org.tiqian.math.parser.MacroExpansionLimits
-import org.tiqian.math.parser.MathFormulaParser
-import org.tiqian.math.parser.MathMacroDefinition
-import org.tiqian.math.parser.MathParser
 import kotlin.math.floor
 import kotlin.math.max
 import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_MU_PER_EM
@@ -381,8 +366,42 @@ internal fun MathLayoutPass.layoutExtensibleArrow(
         )
     }
     val targetWidth = max(naturalFillWidth.coerceAtLeast(0f), labelTargetWidth)
-    val leaderGlueWidth = (targetWidth - naturalFillWidth).coerceAtLeast(0f)
-    val leaderCount = if (leaderBoxWidth > 0f) floor(leaderGlueWidth / leaderBoxWidth).toInt() else 0
+    val resolvedTargetWidth = validatedResolvedDimension(
+        sourceText = "extensibleArrowTargetWidthPx",
+        resolvedPx = targetWidth,
+        range = node.commandRange,
+    ) ?: return LaidNode(
+        node = node,
+        box = emptyBox(node.range),
+        atomClass = MathAtomClass.Relation,
+        italicCorrectionPx = 0f,
+        style = style,
+        scriptBaseKind = ScriptBaseKind.CompoundBox,
+    )
+    val leaderGlueWidth = (resolvedTargetWidth - naturalFillWidth).coerceAtLeast(0f)
+    val requestedLeaderCount = if (leaderBoxWidth > 0f) {
+        floor((leaderGlueWidth / leaderBoxWidth).toDouble())
+    } else {
+        0.0
+    }
+    val requestedLeaderCountLong = if (
+        requestedLeaderCount.isFinite() && requestedLeaderCount <= Long.MAX_VALUE.toDouble()
+    ) {
+        requestedLeaderCount.toLong()
+    } else {
+        Long.MAX_VALUE
+    }
+    if (!consumeExtenders(requestedLeaderCountLong, node.commandRange)) {
+        return LaidNode(
+            node = node,
+            box = emptyBox(node.range),
+            atomClass = MathAtomClass.Relation,
+            italicCorrectionPx = 0f,
+            style = style,
+            scriptBaseKind = ScriptBaseKind.CompoundBox,
+        )
+    }
+    val leaderCount = requestedLeaderCountLong.toInt()
     val centeredLeaderRemainder = if (leaderCount > 0) {
         (leaderGlueWidth - leaderCount * leaderBoxWidth) / 2f
     } else {
@@ -392,7 +411,7 @@ internal fun MathLayoutPass.layoutExtensibleArrow(
     val leaderOrigins = List(leaderCount) { index ->
         leaderGlueStart + centeredLeaderRemainder + index * leaderBoxWidth - leaderInnerOverlap
     }
-    val rightOrigin = targetWidth - rightRun.width
+    val rightOrigin = resolvedTargetWidth - rightRun.width
     val group = MathConstructionPaintGroup(
         id = nextConstructionPaintGroupId++,
         kind = MathConstructionPaintKind.ExtensibleArrow,

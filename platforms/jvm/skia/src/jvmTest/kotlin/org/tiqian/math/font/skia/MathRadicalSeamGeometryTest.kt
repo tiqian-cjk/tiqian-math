@@ -20,7 +20,6 @@ import org.tiqian.math.core.DiagnosticCode
 import org.tiqian.math.core.MathLayoutDecision
 import org.tiqian.math.core.MathLayoutResult
 import org.tiqian.math.core.MathMode
-import org.tiqian.math.core.MathRect
 import org.tiqian.math.core.MathRulePlacement
 import org.tiqian.math.core.MathStyle
 import org.tiqian.math.core.SourceRange
@@ -34,7 +33,6 @@ import org.tiqian.math.layout.MathConstructionOutlineUnavailableReason
 import org.tiqian.math.layout.MathGlyphBoundsSource
 import org.tiqian.math.layout.MathOperatorGlyphRequest
 import org.tiqian.math.layout.MathSymbolGlyphRequest
-import org.tiqian.math.layout.MeasuredMathGlyph
 import org.tiqian.math.layout.MeasuredMathRun
 import org.tiqian.math.layout.MeasuredOutlineConstructionRun
 import org.tiqian.math.layout.ResolvedMathOperator
@@ -98,9 +96,9 @@ class MathRadicalSeamGeometryTest {
         }
 
     @Test
-    fun legacyFontReportedConstructionBoundsReproduceTheHistoricalSeamFailure() =
+    fun shiftedFontReportedConstructionBoundsReproduceTheHistoricalSeamFailure() =
         withSeamFaces { label, face ->
-            val legacy = LegacyFontReportedConstructionFace(face)
+            val legacy = ShiftedFontReportedConstructionFace(face)
             seamFontSizes().forEach { fontSizePx ->
                 radicalCases().forEach { case ->
                     val result = MathLayoutEngine(legacy).layout(
@@ -109,6 +107,7 @@ class MathRadicalSeamGeometryTest {
                     )
                     val seam = face.radicalSeamGeometry(result.box, result.outerRadicalGroup())
                     val geometry = result.radicalGeometryDecision()
+                    assertEquals(case.kind, result.outerRadicalGroup().shapeKind)
                     assertTrue(
                         result.diagnostics.any { it.code == DiagnosticCode.MissingConstructionOutlineEvidence },
                         result.debugDump,
@@ -136,8 +135,8 @@ class MathRadicalSeamGeometryTest {
                         "$label/${case.label}/$fontSizePx legacy font-reported bounds must reproduce the seam bug: $seam",
                     )
                     assertTrue(
-                        abs(seam.centerlineErrorPx) > seam.strokeThicknessTolerancePx * 8f,
-                        "$label/${case.label}/$fontSizePx historical displacement is materially visible: $seam",
+                        abs(seam.centerlineErrorPx) > legacy.reportedBoundsShiftPx(fontSizePx) / 2f,
+                        "$label/${case.label}/$fontSizePx synthetic reported-bounds shift must displace the seam: $seam",
                     )
                     println("SEAM-BEFORE face=$label kind=${case.label} size=$fontSizePx $seam")
                 }
@@ -574,7 +573,14 @@ private inline fun withSeamFaces(block: (String, SkiaMathFontFace) -> Unit) {
     ).forEach { (label, font) -> SkiaMathFontFace(font).use { block(label, it) } }
 }
 
-private class LegacyFontReportedConstructionFace(
+/**
+ * Models the old adapter contract without depending on the host rasterizer's bbox padding.
+ * Shift exact bounds up by 1/8 em while leaving paths, advances and bbox heights unchanged.
+ * This preserves construction selection but deliberately supplies a wrong fallback anchor.
+ * Construction measurements report unavailable outline evidence; ordinary glyphs retain
+ * the delegate's measurements so the test only corrupts the construction fallback anchor.
+ */
+private class ShiftedFontReportedConstructionFace(
     private val delegate: SkiaMathFontFace,
 ) : MathFontFace {
     override val mathFont = delegate.mathFont
@@ -601,34 +607,50 @@ private class LegacyFontReportedConstructionFace(
         text: String,
         fontSizePx: Float,
         sourceRange: SourceRange,
-    ): MeasuredMathRun = delegate.shape(text, fontSizePx, MathStyle.Text, sourceRange)
+    ): MeasuredMathRun = delegate.shapeOutlineConstructionBase(text, fontSizePx, sourceRange)
+        .run.withShiftedReportedBounds(fontSizePx)
 
     override fun measureGlyph(
         glyphId: UShort,
         fontSizePx: Float,
         style: MathStyle,
         sourceRange: SourceRange,
-    ): MeasuredMathRun = delegate.font(fontSizePx).use { font ->
-        val id = glyphId.toShort()
-        val width = font.getWidths(shortArrayOf(id)).single()
-        val bound = font.getBounds(shortArrayOf(id)).single()
-        MeasuredMathRun(
-            glyphs = listOf(
-                MeasuredMathGlyph(
-                    glyphId = glyphId,
-                    x = 0f,
-                    advance = width,
-                    inkBounds = MathRect(bound.left, bound.top, bound.right, bound.bottom),
-                ),
-            ),
-            width = width,
-            ascent = (-bound.top).coerceAtLeast(0f),
-            descent = bound.bottom.coerceAtLeast(0f),
-            missingGlyph = glyphId.toInt() == 0,
+    ): MeasuredMathRun = delegate.measureGlyph(glyphId, fontSizePx, style, sourceRange)
+
+    override fun measureGlyphOutlineBounds(
+        glyphId: UShort,
+        fontSizePx: Float,
+        style: MathStyle,
+        sourceRange: SourceRange,
+    ): MeasuredMathRun = delegate.measureGlyphOutlineBounds(glyphId, fontSizePx, style, sourceRange)
+
+    override fun measureOutlineConstructionGlyph(
+        glyphId: UShort,
+        fontSizePx: Float,
+        style: MathStyle,
+        sourceRange: SourceRange,
+    ): MeasuredOutlineConstructionRun = MeasuredOutlineConstructionRun(
+        run = delegate.measureGlyphOutlineBounds(glyphId, fontSizePx, style, sourceRange)
+            .withShiftedReportedBounds(fontSizePx),
+        evidence = MathConstructionOutlineEvidence.Unavailable(
+            MathConstructionOutlineUnavailableReason.AdapterDoesNotProvideOutlineEvidence,
+        ),
+    )
+
+    fun reportedBoundsShiftPx(fontSizePx: Float): Float = fontSizePx / 8f
+
+    private fun MeasuredMathRun.withShiftedReportedBounds(fontSizePx: Float): MeasuredMathRun {
+        val shift = reportedBoundsShiftPx(fontSizePx)
+        val shiftedGlyphs = glyphs.map { glyph ->
+            glyph.copy(inkBounds = glyph.inkBounds.translated(0f, -shift))
+        }
+        return copy(
+            glyphs = shiftedGlyphs,
+            ascent = (-(shiftedGlyphs.minOfOrNull { it.inkBounds.top } ?: 0f)).coerceAtLeast(0f),
+            descent = (shiftedGlyphs.maxOfOrNull { it.inkBounds.bottom } ?: 0f).coerceAtLeast(0f),
             boundsSource = MathGlyphBoundsSource.FontReported,
         )
     }
-
 }
 
 private class TopStrokeOverrideFace(

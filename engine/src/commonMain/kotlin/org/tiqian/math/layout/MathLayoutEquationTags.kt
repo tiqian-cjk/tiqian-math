@@ -1,40 +1,13 @@
 package org.tiqian.math.layout
 
 import org.tiqian.math.core.*
-import org.tiqian.math.font.opentype.MathConstructionKind
-import org.tiqian.math.font.opentype.MathDeviceAdjustment
-import org.tiqian.math.font.opentype.MathGlyphComponent
-import org.tiqian.math.font.opentype.MathHorizontalConstructionRequest
-import org.tiqian.math.font.opentype.MathKernCorner
-import org.tiqian.math.font.opentype.MathVerticalConstruction
-import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
-import org.tiqian.math.font.opentype.MathVerticalAssemblyPolicy
-import org.tiqian.math.font.opentype.OpenTypeMathConstants
-import org.tiqian.math.font.opentype.OpenTypeMathException
-import org.tiqian.math.font.opentype.OpenTypeMathFont
-import org.tiqian.math.parser.MacroExpansionLimits
-import org.tiqian.math.parser.MathFormulaParser
-import org.tiqian.math.parser.MathMacroDefinition
-import org.tiqian.math.parser.MathParser
-import kotlin.math.floor
-import kotlin.math.max
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_ALIGNED_ROW_GAP_EM
 import org.tiqian.math.layout.MathLayoutPass.Companion.BIG_POINT_TO_PX
 import org.tiqian.math.layout.MathLayoutPass.Companion.CENTIMETERS_PER_INCH
 import org.tiqian.math.layout.MathLayoutPass.Companion.CSS_PIXELS_PER_INCH
 import org.tiqian.math.layout.MathLayoutPass.Companion.MILLIMETERS_PER_INCH
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_ALIGNED_PAIR_GAP_EM
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_ARRAY_COLUMN_SEPARATION_EM
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_ARRAY_INTERCOLUMN_EM
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_ARRAY_STRUT_ASCENT_EM
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_ARRAY_STRUT_DESCENT_EM
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_CASES_STRUT_ASCENT_EM
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_CASES_STRUT_DESCENT_EM
 import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_POINT_TO_PX
-import org.tiqian.math.layout.MathLayoutPass.Companion.TEX_SMALL_MATRIX_LINE_SKIP_EM
 import org.tiqian.math.layout.MathLayoutPass.DelimiterTargetEvidence
 import org.tiqian.math.layout.MathLayoutPass.LaidNode
-import org.tiqian.math.layout.MathLayoutPass.MathAlphabetOverride
 
 /**
  * The shared explainability surface of one responsive wrap: every wrap decision carries these
@@ -91,7 +64,9 @@ internal fun MathLayoutPass.resolveSoftWrappedDisplayBody(
         maxWidthPx = viewportWidth,
         defaultContinuationIndentPx = DISPLAY_CONTINUATION_INDENT_EM * fontSize(style),
         displayRowJotPx = DISPLAY_ROW_JOT_EM * fontSize(style),
+        resourceLimits = resourceLimits,
     )
+    diagnostics += breakResolution.layout.diagnostics.filterNot(diagnostics::contains)
     val broken = breakResolution.layout
     if (broken.lines.size == 1 && body.visualWidth <= viewportWidth) return body
 
@@ -634,7 +609,7 @@ private fun MathLayoutPass.equationTagDecision(
 )
 
 internal fun MathLayoutPass.resolveTeXDimension(dimension: MathTeXDimension, emSizePx: Float): Float {
-    val pixels = when (dimension.unit) {
+    val unvalidatedPixels = when (dimension.unit) {
         MathTeXDimensionUnit.Point -> dimension.value * TEX_POINT_TO_PX
         MathTeXDimensionUnit.BigPoint -> dimension.value * BIG_POINT_TO_PX
         MathTeXDimensionUnit.Em -> dimension.value * emSizePx
@@ -649,10 +624,14 @@ internal fun MathLayoutPass.resolveTeXDimension(dimension: MathTeXDimension, emS
         "value" to dimension.value,
         "unit" to dimension.unit.sourceName,
         "emSizePx" to emSizePx,
-        "resolvedPx" to pixels,
+        "resolvedPx" to unvalidatedPixels,
         "policy" to "TeXDimensionAt96CssPixelsPerInch",
     )
-    return pixels
+    return validatedResolvedDimension(
+        sourceText = dimension.sourceText,
+        resolvedPx = unvalidatedPixels,
+        range = dimension.range,
+    ) ?: 0f
 }
 
 internal fun MathLayoutPass.wrapTableDelimiters(

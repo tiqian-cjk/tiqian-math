@@ -2,7 +2,9 @@ package org.tiqian.math.parser
 
 import org.tiqian.math.core.DiagnosticCode
 import org.tiqian.math.core.MathDiagnostic
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.SourceRange
+import org.tiqian.math.core.mathResourceLimitDiagnostic
 
 enum class MathTokenKind {
     Symbol,
@@ -31,9 +33,23 @@ data class TokenizationResult(
 )
 
 class MathTokenizer {
-    fun tokenize(source: String): TokenizationResult {
+    fun tokenize(
+        source: String,
+        resourceLimits: MathResourceLimits = MathResourceLimits.Default,
+    ): TokenizationResult {
         val tokens = mutableListOf<MathToken>()
         val diagnostics = mutableListOf<MathDiagnostic>()
+        if (source.length > resourceLimits.maximumSourceLength) {
+            diagnostics += mathResourceLimitDiagnostic(
+                code = DiagnosticCode.SourceLengthLimitExceeded,
+                resource = "sourceLength",
+                actual = source.length,
+                limit = resourceLimits.maximumSourceLength,
+                range = SourceRange(0, source.length),
+            )
+            tokens += MathToken(MathTokenKind.End, "", SourceRange.Empty)
+            return TokenizationResult(tokens, diagnostics)
+        }
         var index = 0
         var awaitingBboxOptions = false
         var insideBboxOptions = false
@@ -42,6 +58,16 @@ class MathTokenizer {
         var awaitingColorArgument = false
         var insideColorArgument = false
         while (index < source.length) {
+            if (tokens.size >= resourceLimits.maximumTokenCount) {
+                diagnostics += mathResourceLimitDiagnostic(
+                    code = DiagnosticCode.TokenCountLimitExceeded,
+                    resource = "tokenCount",
+                    actual = tokens.size + 1,
+                    limit = resourceLimits.maximumTokenCount,
+                    range = SourceRange(index, source.nextCodePointIndex(index)),
+                )
+                break
+            }
             val start = index
             val char = source[index]
             if (awaitingBboxOptions && !char.isWhitespace() && char != '[' && char != '%') {
@@ -163,7 +189,7 @@ class MathTokenizer {
                 }
             }
         }
-        tokens += MathToken(MathTokenKind.End, "", SourceRange(source.length, source.length))
+        tokens += MathToken(MathTokenKind.End, "", SourceRange(index, index))
         return TokenizationResult(tokens, diagnostics)
     }
 }

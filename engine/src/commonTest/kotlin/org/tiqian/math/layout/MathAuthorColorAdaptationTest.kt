@@ -5,6 +5,7 @@ import org.tiqian.math.core.MathGlyphPlacement
 import org.tiqian.math.core.MathPaintColor
 import org.tiqian.math.core.MathPaintLayer
 import org.tiqian.math.core.MathRect
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.MathRulePaintRole
 import org.tiqian.math.core.MathRulePlacement
 import org.tiqian.math.core.MathStyle
@@ -213,5 +214,6 @@ class MathAuthorColorAdaptationTest {
         decisions = emptyList(),
         debugDumpRenderer = { "" },
         fontSizePx = 20f,
+        resourceLimits = MathResourceLimits.Default,
     )
 }

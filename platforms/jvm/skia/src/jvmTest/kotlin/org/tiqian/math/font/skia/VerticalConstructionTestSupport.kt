@@ -1,6 +1,7 @@
 package org.tiqian.math.font.skia
 
 import org.tiqian.math.core.MathStyle
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.SourceRange
 import org.tiqian.math.font.opentype.MathVerticalConstruction
 import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
@@ -25,6 +26,7 @@ internal fun OpenTypeMathFont.verticalConstructionForTest(
         normalGlyphHeightPx = normalGlyphHeightPx,
         normalGlyphAdvanceWidthPx = normalGlyphAdvanceWidthPx,
         assemblyPolicy = assemblyPolicy,
+        resourceLimits = MathResourceLimits.Default,
     ),
     glyphVerticalExtentPx = { glyphId ->
         face.measureGlyphOutlineBounds(glyphId, fontSizePx, style, SourceRange(0, 0))

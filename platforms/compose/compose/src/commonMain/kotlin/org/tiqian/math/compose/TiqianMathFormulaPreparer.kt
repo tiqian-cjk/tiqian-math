@@ -25,47 +25,6 @@ class TiqianMathFormulaPreparer internal constructor(
     private val faces = mutableMapOf<MathFontWeight, MathComposeFontFace>()
     private val engines = mutableMapOf<MathFontWeight, MathFormulaCapabilityEngine>()
 
-    /** Binary-compatible density-one bridge; source callers must migrate to the density overload. */
-    @Deprecated(
-        message = "Pass the Compose Density that resolves LaTeX absolute lengths",
-        level = DeprecationLevel.ERROR,
-    )
-    @Synchronized
-    fun prepare(
-        source: String,
-        mode: MathMode = MathMode.Inline,
-        fontSizePx: Float,
-        fontWeight: Int = MathFontWeight.Regular.cssWeight,
-        requestedLineHeightPx: Float? = null,
-        nullDelimiterSpacePx: Float? = null,
-        scriptSpacePx: Float? = null,
-        delimiterFactor: Int = 901,
-        delimiterShortfallPx: Float? = null,
-        color: Color = Color.Black,
-        textLocale: String? = null,
-        displayWidthPx: Float? = null,
-        softWrapDisplay: Boolean = false,
-        authorColorAdapter: MathAuthorColorAdapter? = null,
-        authorColorBackdrop: Color = Color.Unspecified,
-    ): TiqianMathFormula = prepare(
-        source = source,
-        mode = mode,
-        fontSizePx = fontSizePx,
-        density = Density(1f),
-        fontWeight = fontWeight,
-        requestedLineHeightPx = requestedLineHeightPx,
-        nullDelimiterSpacePx = nullDelimiterSpacePx,
-        scriptSpacePx = scriptSpacePx,
-        delimiterFactor = delimiterFactor,
-        delimiterShortfallPx = delimiterShortfallPx,
-        color = color,
-        textLocale = textLocale,
-        displayWidthPx = displayWidthPx,
-        softWrapDisplay = softWrapDisplay,
-        authorColorAdapter = authorColorAdapter,
-        authorColorBackdrop = authorColorBackdrop,
-    )
-
     @Synchronized
     fun prepare(
         source: String,

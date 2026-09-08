@@ -33,7 +33,7 @@ internal fun ParserState.parseDelimited(leftCommand: MathToken): MathDelimited {
                 val command = advance()
                 children += MathMiddleDelimiter(parseDelimiterSpec(command, MathDelimiterSide.Middle))
             }
-            else -> parseAtomWithScripts()?.let { children.appendParsedNode(it) }
+            else -> parseAtomWithScripts()?.let { children += it }
         }
     }
     val bodyRange = when {

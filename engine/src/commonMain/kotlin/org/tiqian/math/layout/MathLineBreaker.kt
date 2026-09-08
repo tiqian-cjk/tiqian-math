@@ -7,6 +7,8 @@ import org.tiqian.math.core.MathBreakOpportunity
 import org.tiqian.math.core.MathBrokenLayout
 import org.tiqian.math.core.MathBrokenLine
 import org.tiqian.math.core.MathContinuationAlignment
+import org.tiqian.math.core.DiagnosticCode
+import org.tiqian.math.core.MathDiagnostic
 import org.tiqian.math.core.MathFormulaLineMetrics
 import org.tiqian.math.core.MathGlueAdjustment
 import org.tiqian.math.core.MathGroup
@@ -17,6 +19,10 @@ import org.tiqian.math.core.MathLineAdjustmentMode
 import org.tiqian.math.core.MathLineBreakPolicy
 import org.tiqian.math.core.MathLineFragmentPlacement
 import org.tiqian.math.core.MathRect
+import org.tiqian.math.core.MathResourceLimits
+import org.tiqian.math.core.SourceRange
+import org.tiqian.math.core.invalidResolvedDimensionDiagnostic
+import org.tiqian.math.core.mathResourceLimitDiagnostic
 import kotlin.math.abs
 
 /**
@@ -69,12 +75,33 @@ internal fun MathLayoutPass.inlineFragments(
  * Greedy reference breaker over the public fragment contract.
  *
  * Break selection, adjustment, reported geometry, and rendering placements all use the same
- * resolved glue values. Glue after the last visible fragment is never placed on a line.
+ * resolved glue values. Glue after the last visible fragment is never placed on a line. The
+ * formula's captured resource policy is reused, with any rejection reported on the returned
+ * [MathBrokenLayout].
  */
 fun MathLayoutResult.breakIntoLines(
     maxWidthPx: Float,
     adjustmentMode: MathLineAdjustmentMode = MathLineAdjustmentMode.Fit,
-): MathBrokenLayout = breakMathFragments(fragments, lineMetrics, maxWidthPx, adjustmentMode)
+): MathBrokenLayout {
+    val breakpointCount = mathBreakpointCount(fragments, MathLineBreakPolicy.InlineTrailingOperators)
+    if (breakpointCount <= resourceLimits.maximumBreakpointCount) {
+        return breakMathFragments(fragments, lineMetrics, maxWidthPx, adjustmentMode)
+    }
+    val diagnostic = mathResourceLimitDiagnostic(
+        code = DiagnosticCode.BreakpointCountLimitExceeded,
+        resource = "breakpointCount",
+        actual = breakpointCount,
+        limit = resourceLimits.maximumBreakpointCount,
+        range = fragments.first().sourceRange.cover(fragments.last().sourceRange),
+    )
+    return resourceRejectedUnbrokenLayout(
+        fragments = fragments,
+        lineMetrics = lineMetrics,
+        maxWidthPx = maxWidthPx,
+        policy = MathLineBreakPolicy.InlineTrailingOperators,
+        diagnostic = diagnostic,
+    )
+}
 
 /**
  * Responsive display policy for variable-width electronic reading.
@@ -87,7 +114,8 @@ fun MathLayoutResult.breakIntoLines(
  * right edge (multline final-line convention) instead of taking the operator anchor. The
  * resulting multiline block is centered as a group instead of centering every line independently.
  * Atomic sub-formulas remain indivisible and are reported as overflow rather than split at an
- * invented boundary.
+ * invented boundary. The formula's captured resource policy is reused, with any rejection
+ * reported on the returned [MathBrokenLayout].
  */
 fun MathLayoutResult.breakResponsiveDisplayLines(
     maxWidthPx: Float,
@@ -99,15 +127,36 @@ fun MathLayoutResult.breakResponsiveDisplayLines(
     adjustmentMode = adjustmentMode,
     defaultContinuationIndentPx = DISPLAY_CONTINUATION_INDENT_EM * fontSizePx,
     displayRowJotPx = DISPLAY_ROW_JOT_EM * fontSizePx,
+    resourceLimits = resourceLimits,
 ).layout
 
-internal fun breakMathFragments(
+/** Uses the same legal boundaries as the requested breaker, including boundary coalescing. */
+internal fun mathBreakpointCount(
+    fragments: List<MathInlineFragment>,
+    policy: MathLineBreakPolicy,
+): Int = when (policy) {
+    MathLineBreakPolicy.InlineTrailingOperators -> fragments.internalBreakpointCount { it.breakAfter != null }
+    MathLineBreakPolicy.ResponsiveDisplayLeadingOperators -> responsiveBoundaries(fragments).responsiveBreakpointCount()
+}
+
+private fun List<ResponsiveBoundary>.responsiveBreakpointCount(): Int = internalBreakpointCount { it.kind != null }
+
+/** Counts legal internal boundaries while excluding a terminal marker in the last slot. */
+internal inline fun <T> List<T>.internalBreakpointCount(isBreakpoint: (T) -> Boolean): Int {
+    var count = 0
+    for (index in 0 until lastIndex) {
+        if (isBreakpoint(this[index])) count += 1
+    }
+    return count
+}
+
+private fun breakMathFragments(
     fragments: List<MathInlineFragment>,
     lineMetrics: MathFormulaLineMetrics,
     maxWidthPx: Float,
     adjustmentMode: MathLineAdjustmentMode = MathLineAdjustmentMode.Fit,
 ): MathBrokenLayout {
-    require(maxWidthPx > 0f) { "line width must be positive" }
+    require(maxWidthPx.isFinite() && maxWidthPx > 0f) { "line width must be finite and positive" }
     if (fragments.isEmpty()) return MathBrokenLayout(emptyList(), 0f, 0f)
 
     // Legal breaks partition the formula into indivisible segments. A segment that cannot fit
@@ -178,6 +227,59 @@ internal fun breakMathFragments(
         height = height,
         policy = MathLineBreakPolicy.InlineTrailingOperators,
         targetWidthPx = maxWidthPx,
+    )
+}
+
+private fun resourceRejectedUnbrokenLayout(
+    fragments: List<MathInlineFragment>,
+    lineMetrics: MathFormulaLineMetrics,
+    maxWidthPx: Float,
+    policy: MathLineBreakPolicy,
+    diagnostic: MathDiagnostic,
+): MathBrokenLayout {
+    require(maxWidthPx.isFinite() && maxWidthPx > 0f) { "line width must be finite and positive" }
+    if (fragments.isEmpty()) {
+        return MathBrokenLayout(
+            lines = emptyList(),
+            width = 0f,
+            height = 0f,
+            policy = policy,
+            targetWidthPx = maxWidthPx,
+            diagnostics = listOf(diagnostic),
+        )
+    }
+
+    // Resource rejection must not enter the ordinary breaker: even an effectively infinite
+    // width still makes it probe every growing segment. Build the one retained line directly in
+    // one geometry pass instead.
+    val range = fragments.indices
+    val lineGeometry = geometry(
+        fragments = fragments,
+        range = range,
+        resolvedGlue = internalGlue(fragments, range) { it.naturalPx },
+    )
+    val safeMetrics = lineMetrics.forInk(lineGeometry.inkAscent, lineGeometry.inkDescent)
+    val line = MathBrokenLine(
+        fragments = lineGeometry.placements,
+        logicalWidth = lineGeometry.logicalWidth,
+        inkBounds = lineGeometry.inkBounds,
+        visualLeft = lineGeometry.visualLeft,
+        visualRight = lineGeometry.visualRight,
+        width = lineGeometry.visualWidth,
+        inkAscent = lineGeometry.inkAscent,
+        inkDescent = lineGeometry.inkDescent,
+        ascent = safeMetrics.logicalAscentPx,
+        descent = safeMetrics.logicalDescentPx,
+        baselineFromTop = safeMetrics.logicalAscentPx,
+        unbreakableOverflow = lineGeometry.visualWidth > maxWidthPx + GEOMETRY_EPSILON_PX,
+    )
+    return MathBrokenLayout(
+        lines = listOf(line),
+        width = lineGeometry.visualWidth,
+        height = line.baselineFromTop + line.descent,
+        policy = policy,
+        targetWidthPx = maxWidthPx,
+        diagnostics = listOf(diagnostic),
     )
 }
 
@@ -294,14 +396,32 @@ internal fun resolveResponsiveDisplayBreak(
     maxWidthPx: Float,
     adjustmentMode: MathLineAdjustmentMode = MathLineAdjustmentMode.Fit,
     defaultContinuationIndentPx: Float,
+    resourceLimits: MathResourceLimits,
     displayRowJotPx: Float = 0f,
 ): ResponsiveDisplayBreakResolution {
-    require(maxWidthPx > 0f) { "line width must be positive" }
+    require(maxWidthPx.isFinite() && maxWidthPx > 0f) { "line width must be finite and positive" }
     require(defaultContinuationIndentPx.isFinite() && defaultContinuationIndentPx >= 0f) {
         "default continuation indent must be finite and non-negative"
     }
     require(displayRowJotPx.isFinite() && displayRowJotPx >= 0f) {
         "display row jot must be finite and non-negative"
+    }
+    if (defaultContinuationIndentPx > resourceLimits.maximumResolvedDimensionPx) {
+        val range = fragments.firstOrNull()?.sourceRange
+            ?.cover(fragments.last().sourceRange)
+            ?: SourceRange.Empty
+        return rejectedResponsiveResolution(
+            fragments = fragments,
+            lineMetrics = lineMetrics,
+            maxWidthPx = maxWidthPx,
+            defaultIndentPx = 0f,
+            diagnostic = invalidResolvedDimensionDiagnostic(
+                sourceText = "responsive continuation indent",
+                resolvedPx = defaultContinuationIndentPx,
+                maximumAbsolutePx = resourceLimits.maximumResolvedDimensionPx,
+                range = range,
+            ),
+        )
     }
     if (fragments.isEmpty()) {
         return ResponsiveDisplayBreakResolution(
@@ -322,6 +442,23 @@ internal fun resolveResponsiveDisplayBreak(
     }
 
     val boundaries = responsiveBoundaries(fragments)
+    val breakpointCount = boundaries.responsiveBreakpointCount()
+    if (breakpointCount > resourceLimits.maximumBreakpointCount) {
+        val diagnostic = mathResourceLimitDiagnostic(
+            code = DiagnosticCode.BreakpointCountLimitExceeded,
+            resource = "breakpointCount",
+            actual = breakpointCount,
+            limit = resourceLimits.maximumBreakpointCount,
+            range = fragments.first().sourceRange.cover(fragments.last().sourceRange),
+        )
+        return rejectedResponsiveResolution(
+            fragments = fragments,
+            lineMetrics = lineMetrics,
+            maxWidthPx = maxWidthPx,
+            defaultIndentPx = defaultContinuationIndentPx,
+            diagnostic = diagnostic,
+        )
+    }
     val rangeWidths = ResponsiveRangeWidths(fragments, boundaries)
     val anchorRequest = responsiveContinuationAnchor(fragments)
     val alignment = anchorRequest.alignment
@@ -503,6 +640,31 @@ internal fun resolveResponsiveDisplayBreak(
         defaultIndentPx = defaultContinuationIndentPx,
         maximumCommonFeasibleIndentPx = maximumCommonFeasibleIndentPx,
         resolvedIndentPx = continuationAnchorWithinBlock,
+    )
+}
+
+private fun rejectedResponsiveResolution(
+    fragments: List<MathInlineFragment>,
+    lineMetrics: MathFormulaLineMetrics,
+    maxWidthPx: Float,
+    defaultIndentPx: Float,
+    diagnostic: MathDiagnostic,
+): ResponsiveDisplayBreakResolution {
+    val fallback = resourceRejectedUnbrokenLayout(
+        fragments = fragments,
+        lineMetrics = lineMetrics,
+        policy = MathLineBreakPolicy.ResponsiveDisplayLeadingOperators,
+        maxWidthPx = maxWidthPx,
+        diagnostic = diagnostic,
+    )
+    return ResponsiveDisplayBreakResolution(
+        layout = fallback,
+        continuationFenceDepths = emptyList(),
+        indentTier = ResponsiveContinuationIndentTier.None,
+        requestedSemanticIndentPx = 0f,
+        defaultIndentPx = defaultIndentPx,
+        maximumCommonFeasibleIndentPx = 0f,
+        resolvedIndentPx = 0f,
     )
 }
 

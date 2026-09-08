@@ -56,13 +56,13 @@ class StixTwoMathTest {
                 font.constants.radicalDegreeBottomRaisePercent,
             ),
         )
-        assertTrue(font.verticalVariants.values.any { it.size > 1 })
+        assertTrue(font.verticalConstructions.values.any { it.variants.size > 1 })
         assertTrue(font.italicCorrections.isNotEmpty())
         assertTrue(font.unsupportedItalicCorrectionVariationAdjustments.isEmpty())
         assertEquals(setOf(4010.toUShort()), font.italicCorrectionDeviceAdjustments.keys)
         assertEquals(19..19, font.italicCorrectionDeviceAdjustments.getValue(4010.toUShort()).ppemRange)
         assertEquals(listOf(1), font.italicCorrectionDeviceAdjustments.getValue(4010.toUShort()).deltasPx)
-        assertTrue(font.verticalVariants.size > 50)
+        assertTrue(font.verticalConstructions.size > 50)
         assertTrue(font.horizontalConstructions.size > 20)
         assertTrue(font.topAccentAttachments.isNotEmpty())
         assertEquals(

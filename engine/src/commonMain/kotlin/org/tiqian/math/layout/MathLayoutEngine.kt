@@ -1,22 +1,13 @@
 package org.tiqian.math.layout
 
 import org.tiqian.math.core.*
-import org.tiqian.math.font.opentype.MathConstructionKind
 import org.tiqian.math.font.opentype.MathDeviceAdjustment
-import org.tiqian.math.font.opentype.MathGlyphComponent
-import org.tiqian.math.font.opentype.MathHorizontalConstructionRequest
-import org.tiqian.math.font.opentype.MathKernCorner
 import org.tiqian.math.font.opentype.MathVerticalConstruction
-import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
-import org.tiqian.math.font.opentype.MathVerticalAssemblyPolicy
 import org.tiqian.math.font.opentype.OpenTypeMathConstants
 import org.tiqian.math.font.opentype.OpenTypeMathException
 import org.tiqian.math.font.opentype.OpenTypeMathFont
-import org.tiqian.math.parser.MacroExpansionLimits
 import org.tiqian.math.parser.MathFormulaParser
-import org.tiqian.math.parser.MathMacroDefinition
 import org.tiqian.math.parser.MathParser
-import kotlin.math.floor
 import kotlin.math.max
 
 data class MathLayoutOptions(
@@ -59,34 +50,34 @@ data class MathLayoutOptions(
     val cancelPicturePointPx: Float? = null,
 ) {
     init {
-        require(fontSizePx > 0f) { "math font size must be positive" }
-        require(nullDelimiterSpacePx == null || nullDelimiterSpacePx >= 0f) {
-            "null delimiter space must not be negative"
+        require(fontSizePx.isFinite() && fontSizePx > 0f) { "math font size must be finite and positive" }
+        require(nullDelimiterSpacePx == null || nullDelimiterSpacePx.isFinite() && nullDelimiterSpacePx >= 0f) {
+            "null delimiter space must be finite and non-negative"
         }
-        require(scriptSpacePx == null || scriptSpacePx >= 0f) {
-            "script space must not be negative"
+        require(scriptSpacePx == null || scriptSpacePx.isFinite() && scriptSpacePx >= 0f) {
+            "script space must be finite and non-negative"
         }
         require(delimiterFactor > 0) { "delimiter factor must be positive" }
-        require(delimiterShortfallPx == null || delimiterShortfallPx >= 0f) {
-            "delimiter shortfall must not be negative"
+        require(delimiterShortfallPx == null || delimiterShortfallPx.isFinite() && delimiterShortfallPx >= 0f) {
+            "delimiter shortfall must be finite and non-negative"
         }
-        require(arrayColumnSeparationPx == null || arrayColumnSeparationPx >= 0f) {
-            "array column separation must not be negative"
+        require(arrayColumnSeparationPx == null || arrayColumnSeparationPx.isFinite() && arrayColumnSeparationPx >= 0f) {
+            "array column separation must be finite and non-negative"
         }
-        require(fboxSeparationPx == null || fboxSeparationPx >= 0f) {
-            "fbox separation must not be negative"
+        require(fboxSeparationPx == null || fboxSeparationPx.isFinite() && fboxSeparationPx >= 0f) {
+            "fbox separation must be finite and non-negative"
         }
-        require(fboxRuleThicknessPx == null || fboxRuleThicknessPx >= 0f) {
-            "fbox rule thickness must not be negative"
+        require(fboxRuleThicknessPx == null || fboxRuleThicknessPx.isFinite() && fboxRuleThicknessPx >= 0f) {
+            "fbox rule thickness must be finite and non-negative"
         }
-        require(arrayRuleThicknessPx == null || arrayRuleThicknessPx >= 0f) {
-            "array rule thickness must not be negative"
+        require(arrayRuleThicknessPx == null || arrayRuleThicknessPx.isFinite() && arrayRuleThicknessPx >= 0f) {
+            "array rule thickness must be finite and non-negative"
         }
-        require(cancelLineThicknessPx == null || cancelLineThicknessPx >= 0f) {
-            "cancel line thickness must not be negative"
+        require(cancelLineThicknessPx == null || cancelLineThicknessPx.isFinite() && cancelLineThicknessPx >= 0f) {
+            "cancel line thickness must be finite and non-negative"
         }
-        require(displayWidthPx == null || displayWidthPx > 0f) {
-            "display width must be positive"
+        require(displayWidthPx == null || displayWidthPx.isFinite() && displayWidthPx > 0f) {
+            "display width must be finite and positive"
         }
         require(cancelPicturePointPx == null || cancelPicturePointPx.isFinite() && cancelPicturePointPx > 0f) {
             "cancel picture point size must be finite and positive"
@@ -94,8 +85,9 @@ data class MathLayoutOptions(
     }
 }
 
-data class MathPreparedFormula(
+class MathPreparedFormula internal constructor(
     val parseResult: MathParseResult,
+    internal val resourceLimits: MathResourceLimits,
 ) {
     val source: String get() = parseResult.source
     val diagnostics: List<MathDiagnostic> get() = parseResult.diagnostics
@@ -113,18 +105,43 @@ interface MathFormulaProductionPipeline {
 
 class MathLayoutEngine(
     internal val glyphSource: MathFontFace,
-    private val parser: MathFormulaParser,
+    private val parser: MathFormulaParser = MathParser(),
     internal val textRunProvider: MathTextRunProvider? = null,
+    val resourceLimits: MathResourceLimits = MathResourceLimits.Default,
 ) : MathFormulaProductionPipeline {
-    constructor(
-        glyphSource: MathFontFace,
-        macros: List<MathMacroDefinition> = emptyList(),
-        expansionLimits: MacroExpansionLimits = MacroExpansionLimits(),
-        textRunProvider: MathTextRunProvider? = null,
-    ) : this(glyphSource, MathParser(macros, expansionLimits), textRunProvider)
-
-    override fun prepare(source: String): MathPreparedFormula =
-        MathPreparedFormula(parser.parse(source))
+    override fun prepare(source: String): MathPreparedFormula {
+        if (source.length > resourceLimits.maximumSourceLength) {
+            return MathPreparedFormula(
+                parseResult = MathParseResult(
+                    source = source,
+                    root = MathList(emptyList(), SourceRange.Empty),
+                    diagnostics = listOf(
+                        mathResourceLimitDiagnostic(
+                            code = DiagnosticCode.SourceLengthLimitExceeded,
+                            resource = "sourceLength",
+                            actual = source.length,
+                            limit = resourceLimits.maximumSourceLength,
+                            range = SourceRange(0, source.length),
+                        ),
+                    ),
+                ),
+                resourceLimits = resourceLimits,
+            )
+        }
+        val parsed = parser.parse(source, resourceLimits)
+        val resourceDiagnostic = inspectMathAstResources(parsed.root, resourceLimits)
+        return MathPreparedFormula(
+            parseResult = if (resourceDiagnostic == null) {
+                parsed
+            } else {
+                parsed.copy(
+                    root = MathList(emptyList(), SourceRange.Empty),
+                    diagnostics = (parsed.diagnostics + resourceDiagnostic).distinct(),
+                )
+            },
+            resourceLimits = resourceLimits,
+        )
+    }
 
     fun layout(source: String, options: MathLayoutOptions = MathLayoutOptions()): MathLayoutResult =
         layout(prepare(source), options)
@@ -132,16 +149,24 @@ class MathLayoutEngine(
     override fun layout(
         prepared: MathPreparedFormula,
         options: MathLayoutOptions,
-    ): MathLayoutResult = MathLayoutPass(glyphSource, textRunProvider).layout(prepared.parseResult, options)
+    ): MathLayoutResult {
+        // A prepared formula is bounded. Reparse on deliberate cross-engine reuse rather
+        // than allowing a wider preparation budget to bypass this engine's token limits.
+        val bounded = if (prepared.resourceLimits == resourceLimits) prepared else prepare(prepared.source)
+        return MathLayoutPass(glyphSource, textRunProvider, resourceLimits)
+            .layout(bounded.parseResult, options)
+    }
 }
 
 /** Per-call mutable state; a public engine can safely serve concurrent layout requests. */
 internal class MathLayoutPass(
     internal val glyphSource: MathFontFace,
     internal val textRunProvider: MathTextRunProvider?,
+    internal val resourceLimits: MathResourceLimits,
 ) {
     internal val diagnostics = mutableListOf<MathDiagnostic>()
     internal val decisions = mutableListOf<MathLayoutDecision>()
+    private var generatedExtenderCount = 0L
     internal var baseFontSizePx: Float = 24f
     internal var nullDelimiterSpacePx: Float = 2.88f
     internal var scriptSpacePx: Float = DEFAULT_SCRIPT_SPACE_PT * TEX_POINT_TO_PX
@@ -177,11 +202,12 @@ internal class MathLayoutPass(
     internal var taggedDisplayReplayExpected: Boolean = false
 
     /**
-     * Runs a measurement-only layout and rolls back every explanation and replay side effect it
-     * produced: decisions, diagnostics, construction paint-group ids, and the tagged-display
-     * fields. Probe results may be inspected but never reused as real layout output.
+     * Runs a measurement-only layout and rolls back ordinary explanation/replay side effects.
+     * Resource consumption is intentionally monotonic across probes: candidate work was really
+     * materialized, so it consumes the formula-wide safety budget and any resulting resource
+     * diagnostic survives the rollback.
      */
-    internal inline fun <T> probeLayout(block: () -> T): T {
+    internal fun <T> probeLayout(block: () -> T): T {
         val decisionMark = decisions.size
         val diagnosticMark = diagnostics.size
         val paintGroupMark = nextConstructionPaintGroupId
@@ -191,8 +217,13 @@ internal class MathLayoutPass(
         try {
             return block()
         } finally {
+            val resourceDiagnostics = diagnostics
+                .subList(diagnosticMark, diagnostics.size)
+                .filter { it.isLayoutResourceLimitDiagnostic() }
+                .distinct()
             decisions.subList(decisionMark, decisions.size).clear()
             diagnostics.subList(diagnosticMark, diagnostics.size).clear()
+            diagnostics += resourceDiagnostics.filterNot(diagnostics::contains)
             nextConstructionPaintGroupId = paintGroupMark
             taggedDisplayBodyLastBaselineY = lastBaselineMark
             taggedDisplayReplay = replayMark
@@ -212,6 +243,74 @@ internal class MathLayoutPass(
 
     internal fun mathFontForFaceOrNull(faceId: MathFaceId): OpenTypeMathFont? =
         if (faceId == glyphSource.faceId) glyphSource.mathFont else glyphSource.mathFontForOrNull(faceId)
+
+    internal fun limitsForNextConstruction(): MathResourceLimits {
+        val remaining = (resourceLimits.maximumExtenderCount - generatedExtenderCount)
+            .coerceAtLeast(0L)
+            .toInt()
+        return resourceLimits.copy(maximumExtenderCount = remaining)
+    }
+
+    internal fun consumeConstructionExtenders(
+        construction: MathVerticalConstruction,
+        range: SourceRange,
+    ): Boolean {
+        val extenderRecords = construction.assemblyValidation?.extenderCount ?: 0
+        val count = construction.extenderRepetitions.toLong() * extenderRecords.toLong()
+        return consumeExtenders(count, range)
+    }
+
+    private fun saturatingNonNegativeAdd(left: Long, right: Long): Long = when {
+        right < 0L -> Long.MAX_VALUE
+        left > Long.MAX_VALUE - right -> Long.MAX_VALUE
+        else -> left + right
+    }
+
+    private fun MathDiagnostic.isLayoutResourceLimitDiagnostic(): Boolean = when (code) {
+        DiagnosticCode.BreakpointCountLimitExceeded,
+        DiagnosticCode.ExtenderCountLimitExceeded,
+        DiagnosticCode.InvalidResolvedDimension,
+        -> true
+        else -> false
+    }
+
+    internal fun consumeExtenders(count: Long, range: SourceRange): Boolean {
+        val maximum = resourceLimits.maximumExtenderCount.toLong()
+        val exceedsLimit = count < 0L || count > maximum - generatedExtenderCount
+        if (exceedsLimit) {
+            diagnostics += mathResourceLimitDiagnostic(
+                code = DiagnosticCode.ExtenderCountLimitExceeded,
+                resource = "extenderCount",
+                actual = saturatingNonNegativeAdd(generatedExtenderCount, count),
+                limit = resourceLimits.maximumExtenderCount,
+                range = range,
+            )
+            return false
+        }
+        generatedExtenderCount += count
+        return true
+    }
+
+    internal fun recordConstructionFailure(failure: OpenTypeMathException, range: SourceRange) {
+        diagnostics += if (failure.diagnosticCode == DiagnosticCode.ExtenderCountLimitExceeded) {
+            mathResourceLimitDiagnostic(
+                code = failure.diagnosticCode,
+                resource = "extenderCount",
+                actual = saturatingNonNegativeAdd(
+                    generatedExtenderCount,
+                    failure.resourceActual ?: (resourceLimits.maximumExtenderCount + 1L),
+                ),
+                limit = resourceLimits.maximumExtenderCount,
+                range = range,
+            )
+        } else {
+            MathDiagnostic(
+                code = failure.diagnosticCode,
+                message = failure.message ?: "OpenType math construction exceeded its resource limit",
+                range = range,
+            )
+        }
+    }
 
     internal fun measureGlyphForFace(
         faceId: MathFaceId,
@@ -269,29 +368,70 @@ internal class MathLayoutPass(
 
     fun layout(parsed: MathParseResult, options: MathLayoutOptions): MathLayoutResult {
         val source = parsed.source
-        baseFontSizePx = options.fontSizePx
+        val requestRange = parsed.root.range
+        baseFontSizePx = validatedResolvedDimension(
+            "fontSizePx",
+            options.fontSizePx,
+            requestRange,
+        ) ?: minOf(24f, resourceLimits.maximumResolvedDimensionPx)
         formulaMode = options.mode
-        displayWidthPx = options.displayWidthPx
+        displayWidthPx = options.displayWidthPx?.let {
+            validatedResolvedDimension("displayWidthPx", it, requestRange)
+        }
         softWrapDisplay = options.softWrapDisplay
-        nextConstructionPaintGroupId = 1
-        nullDelimiterSpacePx = options.nullDelimiterSpacePx
-            ?: options.fontSizePx * DEFAULT_NULL_DELIMITER_SPACE_EM
-        scriptSpacePx = options.scriptSpacePx ?: DEFAULT_SCRIPT_SPACE_PT * TEX_POINT_TO_PX
+        nullDelimiterSpacePx = validatedResolvedDimension(
+            "nullDelimiterSpacePx",
+            options.nullDelimiterSpacePx ?: baseFontSizePx * DEFAULT_NULL_DELIMITER_SPACE_EM,
+            requestRange,
+        ) ?: 0f
+        scriptSpacePx = validatedResolvedDimension(
+            "scriptSpacePx",
+            options.scriptSpacePx ?: DEFAULT_SCRIPT_SPACE_PT * TEX_POINT_TO_PX,
+            requestRange,
+        ) ?: 0f
         scriptSpacePolicy = if (options.scriptSpacePx == null) {
             "PlainTeXXeTeXScriptSpace"
         } else {
             "ExplicitTeXScriptSpace"
         }
         delimiterFactor = options.delimiterFactor
-        delimiterShortfallPx = options.delimiterShortfallPx
-            ?: options.fontSizePx * DEFAULT_DELIMITER_SHORTFALL_EM
+        delimiterShortfallPx = validatedResolvedDimension(
+            "delimiterShortfallPx",
+            options.delimiterShortfallPx ?: baseFontSizePx * DEFAULT_DELIMITER_SHORTFALL_EM,
+            requestRange,
+        ) ?: 0f
         textLocale = options.textLocale
-        explicitArrayColumnSeparationPx = options.arrayColumnSeparationPx
-        fboxSeparationPx = options.fboxSeparationPx ?: DEFAULT_FBOX_SEPARATION_PT * TEX_POINT_TO_PX
-        fboxRuleThicknessPx = options.fboxRuleThicknessPx ?: DEFAULT_FBOX_RULE_THICKNESS_PT * TEX_POINT_TO_PX
-        arrayRuleThicknessPx = options.arrayRuleThicknessPx ?: DEFAULT_ARRAY_RULE_THICKNESS_PT * TEX_POINT_TO_PX
-        cancelLineThicknessPx = options.cancelLineThicknessPx ?: DEFAULT_CANCEL_LINE_THICKNESS_PT * TEX_POINT_TO_PX
-        cancelPicturePointPx = options.cancelPicturePointPx ?: TEX_POINT_TO_PX
+        explicitArrayColumnSeparationPx = options.arrayColumnSeparationPx?.let {
+            validatedResolvedDimension("arrayColumnSeparationPx", it, requestRange)
+        }
+        fboxSeparationPx = validatedResolvedDimension(
+            "fboxSeparationPx",
+            options.fboxSeparationPx ?: DEFAULT_FBOX_SEPARATION_PT * TEX_POINT_TO_PX,
+            requestRange,
+        ) ?: 0f
+        fboxRuleThicknessPx = validatedResolvedDimension(
+            "fboxRuleThicknessPx",
+            options.fboxRuleThicknessPx ?: DEFAULT_FBOX_RULE_THICKNESS_PT * TEX_POINT_TO_PX,
+            requestRange,
+        ) ?: 0f
+        arrayRuleThicknessPx = validatedResolvedDimension(
+            "arrayRuleThicknessPx",
+            options.arrayRuleThicknessPx ?: DEFAULT_ARRAY_RULE_THICKNESS_PT * TEX_POINT_TO_PX,
+            requestRange,
+        ) ?: 0f
+        cancelLineThicknessPx = validatedResolvedDimension(
+            "cancelLineThicknessPx",
+            options.cancelLineThicknessPx ?: DEFAULT_CANCEL_LINE_THICKNESS_PT * TEX_POINT_TO_PX,
+            requestRange,
+        ) ?: 0f
+        cancelPicturePointPx = validatedResolvedDimension(
+            "cancelPicturePointPx",
+            options.cancelPicturePointPx ?: TEX_POINT_TO_PX,
+            requestRange,
+        ) ?: minOf(
+            TEX_POINT_TO_PX,
+            resourceLimits.maximumResolvedDimensionPx / DEFAULT_CANCEL_MAXIMUM_DERIVED_POINT_FACTOR,
+        )
         diagnostics += parsed.diagnostics
         val initialStyle = options.initialStyle ?: MathStyle.initial(options.mode)
         val breakableRoot = unwrapWholeFormulaGroups(parsed.root)
@@ -305,6 +445,22 @@ internal class MathLayoutPass(
         val horizontal = layoutList(breakableRoot, initialStyle)
         val fragments = inlineFragments(horizontal)
         val breaks = fragments.mapNotNull { it.breakAfter }
+        // Preflight the mode's actual breaker: display operators lead the next line,
+        // while inline operators trail the preceding line.
+        val breakPolicy = when (options.mode) {
+            MathMode.Inline -> MathLineBreakPolicy.InlineTrailingOperators
+            MathMode.Display -> MathLineBreakPolicy.ResponsiveDisplayLeadingOperators
+        }
+        val internalBreakpointCount = mathBreakpointCount(fragments, breakPolicy)
+        if (internalBreakpointCount > resourceLimits.maximumBreakpointCount) {
+            diagnostics += mathResourceLimitDiagnostic(
+                code = DiagnosticCode.BreakpointCountLimitExceeded,
+                resource = "breakpointCount",
+                actual = internalBreakpointCount,
+                limit = resourceLimits.maximumBreakpointCount,
+                range = parsed.root.range,
+            )
+        }
         val lineMetrics = formulaLineMetrics(horizontal.laid.box, initialStyle)
         decision(
             "Os2TypographicMathLineExtents",
@@ -321,7 +477,7 @@ internal class MathLayoutPass(
             "logicalAscentPx" to lineMetrics.logicalAscentPx,
             "logicalDescentPx" to lineMetrics.logicalDescentPx,
         )
-        val resultDiagnostics = diagnostics.toList()
+        val resultDiagnostics = diagnostics.distinct()
         val resultDecisions = decisions.toList()
         val dumpMetadata = MathLayoutDebugDumpMetadata(
             unitsPerEm = glyphSource.mathFont.unitsPerEm,
@@ -342,7 +498,8 @@ internal class MathLayoutPass(
             decisions = resultDecisions,
             debugDumpRenderer = DefaultMathLayoutDebugDumpRenderer(dumpMetadata),
             taggedDisplayReplay = taggedDisplayReplay,
-            fontSizePx = options.fontSizePx,
+            fontSizePx = baseFontSizePx,
+            resourceLimits = resourceLimits,
         )
     }
 
@@ -1007,6 +1164,7 @@ internal class MathLayoutPass(
         const val DEFAULT_CANCEL_WIDE_MINIMUM_WIDTH_PT = 8f
         const val DEFAULT_CANCEL_TALL_MINIMUM_HEIGHT_PT = 8f
         const val DEFAULT_CANCEL_LINE_EXTENSION_PT = 2f
+        const val DEFAULT_CANCEL_MAXIMUM_DERIVED_POINT_FACTOR = 8f
         const val BIG_POINT_TO_PX = CSS_PIXELS_PER_INCH / BIG_POINTS_PER_INCH
 
         val CANCEL_WIDE_SLOPES = listOf(6 to 1, 4 to 1, 2 to 1, 4 to 3, 1 to 1)

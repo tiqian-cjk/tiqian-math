@@ -123,19 +123,33 @@ class TiqianMathComposeMeasureTest {
     }
 
     @Test
-    fun realInlineTextHostUsesFirstBaselineAndOnlyTallFormulaExpandsTheRow() {
+    fun realInlineTextHostAlignsBaselinesAndReservesEveryChildExtent() {
         val style = TextStyle(fontSize = 32.sp, lineHeight = 40.sp, color = Color.Black)
         val simple = measureInlineHost("x", style)
         val tall = measureInlineHost("\\frac{x}{y}", style)
 
-        assertEquals(simple.textBaseline, simple.formulaBaseline, "Row aligns actual FirstBaseline values")
-        assertEquals(40, simple.formulaHeight, "simple symbol fits requested text line height")
-        assertTrue(
-            simple.rowHeight <= simple.textHeight + 1,
-            "simple inline math differs from the text row only by integer baseline rounding",
-        )
-        assertEquals(tall.textBaseline, tall.formulaBaseline, "tall formula still shares the host baseline")
-        assertTrue(tall.formulaHeight > simple.formulaHeight, "fraction expands by intrinsic safe geometry")
+        for (measurement in listOf(simple, tall)) {
+            val children = measurement.children
+            children.forEach { child ->
+                assertTrue(child.firstBaseline in 0..child.height, "missing or invalid baseline: $measurement")
+            }
+            val placedBaselines = children.map { it.topInRoot + it.firstBaseline }
+            assertEquals(1, placedBaselines.distinct().size, "actual placed baselines must align: $measurement")
+
+            // System text and math fonts may split the same line height differently.
+            // Verify the real Row's measured extent against all children's baseline needs.
+            val requiredAscent = children.maxOf { it.firstBaseline }
+            val requiredDescent = children.maxOf { it.height - it.firstBaseline }
+            assertEquals(requiredAscent + requiredDescent, measurement.rowHeight, "row extent: $measurement")
+            assertEquals(measurement.rowTopInRoot, children.minOf { it.topInRoot }, "top placement: $measurement")
+            assertEquals(
+                measurement.rowTopInRoot + measurement.rowHeight,
+                children.maxOf { it.topInRoot + it.height },
+                "bottom placement: $measurement",
+            )
+        }
+        assertEquals(40, simple.children[1].height, "simple symbol fits requested text line height")
+        assertTrue(tall.children[1].height > simple.children[1].height, "fraction expands by intrinsic safe geometry")
         assertTrue(tall.rowHeight > simple.rowHeight)
     }
 

@@ -121,7 +121,7 @@ class ComparisonCorpusTest {
                             assertTrue(operator.details["construction"] != "BaseGlyph", case.toString())
                             assertNear(
                                 operator.details.getValue("axisY").toFloat(),
-                                operator.details.getValue("inkCenterAfter").toFloat(),
+                                operator.details.getValue("outlineCenterAfter").toFloat(),
                                 case,
                             )
                             assertTrue(display.decisions.any { it.name == "OpenTypeMathOperatorLimits" })

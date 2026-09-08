@@ -178,6 +178,14 @@ internal fun ParserState.parseTextArgument(
     command: MathToken,
     role: String,
     requestedWeight: MathFontWeight? = null,
+): ParsedTextArgument = withResourceRecursion(command.range) {
+    parseTextArgumentUnchecked(command, role, requestedWeight)
+}
+
+private fun ParserState.parseTextArgumentUnchecked(
+    command: MathToken,
+    role: String,
+    requestedWeight: MathFontWeight?,
 ): ParsedTextArgument {
     skipIgnored()
     val opening = peek()
@@ -215,16 +223,8 @@ internal fun ParserState.parseTextArgument(
     val segments = mutableListOf<MathTextSegment>()
     fun appendText(text: String, range: SourceRange, weight: MathFontWeight? = requestedWeight) {
         if (text.isEmpty()) return
-        val previous = segments.lastOrNull()
-        if (previous != null && previous.range.endExclusive == range.start && previous.requestedWeight == weight) {
-            segments[segments.lastIndex] = MathTextSegment(
-                previous.text + text,
-                previous.range.cover(range),
-                weight,
-            )
-        } else {
-            segments += MathTextSegment(text, range, weight)
-        }
+        // Coalesce once after scanning. Rebuilding a growing String for every token is quadratic.
+        segments += MathTextSegment(text, range, weight)
     }
     var depth = 1
     var closing: MathToken? = null
@@ -304,7 +304,34 @@ internal fun ParserState.parseTextArgument(
     val contentEnd = closing?.range?.start ?: lastContentEnd
     val contentRange = SourceRange(opening.range.endExclusive, contentEnd.coerceAtLeast(opening.range.endExclusive))
     val totalRange = closing?.let { opening.range.cover(it.range) } ?: opening.range.cover(contentRange)
-    return ParsedTextArgument(segments, contentRange, totalRange)
+    return ParsedTextArgument(coalesceTextSegments(segments), contentRange, totalRange)
+}
+
+private fun coalesceTextSegments(segments: List<MathTextSegment>): List<MathTextSegment> {
+    if (segments.size < 2) return segments
+    val result = mutableListOf<MathTextSegment>()
+    var range = segments.first().range
+    var weight = segments.first().requestedWeight
+    var text = StringBuilder(segments.first().text)
+
+    fun flush() {
+        result += MathTextSegment(text.toString(), range, weight)
+    }
+
+    for (index in 1 until segments.size) {
+        val segment = segments[index]
+        if (range.endExclusive == segment.range.start && weight == segment.requestedWeight) {
+            text.append(segment.text)
+            range = range.cover(segment.range)
+        } else {
+            flush()
+            range = segment.range
+            weight = segment.requestedWeight
+            text = StringBuilder(segment.text)
+        }
+    }
+    flush()
+    return result
 }
 
 internal fun ParserState.parseRequiredArgument(command: MathToken, role: String): MathNode {
@@ -366,7 +393,7 @@ internal fun ParserState.parseOptionalRadicalDegree(): ParsedRadicalDegree? {
                 )
                 children += MathErrorNode(token.text, token.range)
             }
-            else -> parseAtomWithScripts()?.let { children.appendParsedNode(it) }
+            else -> parseAtomWithScripts()?.let { children += it }
         }
     }
     val bodyRange = when {
@@ -459,7 +486,7 @@ internal fun ParserState.parseOptionalExtensibleArrowBelow(): ParsedOptionalMath
                 )
                 break
             }
-            else -> parseAtomWithScripts()?.let { children.appendParsedNode(it) }
+            else -> parseAtomWithScripts()?.let { children += it }
         }
     }
     val bodyRange = if (children.isEmpty()) {

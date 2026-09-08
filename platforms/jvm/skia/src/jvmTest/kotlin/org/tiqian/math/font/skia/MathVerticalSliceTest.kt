@@ -8,6 +8,7 @@ import org.tiqian.math.font.opentype.OpenTypeMathFont
 import org.tiqian.math.font.stix.StixTwoMath
 import org.tiqian.math.layout.*
 import org.tiqian.math.parser.MathMacroDefinition
+import org.tiqian.math.parser.MathParser
 import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,7 +22,7 @@ class MathVerticalSliceTest {
         val source = "E_k=(n-1)E_{k-1}+E_{k-2}+\\frac{a+b}{\\binom{n}{k}}=y_2^3"
         val engine = MathLayoutEngine(
             face,
-            macros = listOf(MathMacroDefinition("pair", 2, "#1+#2")),
+            parser = MathParser(listOf(MathMacroDefinition("pair", 2, "#1+#2"))),
         )
 
         listOf(MathMode.Inline, MathMode.Display).forEach { mode ->
@@ -50,7 +51,7 @@ class MathVerticalSliceTest {
 
         val expanded = MathLayoutEngine(
             face,
-            macros = listOf(MathMacroDefinition("pair", 2, "#1+#2")),
+            parser = MathParser(listOf(MathMacroDefinition("pair", 2, "#1+#2"))),
         ).layout("\\pair{x_1^2}{\\frac{a}{b}}", MathLayoutOptions(fontSizePx = 32f))
         assertTrue(expanded.diagnostics.isEmpty(), "$label macro pipeline: ${expanded.diagnostics}")
         assertTrue(expanded.box.rules.size == 1 && expanded.box.glyphs.size >= 5)

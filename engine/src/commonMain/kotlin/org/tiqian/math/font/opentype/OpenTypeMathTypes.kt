@@ -1,5 +1,7 @@
 package org.tiqian.math.font.opentype
 
+import org.tiqian.math.core.MathResourceLimits
+
 data class OpenTypeMathConstants(
     val scriptPercentScaleDown: Int,
     val scriptScriptPercentScaleDown: Int,
@@ -145,6 +147,7 @@ data class MathHorizontalConstructionRequest(
     val fontSizePx: Float,
     val normalGlyphWidthPx: Float,
     val normalGlyphOrthogonalExtentPx: Float,
+    val resourceLimits: MathResourceLimits,
 )
 
 data class MathVerticalConstructionRequest(
@@ -153,6 +156,7 @@ data class MathVerticalConstructionRequest(
     val fontSizePx: Float,
     val normalGlyphHeightPx: Float,
     val normalGlyphAdvanceWidthPx: Float,
+    val resourceLimits: MathResourceLimits,
     val assemblyPolicy: MathVerticalAssemblyPolicy = MathVerticalAssemblyPolicy.MathMLCoreUniformOverlap,
 )
 
@@ -205,4 +209,3 @@ data class MathGlyphAssemblyValidation(
     val validationPolicy: String,
     val specificationDivergence: String?,
 )
-

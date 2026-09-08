@@ -22,6 +22,7 @@ enum class MathFormulaCapabilityCategory {
     GlyphOutlineUnavailable,
     ConstructionPaintOwnershipInvalid,
     UnsupportedFontCapability,
+    ResourceLimitExceeded,
 }
 
 data class MathFormulaFallbackReason(
@@ -60,7 +61,6 @@ fun interface MathFormulaRenderPreflight {
 
 /**
  * Parses and lays out exactly once, then closes formula-wide layout and paint capabilities.
- * Existing blocking diagnostics short-circuit render preflight so rejected formulas build no paths.
  */
 class MathFormulaCapabilityEngine(
     private val pipeline: MathFormulaProductionPipeline,
@@ -93,11 +93,13 @@ class MathFormulaCapabilityEngine(
     ): MathLayoutResult = when (val result = evaluate(source, options)) {
         is MathFormulaCapabilityResult.Ready -> result.layoutResult
         is MathFormulaCapabilityResult.FallbackRequired -> throw MathFormulaStrictException(result)
+        // is MathFormulaCapabilityResult.MathFormulaFallbackReason -> TODO()
+        // is MathFormulaCapabilityResult.MathFormulaCapabilityEngine -> TODO()
     }
 }
 
 object MathFormulaCapabilityClassifier {
-    /** Warnings in these categories describe incomplete output and are never production-safe. */
+    /** NOTE: warnings in these categories describe incomplete output and are not safe! */
     private val blockingWarningCodes = setOf(
         DiagnosticCode.MissingGlyph,
         DiagnosticCode.MissingTextRunProvider,
@@ -115,7 +117,7 @@ object MathFormulaCapabilityClassifier {
         DiagnosticCode.InvalidConstructionPaintOwnership,
     )
 
-    /** Returns null only when all supplied diagnostics are production-safe. */
+    /** Returns null only when all supplied diagnostics are safe. */
     fun classify(
         layoutResult: MathLayoutResult,
         additionalDiagnostics: List<MathDiagnostic> = emptyList(),
@@ -164,12 +166,21 @@ object MathFormulaCapabilityClassifier {
         DiagnosticCode.UnsupportedNegatedSymbol,
         -> MathFormulaCapabilityCategory.UnsupportedSyntax
 
+        DiagnosticCode.SourceLengthLimitExceeded,
+        DiagnosticCode.TokenCountLimitExceeded,
+        DiagnosticCode.AstNodeCountLimitExceeded,
+        DiagnosticCode.RecursionDepthLimitExceeded,
+        DiagnosticCode.BreakpointCountLimitExceeded,
+        DiagnosticCode.ExtenderCountLimitExceeded,
+        DiagnosticCode.InvalidResolvedDimension,
+        DiagnosticCode.MacroExpansionDepthExceeded,
+        DiagnosticCode.MacroExpansionBudgetExceeded,
+        -> MathFormulaCapabilityCategory.ResourceLimitExceeded
+
         DiagnosticCode.TrailingEscape,
         DiagnosticCode.InvalidParameterMarker,
         DiagnosticCode.InvalidRuleDimension,
         DiagnosticCode.MissingMacroArgument,
-        DiagnosticCode.MacroExpansionDepthExceeded,
-        DiagnosticCode.MacroExpansionBudgetExceeded,
         DiagnosticCode.RecursiveMacro,
         DiagnosticCode.UnexpectedClosingGroup,
         DiagnosticCode.UnclosedGroup,

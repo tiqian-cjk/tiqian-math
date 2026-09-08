@@ -4,7 +4,9 @@ import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import org.tiqian.math.core.MathGlyphPlacement
 import org.tiqian.math.core.MathMode
+import org.tiqian.math.core.MathRect
 import org.tiqian.math.core.MathStyle
 import org.tiqian.math.core.SourceRange
 import org.tiqian.math.font.opentype.LeteSansMath
@@ -17,7 +19,10 @@ import org.tiqian.math.layout.MathLayoutOptions
  * 24bp is exactly 32 device pixels; the math face was initialized at that size so MATH constants
  * and the ScriptScript face use the same scale as the formula. The trace reproducers under
  * `preview/tectonic` load these exact repository OTFs. Tectonic supplies glyph IDs, kerns, box
- * advances, and origins; replaying those glyphs from the shared OTF supplies the ink/outline probes.
+ * advances, and origins. The additional outline probes are independently calculated with
+ * fontTools BoundsPen from the repository OTFs, not from platform raster bounds:
+ * degree x bounds are 37..530 (Lete) / 59..494 (STIX) at 17.6 px per 1000 units;
+ * radical x minima are 16 / 18 at 32 px per 1000 units. Add the traced origins below.
  */
 class TectonicRadicalDegreeOracleTest {
     @Test
@@ -33,10 +38,10 @@ class TectonicRadicalDegreeOracleTest {
                 degreeAdvancePx = 10.208f,
                 kernAfterPx = -12.8f,
                 radicalOriginPx = 6.24f,
-                degreeInkLeftPx = 7.832f,
-                degreeInkRightPx = 19.832f,
+                degreeOutlineLeftPx = 9.4832f,
+                degreeOutlineRightPx = 18.16f,
                 radicalTopStrokeRightPx = 27.488f,
-                degreeToRadicalInkGapPx = -13.08f,
+                degreeToRadicalOutlineGapPx = -11.408f,
             ),
             TectonicOracle(
                 label = "STIX Two Math",
@@ -48,10 +53,10 @@ class TectonicRadicalDegreeOracleTest {
                 degreeAdvancePx = 9.8736f,
                 kernAfterPx = -10.72f,
                 radicalOriginPx = 1.2336f,
-                degreeInkLeftPx = 2.08f,
-                degreeInkRightPx = 12.08f,
+                degreeOutlineLeftPx = 3.1184f,
+                degreeOutlineRightPx = 10.7744f,
                 radicalTopStrokeRightPx = 27.7616f,
-                degreeToRadicalInkGapPx = -10.2704f,
+                degreeToRadicalOutlineGapPx = -8.9648f,
             ),
         )
 
@@ -78,11 +83,13 @@ class TectonicRadicalDegreeOracleTest {
                 )
 
                 val topStrokeX = geometry.float("radicalX") + geometry.float("radicalTopStrokeRightPx")
-                val degreeToRadicalInkGap = radicalGlyph.inkBounds.left - degreeGlyph.inkBounds.right
+                val degreeOutline = face.placedOutlineBounds(degreeGlyph)
+                val radicalOutline = face.placedOutlineBounds(radicalGlyph)
+                val degreeToRadicalOutlineGap = radicalOutline.left - degreeOutline.right
                 println(
                     "tectonic-oracle=${oracle.label} " +
-                        "degreeInk=${degreeGlyph.inkBounds} radicalOrigin=${geometry.float("radicalX")} " +
-                        "topStrokeX=$topStrokeX degreeToRadicalInkGap=$degreeToRadicalInkGap " +
+                        "degreeOutline=$degreeOutline radicalOrigin=${geometry.float("radicalX")} " +
+                        "topStrokeX=$topStrokeX degreeToRadicalOutlineGap=$degreeToRadicalOutlineGap " +
                         "degreeGlyphAdvance=${degreeGlyph.advance} degreeItalicCorrection=" +
                         degreeResolution.details["italicCorrectionPx"],
                 )
@@ -104,17 +111,19 @@ class TectonicRadicalDegreeOracleTest {
                 assertNear(oracle.degreeAdvancePx, geometry.float("degreeWidthPx"), "${oracle.label} degree advance")
                 assertNear(oracle.kernAfterPx, geometry.float("adjustedRadicalKernAfterDegreePx"), "${oracle.label} after kern")
                 assertNear(oracle.radicalOriginPx, geometry.float("radicalX"), "${oracle.label} radical origin")
-                assertNear(oracle.degreeInkLeftPx, degreeGlyph.inkBounds.left, "${oracle.label} degree ink left")
-                assertNear(oracle.degreeInkRightPx, degreeGlyph.inkBounds.right, "${oracle.label} degree ink right")
+                assertNear(oracle.kernBeforePx, degreeGlyph.x, "${oracle.label} placed degree origin")
+                assertNear(oracle.radicalOriginPx, radicalGlyph.x, "${oracle.label} placed radical origin")
+                assertNear(oracle.degreeOutlineLeftPx, degreeOutline.left, "${oracle.label} degree outline left")
+                assertNear(oracle.degreeOutlineRightPx, degreeOutline.right, "${oracle.label} degree outline right")
                 assertNear(
                     oracle.radicalTopStrokeRightPx,
                     topStrokeX,
                     "${oracle.label} radical top-stroke right edge",
                 )
                 assertNear(
-                    oracle.degreeToRadicalInkGapPx,
-                    degreeToRadicalInkGap,
-                    "${oracle.label} degree-to-radical ink distance",
+                    oracle.degreeToRadicalOutlineGapPx,
+                    degreeToRadicalOutlineGap,
+                    "${oracle.label} degree-to-radical outline distance",
                 )
                 assertEquals(
                     "TeXMakeRadicalSignedBeforeAndWidthPlusBeforeAfterClamp",
@@ -123,6 +132,14 @@ class TectonicRadicalDegreeOracleTest {
             }
         }
     }
+
+    private fun SkiaMathFontFace.placedOutlineBounds(glyph: MathGlyphPlacement): MathRect =
+        checkNotNull(glyphPath(glyph.glyphId, glyph.fontSizePx)).use { outline ->
+            check(!outline.isEmpty) { "Glyph ${glyph.glyphId} has no outline" }
+            val bounds = outline.computeTightBounds()
+            MathRect(bounds.left, bounds.top, bounds.right, bounds.bottom)
+                .translated(glyph.x, glyph.baselineY)
+        }
 
     private fun org.tiqian.math.core.MathLayoutDecision.float(key: String): Float =
         checkNotNull(details[key]).toFloat()
@@ -141,10 +158,10 @@ class TectonicRadicalDegreeOracleTest {
         val degreeAdvancePx: Float,
         val kernAfterPx: Float,
         val radicalOriginPx: Float,
-        val degreeInkLeftPx: Float,
-        val degreeInkRightPx: Float,
+        val degreeOutlineLeftPx: Float,
+        val degreeOutlineRightPx: Float,
         val radicalTopStrokeRightPx: Float,
-        val degreeToRadicalInkGapPx: Float,
+        val degreeToRadicalOutlineGapPx: Float,
     )
 
     private companion object {

@@ -327,7 +327,7 @@ data class MathBrokenLine(
     val ascent: Float,
     val descent: Float,
     val baselineFromTop: Float,
-    /** True only when one indivisible legal-break segment is wider than the host constraint. */
+    /** True when a retained unbroken line exceeds the host constraint. */
     val unbreakableOverflow: Boolean,
     /** Logical x in the display viewport. Responsive display lines consume this directly. */
     val horizontalOffsetPx: Float = 0f,
@@ -351,6 +351,8 @@ data class MathBrokenLayout(
     val continuationAlignment: MathContinuationAlignment = MathContinuationAlignment.None,
     /** Shared painted operator anchor actually used by every continuation line. */
     val continuationAnchorPx: Float = 0f,
+    /** Diagnostics produced by line breaking itself, separate from formula layout diagnostics. */
+    val diagnostics: List<MathDiagnostic> = emptyList(),
 )
 
 data class MathFormulaLineMetrics(
@@ -448,35 +450,9 @@ data class MathLayoutResult(
     val taggedDisplayReplay: MathTaggedDisplayReplay? = null,
     /** Formula text-style em in layout pixels; script styles derive from this value. */
     val fontSizePx: Float,
+    /** Formula-wide safety policy reused by downstream operations such as line breaking. */
+    val resourceLimits: MathResourceLimits,
 ) {
     /** Human-readable diagnostic projection, memoized only when a caller requests it. */
     val debugDump: String by lazy { debugDumpRenderer.render(this) }
-
-    /** Source-compatible constructor for external fixtures that already own an eager dump. */
-    constructor(
-        source: String,
-        mode: MathMode,
-        initialStyle: MathStyle,
-        box: MathBox,
-        fragments: List<MathInlineFragment>,
-        breakOpportunities: List<MathBreakOpportunity>,
-        diagnostics: List<MathDiagnostic>,
-        lineMetrics: MathFormulaLineMetrics,
-        decisions: List<MathLayoutDecision>,
-        debugDump: String,
-        fontSizePx: Float,
-    ) : this(
-        source = source,
-        mode = mode,
-        initialStyle = initialStyle,
-        box = box,
-        fragments = fragments,
-        breakOpportunities = breakOpportunities,
-        diagnostics = diagnostics,
-        lineMetrics = lineMetrics,
-        decisions = decisions,
-        debugDumpRenderer = MathLayoutDebugDumpRenderer { debugDump },
-        taggedDisplayReplay = null,
-        fontSizePx = fontSizePx,
-    )
 }

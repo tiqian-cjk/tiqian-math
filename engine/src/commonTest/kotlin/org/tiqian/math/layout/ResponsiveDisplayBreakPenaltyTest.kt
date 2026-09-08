@@ -9,6 +9,7 @@ import org.tiqian.math.core.MathFormulaLineMetrics
 import org.tiqian.math.core.MathGlueAdjustment
 import org.tiqian.math.core.MathInlineFragment
 import org.tiqian.math.core.MathRect
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.SourceRange
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -36,6 +37,7 @@ class ResponsiveDisplayBreakPenaltyTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 200f,
             defaultContinuationIndentPx = 0f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         val layout = resolution.layout

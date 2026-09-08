@@ -1,21 +1,6 @@
 package org.tiqian.math.layout
 
 import org.tiqian.math.core.*
-import org.tiqian.math.font.opentype.MathConstructionKind
-import org.tiqian.math.font.opentype.MathDeviceAdjustment
-import org.tiqian.math.font.opentype.MathGlyphComponent
-import org.tiqian.math.font.opentype.MathHorizontalConstructionRequest
-import org.tiqian.math.font.opentype.MathKernCorner
-import org.tiqian.math.font.opentype.MathVerticalConstruction
-import org.tiqian.math.font.opentype.MathVerticalConstructionRequest
-import org.tiqian.math.font.opentype.MathVerticalAssemblyPolicy
-import org.tiqian.math.font.opentype.OpenTypeMathConstants
-import org.tiqian.math.font.opentype.OpenTypeMathException
-import org.tiqian.math.font.opentype.OpenTypeMathFont
-import org.tiqian.math.parser.MacroExpansionLimits
-import org.tiqian.math.parser.MathFormulaParser
-import org.tiqian.math.parser.MathMacroDefinition
-import org.tiqian.math.parser.MathParser
 import kotlin.math.floor
 import kotlin.math.max
 import org.tiqian.math.layout.MathLayoutPass.Companion.CANCEL_TALL_SLOPES
@@ -24,6 +9,7 @@ import org.tiqian.math.layout.MathLayoutPass.Companion.CANCEL_WIDE_SLOPES
 import org.tiqian.math.layout.MathLayoutPass.Companion.CENTIMETERS_PER_INCH
 import org.tiqian.math.layout.MathLayoutPass.Companion.CSS_PIXELS_PER_INCH
 import org.tiqian.math.layout.MathLayoutPass.Companion.DEFAULT_CANCEL_LINE_EXTENSION_PT
+import org.tiqian.math.layout.MathLayoutPass.Companion.DEFAULT_CANCEL_MAXIMUM_DERIVED_POINT_FACTOR
 import org.tiqian.math.layout.MathLayoutPass.Companion.DEFAULT_CANCEL_MINIMUM_TOTAL_HEIGHT_PT
 import org.tiqian.math.layout.MathLayoutPass.Companion.DEFAULT_CANCEL_MINIMUM_WIDTH_PT
 import org.tiqian.math.layout.MathLayoutPass.Companion.DEFAULT_CANCEL_TALL_MINIMUM_HEIGHT_PT
@@ -39,7 +25,12 @@ import org.tiqian.math.layout.MathLayoutPass.MathAlphabetOverride
 private const val NOT_ACCENT_SCALAR = 0x0338
 
 internal fun MathLayoutPass.layoutExplicitSpace(node: MathExplicitSpace, style: MathStyle): LaidNode {
-    val advance = node.mu * fontSize(style) / 18f
+    val unvalidatedAdvance = node.mu * fontSize(style) / 18f
+    val advance = validatedResolvedDimension(
+        sourceText = "${node.mu}mu",
+        resolvedPx = unvalidatedAdvance,
+        range = node.range,
+    ) ?: 0f
     val width = advance.coerceAtLeast(0f)
     decision(
         "TeXExplicitMathSpace",
@@ -48,7 +39,8 @@ internal fun MathLayoutPass.layoutExplicitSpace(node: MathExplicitSpace, style: 
         "mu" to node.mu,
         "style" to style,
         "fontSizePx" to fontSize(style),
-        "advancePx" to advance,
+        "advancePx" to unvalidatedAdvance,
+        "acceptedAdvancePx" to advance,
         "boxWidthPx" to width,
         "policy" to if (advance < 0f) "TeXFixedSignedMuKern" else "NamedTeXMuSkip",
     )
@@ -132,9 +124,14 @@ internal fun MathLayoutPass.layoutNegation(
 
     val nucleusStyle = style.cramped()
     val size = fontSize(style)
-    val interveningAdvancePx = node.interveningSpaces.sumOf {
+    val unvalidatedInterveningAdvancePx = node.interveningSpaces.sumOf {
         (it.mu * size / TEX_MU_PER_EM).toDouble()
     }.toFloat()
+    val interveningAdvancePx = validatedResolvedDimension(
+        sourceText = "\\not intervening mu spaces",
+        resolvedPx = unvalidatedInterveningAdvancePx,
+        range = node.commandRange,
+    ) ?: 0f
     val resolvedSymbolWithOverlay = base?.let { symbol ->
         val request = symbolRequest(symbol, nucleusStyle, alphabetOverride)
         request to glyphSource.resolveSymbolWithRequiredGlyph(
@@ -348,7 +345,17 @@ internal fun MathLayoutPass.layoutCancel(
     val content = layoutNode(node.body, style, alphabetOverride).completedTeXMathField().box
     val clean = content.texCleanBoxMetrics
     val totalHeight = clean.height
-    val geometry = cancelStrokeGeometry(content.width, clean.ascent, clean.descent)
+    val acceptedPicturePointPx = validatedResolvedDimension(
+        sourceText = "cancel.sty maximum derived picture length",
+        resolvedPx = DEFAULT_CANCEL_MAXIMUM_DERIVED_POINT_FACTOR * cancelPicturePointPx,
+        range = node.commandRange,
+    )?.let { cancelPicturePointPx } ?: 0f
+    val geometry = cancelStrokeGeometry(
+        content.width,
+        clean.ascent,
+        clean.descent,
+        acceptedPicturePointPx,
+    )
     val halfThickness = cancelLineThicknessPx / 2f
     val line = MathLineSegment(
         startX = geometry.startX,
@@ -405,11 +412,12 @@ internal fun MathLayoutPass.layoutCancel(
         "lineVerticalExtentPx" to (geometry.startY - geometry.endY),
         "cancelLineThicknessPx" to cancelLineThicknessPx,
         "cancelPicturePointPx" to cancelPicturePointPx,
-        "cancelMinimumWidthPx" to (DEFAULT_CANCEL_MINIMUM_WIDTH_PT * cancelPicturePointPx),
-        "cancelMinimumTotalHeightPx" to (DEFAULT_CANCEL_MINIMUM_TOTAL_HEIGHT_PT * cancelPicturePointPx),
-        "cancelWideMinimumWidthPx" to (DEFAULT_CANCEL_WIDE_MINIMUM_WIDTH_PT * cancelPicturePointPx),
-        "cancelTallMinimumHeightPx" to (DEFAULT_CANCEL_TALL_MINIMUM_HEIGHT_PT * cancelPicturePointPx),
-        "cancelLineExtensionPx" to (DEFAULT_CANCEL_LINE_EXTENSION_PT * cancelPicturePointPx),
+        "acceptedCancelPicturePointPx" to acceptedPicturePointPx,
+        "cancelMinimumWidthPx" to (DEFAULT_CANCEL_MINIMUM_WIDTH_PT * acceptedPicturePointPx),
+        "cancelMinimumTotalHeightPx" to (DEFAULT_CANCEL_MINIMUM_TOTAL_HEIGHT_PT * acceptedPicturePointPx),
+        "cancelWideMinimumWidthPx" to (DEFAULT_CANCEL_WIDE_MINIMUM_WIDTH_PT * acceptedPicturePointPx),
+        "cancelTallMinimumHeightPx" to (DEFAULT_CANCEL_TALL_MINIMUM_HEIGHT_PT * acceptedPicturePointPx),
+        "cancelLineExtensionPx" to (DEFAULT_CANCEL_LINE_EXTENSION_PT * acceptedPicturePointPx),
         "classificationWidthPx" to geometry.classificationWidth,
         "classificationTotalHeightPx" to geometry.classificationHeight,
         "logicalWidthPx" to box.width,
@@ -429,13 +437,18 @@ internal fun MathLayoutPass.layoutCancel(
     )
 }
 
-private fun MathLayoutPass.cancelStrokeGeometry(width: Float, ascent: Float, descent: Float): CancelStrokeGeometry {
+private fun cancelStrokeGeometry(
+    width: Float,
+    ascent: Float,
+    descent: Float,
+    acceptedPicturePointPx: Float,
+): CancelStrokeGeometry {
     val totalHeight = ascent + descent
-    val minimumWidth = DEFAULT_CANCEL_MINIMUM_WIDTH_PT * cancelPicturePointPx
-    val minimumTotalHeight = DEFAULT_CANCEL_MINIMUM_TOTAL_HEIGHT_PT * cancelPicturePointPx
-    val wideMinimumWidth = DEFAULT_CANCEL_WIDE_MINIMUM_WIDTH_PT * cancelPicturePointPx
-    val tallMinimumHeight = DEFAULT_CANCEL_TALL_MINIMUM_HEIGHT_PT * cancelPicturePointPx
-    val lineExtension = DEFAULT_CANCEL_LINE_EXTENSION_PT * cancelPicturePointPx
+    val minimumWidth = DEFAULT_CANCEL_MINIMUM_WIDTH_PT * acceptedPicturePointPx
+    val minimumTotalHeight = DEFAULT_CANCEL_MINIMUM_TOTAL_HEIGHT_PT * acceptedPicturePointPx
+    val wideMinimumWidth = DEFAULT_CANCEL_WIDE_MINIMUM_WIDTH_PT * acceptedPicturePointPx
+    val tallMinimumHeight = DEFAULT_CANCEL_TALL_MINIMUM_HEIGHT_PT * acceptedPicturePointPx
+    val lineExtension = DEFAULT_CANCEL_LINE_EXTENSION_PT * acceptedPicturePointPx
     val classificationWidth = max(width, minimumWidth)
     val classificationHeight = max(totalHeight, minimumTotalHeight)
     val centerX = width / 2f
@@ -547,9 +560,13 @@ internal fun MathLayoutPass.layoutBoxed(
             maxWidthPx = responsiveWidth,
             defaultContinuationIndentPx = DISPLAY_CONTINUATION_INDENT_EM * fontSize(contentStyle),
             displayRowJotPx = DISPLAY_ROW_JOT_EM * fontSize(contentStyle),
+            resourceLimits = resourceLimits,
         )
     } else {
         null
+    }
+    if (breakResolution != null) {
+        diagnostics += breakResolution.layout.diagnostics.filterNot(diagnostics::contains)
     }
     val broken = breakResolution?.layout
     val content = if (
@@ -852,7 +869,7 @@ internal fun MathLayoutPass.layoutLap(
 }
 
 private fun MathLayoutPass.resolveBboxDimension(dimension: MathBboxDimension, emSizePx: Float): Float {
-    val pixels = when (dimension.unit) {
+    val unvalidatedPixels = when (dimension.unit) {
         MathBboxDimensionUnit.Point -> dimension.value * CSS_PIXELS_PER_INCH / 72f
         MathBboxDimensionUnit.Em -> dimension.value * emSizePx
         MathBboxDimensionUnit.Ex -> {
@@ -882,8 +899,12 @@ private fun MathLayoutPass.resolveBboxDimension(dimension: MathBboxDimension, em
         "unit" to dimension.unit,
         "styleFontSizePx" to emSizePx,
         "fontXHeightDesignUnits" to glyphSource.mathFont.xHeight,
-        "resolvedPx" to pixels,
+        "resolvedPx" to unvalidatedPixels,
         "policy" to "MathJaxBboxCss96DpiEmMuAndOpenTypeOs2XHeight",
     )
-    return pixels
+    return validatedResolvedDimension(
+        sourceText = dimension.sourceText,
+        resolvedPx = unvalidatedPixels,
+        range = dimension.range,
+    ) ?: 0f
 }

@@ -42,7 +42,6 @@ import org.tiqian.math.layout.MathFormulaCapabilityResult
 import org.tiqian.math.layout.MathFormulaStrictException
 import org.tiqian.math.layout.MathLayoutOptions
 import org.tiqian.math.layout.MathTextRunProvider
-import org.tiqian.math.layout.breakIntoLines
 import kotlin.math.ceil
 
 /** Loads Tiqian's platform-native product-default Lete face and owns its native lifetime. */
@@ -414,12 +413,14 @@ internal fun TiqianMathCapabilityBoundaryForTest(
     strict: Boolean,
     modifier: Modifier = Modifier,
     fontSizePx: Float = 32f,
+    mode: MathMode = MathMode.Inline,
+    displayWidthPx: Float? = null,
     onMathLayout: (MathLayoutResult) -> Unit = {},
     fallback: @Composable (MathFormulaCapabilityResult.FallbackRequired) -> Unit,
 ) {
     val resolved = rememberResolvedFormulaCapability(
         source,
-        MathMode.Inline,
+        mode,
         LocalTextStyle.current,
         fontSizePx,
         null,
@@ -431,7 +432,7 @@ internal fun TiqianMathCapabilityBoundaryForTest(
         null,
         null,
         capabilityEngine,
-        null,
+        displayWidthPx,
     )
     FormulaCapabilityContent(
         resolved,
@@ -467,6 +468,7 @@ private fun FormulaCapabilityContent(
             displayScrollState,
             displayHorizontalInsetPx,
             resolved.displayWidthPx,
+            fallback,
         )
         is MathFormulaCapabilityResult.FallbackRequired -> {
             val errorPresentation = fallback ?: throw MathFormulaStrictException(capability)
@@ -685,12 +687,12 @@ private fun ReadyTiqianMath(
     displayScrollState: ScrollState?,
     displayHorizontalInsetPx: Float,
     displayContentWidthPx: Float?,
+    fallback: (@Composable (MathFormulaCapabilityResult.FallbackRequired) -> Unit)?,
 ) {
-    SideEffect { onMathLayout(result) }
-
     if (result.mode == MathMode.Display) {
         val resolvedDisplayScrollState = displayScrollState ?: rememberScrollState()
         if (result.taggedDisplayReplay != null) {
+            SideEffect { onMathLayout(result) }
             TaggedDisplayTiqianMath(
                 result = result,
                 requestedLineHeightPx = requestedLineHeightPx,
@@ -714,41 +716,24 @@ private fun ReadyTiqianMath(
                 horizontalInsetPx = displayHorizontalInsetPx,
                 displayContentWidthPx = displayContentWidthPx,
                 modifier = modifier,
+                onMathLayout = onMathLayout,
+                fallback = fallback,
             )
         }
         return
     }
 
-    var renderPlan = RenderPlan.unbroken(result, requestedLineHeightPx)
-    Layout(
+    InlineTiqianMath(
+        result = result,
         modifier = modifier,
-        content = {
-            Canvas(Modifier.fillMaxSize()) {
-                drawPlatformMathPlan(face, textRunProvider, renderPlan, color)
-            }
-        },
-    ) { measurables, constraints ->
-        val broken = if (softWrap && constraints.hasBoundedWidth && result.fragments.size > 1) {
-            result.breakIntoLines(constraints.maxWidth.toFloat().coerceAtLeast(1f))
-        } else {
-            null
-        }
-        renderPlan = if (broken != null) {
-            RenderPlan.broken(result, broken, requestedLineHeightPx)
-        } else {
-            RenderPlan.unbroken(result, requestedLineHeightPx)
-        }
-        val width = ceil(renderPlan.width).toInt().coerceIn(constraints.minWidth, constraints.maxWidth)
-        val height = ceil(renderPlan.height).toInt().coerceIn(constraints.minHeight, constraints.maxHeight)
-        val child = measurables.single().measure(Constraints.fixed(width, height))
-        layout(
-            width,
-            height,
-            alignmentLines = mapOf(FirstBaseline to renderPlan.firstBaseline.toInt()),
-        ) {
-            child.place(0, 0)
-        }
-    }
+        requestedLineHeightPx = requestedLineHeightPx,
+        color = color,
+        softWrap = softWrap,
+        face = face,
+        textRunProvider = textRunProvider,
+        onMathLayout = onMathLayout,
+        fallback = fallback,
+    )
 }
 
 @Composable

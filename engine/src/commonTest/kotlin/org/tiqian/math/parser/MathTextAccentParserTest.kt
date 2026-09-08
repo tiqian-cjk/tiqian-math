@@ -23,6 +23,17 @@ class MathTextAccentParserTest {
     }
 
     @Test
+    fun contiguousCjkKeepsScriptsOnTheFinalScalar() {
+        val parsed = MathParser().parse("中文 ^2")
+
+        assertTrue(parsed.diagnostics.isEmpty(), parsed.diagnostics.toString())
+        assertEquals("中", assertIs<MathText>(parsed.root.children.first()).text)
+        val scripts = assertIs<MathScripts>(parsed.root.children.last())
+        assertEquals("文", assertIs<MathText>(scripts.base).text)
+        assertEquals("2", assertIs<MathSymbol>(scripts.superscript).sourceText)
+    }
+
+    @Test
     fun cjkPunctuationUsesHostTextSemanticsWithoutRewritingMathSource() {
         val source = "C_1=1-C，C_2=C-\\frac14"
         val parsed = MathParser().parse(source)

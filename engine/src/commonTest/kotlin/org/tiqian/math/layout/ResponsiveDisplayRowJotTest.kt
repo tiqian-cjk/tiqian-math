@@ -6,6 +6,7 @@ import org.tiqian.math.core.MathFormulaLineMetrics
 import org.tiqian.math.core.MathGlueAdjustment
 import org.tiqian.math.core.MathInlineFragment
 import org.tiqian.math.core.MathRect
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.SourceRange
 import kotlin.math.abs
 import kotlin.test.Test
@@ -25,6 +26,7 @@ class ResponsiveDisplayRowJotTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 120f,
             defaultContinuationIndentPx = 0f,
+            resourceLimits = MathResourceLimits.Default,
             displayRowJotPx = 7f,
         )
 
@@ -51,6 +53,7 @@ class ResponsiveDisplayRowJotTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 120f,
             defaultContinuationIndentPx = 0f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         val lines = resolution.layout.lines

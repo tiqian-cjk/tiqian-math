@@ -9,6 +9,7 @@ import org.tiqian.math.core.DiagnosticCode
 import org.tiqian.math.core.MathLargeOperatorIdentity
 import org.tiqian.math.core.MathLayoutDecision
 import org.tiqian.math.core.MathMode
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.MathStyle
 import org.tiqian.math.core.SourceRange
 import org.tiqian.math.font.opentype.LeteSansMath
@@ -118,8 +119,8 @@ class MathOperatorNoadTest {
                 assertEquals("LargeSymbols", op.details["family"], "$label/${result.source}")
                 assertNear(
                     op.float("axisY"),
-                    op.float("inkCenterAfter"),
-                    "$label/${result.source} operator ink center follows the math axis",
+                    op.float("outlineCenterAfter"),
+                    "$label/${result.source} operator outline center follows the math axis",
                 )
             }
 
@@ -208,6 +209,7 @@ class MathOperatorNoadTest {
                         MathLargeOperatorIdentity.Sum,
                         MathStyle.Display,
                         SourceRange(0, 4),
+                        MathResourceLimits.Default,
                     ),
                     size,
                 ).constructionBaseGlyphId,
@@ -311,7 +313,12 @@ class MathOperatorNoadTest {
             val range = SourceRange(0, 4)
             val operatorGlyph = assertNotNull(
                 delegate.resolveOperator(
-                    MathOperatorGlyphRequest(MathLargeOperatorIdentity.Sum, MathStyle.Display, range),
+                    MathOperatorGlyphRequest(
+                        MathLargeOperatorIdentity.Sum,
+                        MathStyle.Display,
+                        range,
+                        MathResourceLimits.Default,
+                    ),
                     size,
                 ).constructionBaseGlyphId,
             )
@@ -349,7 +356,12 @@ class MathOperatorNoadTest {
             val range = SourceRange(0, 4)
             val operatorGlyph = assertNotNull(
                 delegate.resolveOperator(
-                    MathOperatorGlyphRequest(MathLargeOperatorIdentity.Sum, MathStyle.Display, range),
+                    MathOperatorGlyphRequest(
+                        MathLargeOperatorIdentity.Sum,
+                        MathStyle.Display,
+                        range,
+                        MathResourceLimits.Default,
+                    ),
                     size,
                 ).constructionBaseGlyphId,
             )

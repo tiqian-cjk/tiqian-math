@@ -2,35 +2,91 @@ package org.tiqian.math.parser
 
 import org.tiqian.math.core.*
 
-fun interface MathFormulaParser {
-    fun parse(source: String): MathParseResult
+interface MathFormulaParser {
+    fun parse(
+        source: String,
+        resourceLimits: MathResourceLimits = MathResourceLimits.Default,
+    ): MathParseResult
 }
 
 class MathParser(
-    private val macros: List<MathMacroDefinition> = emptyList(),
-    private val expansionLimits: MacroExpansionLimits = MacroExpansionLimits(),
+    macros: List<MathMacroDefinition> = emptyList(),
+    expansionLimits: MacroExpansionLimits? = null,
 ) : MathFormulaParser {
-    override fun parse(source: String): MathParseResult {
-        val tokenized = MathTokenizer().tokenize(source)
-        val expanded = MathMacroExpander(macros, expansionLimits).expand(tokenized.tokens)
-        return ParserState(
-            source = source,
-            tokens = expanded.tokens,
-            diagnostics = (tokenized.diagnostics + expanded.diagnostics).toMutableList(),
-        ).parse()
+    private val tokenizer = MathTokenizer()
+    private val macroExpander = MathMacroExpander(macros, expansionLimits)
+
+    override fun parse(source: String, resourceLimits: MathResourceLimits): MathParseResult {
+        val tokenized = tokenizer.tokenize(source, resourceLimits)
+        tokenized.diagnostics.firstOrNull { it.code.isResourceLimitCode() }?.let { diagnostic ->
+            return rejectedParseResult(source, tokenized.diagnostics, diagnostic)
+        }
+        val expanded = macroExpander.expand(tokenized.tokens, resourceLimits)
+        expanded.diagnostics.firstOrNull { it.code.isResourceLimitCode() }?.let { diagnostic ->
+            return rejectedParseResult(
+                source,
+                tokenized.diagnostics + expanded.diagnostics,
+                diagnostic,
+            )
+        }
+        val diagnostics = (tokenized.diagnostics + expanded.diagnostics).toMutableList()
+        return try {
+            val result = ParserState(
+                source = source,
+                tokens = expanded.tokens,
+                diagnostics = diagnostics,
+                resourceLimits = resourceLimits,
+            ).parse()
+            inspectMathAstResources(result.root, resourceLimits)?.let { diagnostic ->
+                rejectedParseResult(source, result.diagnostics, diagnostic)
+            } ?: result
+        } catch (failure: ParserResourceLimitSignal) {
+            rejectedParseResult(
+                source,
+                diagnostics,
+                failure.diagnostic,
+            )
+        }
     }
 }
+
+private fun rejectedParseResult(
+    source: String,
+    diagnostics: List<MathDiagnostic>,
+    resourceDiagnostic: MathDiagnostic,
+): MathParseResult = MathParseResult(
+    source = source,
+    root = MathList(emptyList(), SourceRange.Empty),
+    diagnostics = (diagnostics.filterNot { it.code.isResourceLimitCode() } + resourceDiagnostic).distinct(),
+)
+
+private fun DiagnosticCode.isResourceLimitCode(): Boolean = when (this) {
+    DiagnosticCode.SourceLengthLimitExceeded,
+    DiagnosticCode.TokenCountLimitExceeded,
+    DiagnosticCode.AstNodeCountLimitExceeded,
+    DiagnosticCode.RecursionDepthLimitExceeded,
+    DiagnosticCode.MacroExpansionDepthExceeded,
+    DiagnosticCode.MacroExpansionBudgetExceeded,
+    -> true
+    else -> false
+}
+
+private class ParserResourceLimitSignal(
+    val diagnostic: MathDiagnostic,
+) : RuntimeException()
 
 internal class ParserState(
     internal val source: String,
     private val tokens: List<MathToken>,
     internal val diagnostics: MutableList<MathDiagnostic>,
+    private val resourceLimits: MathResourceLimits,
 ) {
     internal data class ParsedBboxOptions(
         val options: MathBboxOptions,
         val totalRange: SourceRange?,
     )
     private var index = 0
+    private var recursionDepth = 0
     internal var structureDepth = 0
     internal val boxDisplayContainerDepths = mutableListOf<Int>()
     internal val rowSeparatorContainerDepths = mutableListOf<Int>()
@@ -201,13 +257,15 @@ internal class ParserState(
                         token.range,
                     )
                 }
-                val denominator = parseList(
-                    stopAtClosingGroup = stopAtClosingGroup,
-                    opening = opening,
-                    unclosedCode = unclosedCode,
-                    unclosedMessage = unclosedMessage,
-                    generalizedFractionAllowed = false,
-                )
+                val denominator = withResourceRecursion(token.range) {
+                    parseList(
+                        stopAtClosingGroup = stopAtClosingGroup,
+                        opening = opening,
+                        unclosedCode = unclosedCode,
+                        unclosedMessage = unclosedMessage,
+                        generalizedFractionAllowed = false,
+                    )
+                }
                 if (denominator.children.isEmpty()) {
                     diagnostics += MathDiagnostic(
                         DiagnosticCode.MissingGeneralizedFractionDenominator,
@@ -253,7 +311,7 @@ internal class ParserState(
                     )
                     children += MathErrorNode(token.text, token.range)
                 }
-                else -> parseAtomWithScripts()?.let { children.appendParsedNode(it) }
+                else -> parseAtomWithScripts()?.let { children += it }
             }
         }
 
@@ -388,8 +446,10 @@ internal class ParserState(
 
     internal fun parsePrimary(): MathNode? {
         skipIgnored()
-        val token = advance()
-        return when (token.kind) {
+        val nextRange = peek().range
+        return withResourceRecursion(nextRange) {
+            val token = advance()
+            when (token.kind) {
             MathTokenKind.Symbol -> if (token.text == "&") {
                 diagnostics += MathDiagnostic(
                     DiagnosticCode.UnexpectedAlignmentTab,
@@ -398,11 +458,40 @@ internal class ParserState(
                 )
                 MathErrorNode(token.text, token.range)
             } else if (token.text.scalarValues().all { it.isCjkMathTextScalar() }) {
+                // Consume the complete contiguous run once. Merging one token at a time by
+                // repeatedly copying the growing segment list makes a long CJK run quadratic.
+                val segments = mutableListOf(MathTextSegment(token.text, token.range))
+                var contentRange = token.range
+                while (true) {
+                    val following = peek()
+                    if (
+                        following.kind != MathTokenKind.Symbol ||
+                        following.range.start != contentRange.endExclusive ||
+                        !following.text.scalarValues().all { it.isCjkMathTextScalar() }
+                    ) {
+                        break
+                    }
+                    // Preserve TeX script binding: in `中文^2`, the script belongs to `文`, not
+                    // to a greedily merged `中文` text atom. Ignored tokens are skipped by the
+                    // script parser, so include them in this look-ahead without consuming them.
+                    var afterFollowing = index + 1
+                    var followingKind = tokens.getOrElse(afterFollowing) { tokens.last() }.kind
+                    while (followingKind == MathTokenKind.Space || followingKind == MathTokenKind.Comment) {
+                        afterFollowing += 1
+                        followingKind = tokens.getOrElse(afterFollowing) { tokens.last() }.kind
+                    }
+                    if (followingKind == MathTokenKind.Superscript || followingKind == MathTokenKind.Subscript) {
+                        break
+                    }
+                    advance()
+                    segments += MathTextSegment(following.text, following.range)
+                    contentRange = contentRange.cover(following.range)
+                }
                 MathText(
-                    segments = listOf(MathTextSegment(token.text, token.range)),
+                    segments = segments,
                     commandRange = SourceRange(token.range.start, token.range.start),
-                    contentRange = token.range,
-                    range = token.range,
+                    contentRange = contentRange,
+                    range = contentRange,
                     origin = MathTextOrigin.ImplicitCjk,
                 )
             } else {
@@ -422,6 +511,28 @@ internal class ParserState(
             MathTokenKind.CloseGroup, MathTokenKind.End -> null
             MathTokenKind.Superscript, MathTokenKind.Subscript -> null
             MathTokenKind.Space, MathTokenKind.Comment -> null
+            }
+        }
+    }
+
+    internal fun <T> withResourceRecursion(range: SourceRange, block: () -> T): T {
+        val attemptedDepth = recursionDepth + 1
+        if (attemptedDepth > resourceLimits.maximumRecursionDepth) {
+            throw ParserResourceLimitSignal(
+                mathResourceLimitDiagnostic(
+                    code = DiagnosticCode.RecursionDepthLimitExceeded,
+                    resource = "recursionDepth",
+                    actual = attemptedDepth,
+                    limit = resourceLimits.maximumRecursionDepth,
+                    range = range,
+                ),
+            )
+        }
+        recursionDepth = attemptedDepth
+        try {
+            return block()
+        } finally {
+            recursionDepth -= 1
         }
     }
 
@@ -486,26 +597,6 @@ internal class ParserState(
     internal fun advance(): MathToken = peek().also { if (index < tokens.size) index++ }
     internal fun sourceSlice(range: SourceRange): String =
         if (range.endExclusive <= source.length) source.substring(range.start, range.endExclusive) else ""
-
-    /**
-     * Tokenization stays scalar based, but one implicit upright text atom must reach the host shaper
-     * as one contiguous run. The provider, not the parser, owns grapheme and physical-face splits.
-     */
-    internal fun MutableList<MathNode>.appendParsedNode(node: MathNode) {
-        val previous = lastOrNull() as? MathText
-        if (previous?.origin == MathTextOrigin.ImplicitCjk &&
-            node is MathText && node.origin == MathTextOrigin.ImplicitCjk &&
-            previous.range.endExclusive == node.range.start
-        ) {
-            this[lastIndex] = previous.copy(
-                segments = previous.segments + node.segments,
-                contentRange = previous.contentRange.cover(node.contentRange),
-                range = previous.range.cover(node.range),
-            )
-        } else {
-            add(node)
-        }
-    }
 
     internal companion object {
         val GENERALIZED_FRACTION_COMMANDS = setOf("over", "atop", "choose")

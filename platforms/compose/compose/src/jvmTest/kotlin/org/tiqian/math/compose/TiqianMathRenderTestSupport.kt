@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,6 +20,8 @@ import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
@@ -45,10 +48,10 @@ import org.tiqian.math.layout.MathTextRunProvider
 import org.tiqian.math.layout.MathTextRunRequest
 import org.tiqian.math.layout.MathTextRunProviderResult
 import org.tiqian.math.layout.MeasuredMathRun
-import org.tiqian.math.layout.breakIntoLines
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.floor
+import kotlin.math.roundToInt
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertEquals
@@ -89,50 +92,51 @@ internal fun measureInCompose(
     return MeasuredFormula(assertNotNull(measured), assertNotNull(result))
 }
 
+internal data class InlineHostChildMeasurement(
+    val height: Int,
+    val firstBaseline: Int,
+    val topInRoot: Int,
+)
+
 internal data class InlineHostMeasurement(
-    val textBaseline: Int,
-    val formulaBaseline: Int,
-    val formulaHeight: Int,
-    val textHeight: Int,
+    val children: List<InlineHostChildMeasurement>,
     val rowHeight: Int,
+    val rowTopInRoot: Int,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun measureInlineHost(source: String, style: TextStyle): InlineHostMeasurement {
-    var measurement: InlineHostMeasurement? = null
+    val children = arrayOfNulls<InlineHostChildMeasurement>(3)
+    var rowHeight: Int? = null
+    var rowTopInRoot: Int? = null
+
+    fun Modifier.observeChild(index: Int): Modifier = onGloballyPositioned { coordinates ->
+        children[index] = InlineHostChildMeasurement(
+            height = coordinates.size.height,
+            firstBaseline = coordinates[FirstBaseline],
+            topInRoot = coordinates.positionInRoot().y.roundToInt(),
+        )
+    }
+
     ImageComposeScene(width = 500, height = 240, density = Density(1f)) {
         CompositionLocalProvider(LocalTextStyle provides style) {
-            Layout(
-                content = {
-                    BasicText("正文", style = style)
-                    TiqianMath(source)
-                    BasicText("继续", style = style)
-                },
-            ) { measurables, constraints ->
-                val placeables = measurables.map { it.measure(constraints.copy(minWidth = 0, minHeight = 0)) }
-                val baselines = placeables.map { it[FirstBaseline] }
-                val rowBaseline = baselines.max()
-                val rowDescent = placeables.indices.maxOf { placeables[it].height - baselines[it] }
-                val width = placeables.sumOf { it.width }
-                val height = rowBaseline + rowDescent
-                measurement = InlineHostMeasurement(
-                    textBaseline = rowBaseline,
-                    formulaBaseline = rowBaseline,
-                    formulaHeight = placeables[1].height,
-                    textHeight = placeables[0].height,
-                    rowHeight = height,
-                )
-                layout(width, height) {
-                    var x = 0
-                    placeables.forEachIndexed { index, placeable ->
-                        placeable.place(x, rowBaseline - baselines[index])
-                        x += placeable.width
-                    }
+            Box(Modifier.fillMaxSize()) {
+                Row(Modifier.onGloballyPositioned { coordinates ->
+                    rowHeight = coordinates.size.height
+                    rowTopInRoot = coordinates.positionInRoot().y.roundToInt()
+                }) {
+                    BasicText("正文", modifier = Modifier.alignByBaseline().observeChild(0), style = style)
+                    TiqianMath(source, modifier = Modifier.alignByBaseline().observeChild(1))
+                    BasicText("继续", modifier = Modifier.alignByBaseline().observeChild(2), style = style)
                 }
             }
         }
     }.use { it.render() }
-    return assertNotNull(measurement)
+    return InlineHostMeasurement(
+        children = children.map { assertNotNull(it) },
+        rowHeight = assertNotNull(rowHeight),
+        rowTopInRoot = assertNotNull(rowTopInRoot),
+    )
 }
 
 internal data class PixelBounds(val left: Int, val top: Int, val right: Int, val bottom: Int)

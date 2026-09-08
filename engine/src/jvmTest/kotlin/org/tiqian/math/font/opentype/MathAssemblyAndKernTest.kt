@@ -1,9 +1,12 @@
 package org.tiqian.math.font.opentype
 
+import org.tiqian.math.core.DiagnosticCode
+import org.tiqian.math.core.MathResourceLimits
 import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -11,6 +14,109 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class MathAssemblyAndKernTest {
+    @Test
+    fun extenderLimitIsCheckedBeforeAssemblyMaterialization() {
+        val font = LeteSansMath.load().copy(
+            verticalConstructions = mapOf(TEST_GLYPH to construction(withExtender = true)),
+        )
+        val limits = MathResourceLimits.Default.copy(maximumExtenderCount = 1)
+
+        assertNotNull(font.testVerticalConstruction(220f, resourceLimits = limits))
+        val zeroBudgetFailure = assertFailsWith<OpenTypeMathException> {
+            font.testVerticalConstruction(
+                220f,
+                resourceLimits = limits.copy(maximumExtenderCount = 0),
+            )
+        }
+        assertEquals(DiagnosticCode.ExtenderCountLimitExceeded, zeroBudgetFailure.diagnosticCode)
+        assertEquals(1L, zeroBudgetFailure.resourceActual)
+        val failure = assertFailsWith<OpenTypeMathException> {
+            font.testVerticalConstruction(Float.MAX_VALUE, resourceLimits = limits)
+        }
+        assertEquals(DiagnosticCode.InvalidResolvedDimension, failure.diagnosticCode)
+
+        val extenderFailure = assertFailsWith<OpenTypeMathException> {
+            font.testVerticalConstruction(260f, resourceLimits = limits)
+        }
+        assertEquals(DiagnosticCode.ExtenderCountLimitExceeded, extenderFailure.diagnosticCode)
+
+        val xeTeXFailure = assertFailsWith<OpenTypeMathException> {
+            font.testVerticalConstruction(
+                target = 260f,
+                assemblyPolicy = MathVerticalAssemblyPolicy.TectonicXeTeXStretchGlue,
+                resourceLimits = limits,
+            )
+        }
+        assertEquals(DiagnosticCode.ExtenderCountLimitExceeded, xeTeXFailure.diagnosticCode)
+
+        assertNotNull(
+            font.testVerticalConstruction(
+                target = 240f,
+                assemblyPolicy = MathVerticalAssemblyPolicy.TectonicXeTeXStretchGlue,
+                resourceLimits = limits,
+            ),
+        )
+        val oneOverXeTeXFailure = assertFailsWith<OpenTypeMathException> {
+            font.testVerticalConstruction(
+                target = 241f,
+                assemblyPolicy = MathVerticalAssemblyPolicy.TectonicXeTeXStretchGlue,
+                resourceLimits = limits,
+            )
+        }
+        assertEquals(DiagnosticCode.ExtenderCountLimitExceeded, oneOverXeTeXFailure.diagnosticCode)
+        assertEquals(2L, oneOverXeTeXFailure.resourceActual)
+    }
+
+    @Test
+    fun nonMaterializingAvailabilityCheckUsesTheRequestBudget() {
+        val font = LeteSansMath.load().copy(
+            verticalConstructions = mapOf(TEST_GLYPH to construction(withExtender = true)),
+        )
+        val request = MathVerticalConstructionRequest(
+            baseGlyphId = TEST_GLYPH,
+            targetSizePx = 220f,
+            fontSizePx = 1000f,
+            normalGlyphHeightPx = 0f,
+            normalGlyphAdvanceWidthPx = 20f,
+            resourceLimits = MathResourceLimits.Default.copy(maximumExtenderCount = 1),
+        )
+
+        assertTrue(font.verticalConstructionAvailable(request))
+        val failure = assertFailsWith<OpenTypeMathException> {
+            font.verticalConstructionAvailable(
+                request.copy(
+                    resourceLimits = request.resourceLimits.copy(maximumExtenderCount = 0),
+                ),
+            )
+        }
+        assertEquals(DiagnosticCode.ExtenderCountLimitExceeded, failure.diagnosticCode)
+        assertEquals(1L, failure.resourceActual)
+    }
+
+    @Test
+    fun xetexRepetitionLimitIsResolvedBeforeQuadraticSearchOrMaterialization() {
+        val font = LeteSansMath.load().copy(
+            verticalConstructions = mapOf(TEST_GLYPH to construction(withExtender = true)),
+        )
+        val limits = MathResourceLimits.Default.copy(
+            maximumExtenderCount = 10_000,
+            maximumResolvedDimensionPx = 600_000f,
+        )
+
+        val failure = assertCompletesWithinOneSecond {
+            assertFailsWith<OpenTypeMathException> {
+                font.testVerticalConstruction(
+                    target = 500_191f,
+                    assemblyPolicy = MathVerticalAssemblyPolicy.TectonicXeTeXStretchGlue,
+                    resourceLimits = limits,
+                )
+            }
+        }
+
+        assertEquals(DiagnosticCode.ExtenderCountLimitExceeded, failure.diagnosticCode)
+        assertEquals(10_001L, failure.resourceActual)
+    }
+
     @Test
     fun mathKernIntervalsUseTheOpenTypeCorrectionHeightBoundaries() {
         val table = MathKernTable(listOf(-100, 300), listOf(11, 22, 33))
@@ -260,6 +366,7 @@ class MathAssemblyAndKernTest {
             font.testVerticalConstruction(
                 target = 170f,
                 glyphWidths = mapOf(10.toUShort() to 23f, widestExtender to 91f, 12.toUShort() to 29f),
+                resourceLimits = MathResourceLimits.Default.copy(maximumExtenderCount = 0),
             ),
         )
         assertEquals(MathConstructionKind.Assembly, selected.kind)
@@ -303,17 +410,21 @@ private fun OpenTypeMathFont.testVerticalConstruction(
     glyphWidths: Map<UShort, Float> = emptyMap(),
     assemblyPolicy: MathVerticalAssemblyPolicy = MathVerticalAssemblyPolicy.MathMLCoreUniformOverlap,
     glyphVerticalExtents: Map<UShort, Float> = emptyMap(),
-): MathVerticalConstruction? = verticalConstruction(
-    MathVerticalConstructionRequest(
+    resourceLimits: MathResourceLimits = MathResourceLimits.Default,
+): MathVerticalConstruction? {
+    val request = MathVerticalConstructionRequest(
         baseGlyphId = 1u,
         targetSizePx = target,
         fontSizePx = 1000f,
         normalGlyphHeightPx = normalHeight,
         normalGlyphAdvanceWidthPx = normalWidth,
         assemblyPolicy = assemblyPolicy,
-    ),
-    glyphVerticalExtentPx = { glyphId -> glyphVerticalExtents[glyphId] ?: 20f },
-) { glyphId -> glyphWidths[glyphId] ?: 20f }
+        resourceLimits = resourceLimits,
+    )
+    val glyphExtent: (UShort) -> Float = { glyphId -> glyphVerticalExtents[glyphId] ?: 20f }
+    val glyphWidth: (UShort) -> Float = { glyphId -> glyphWidths[glyphId] ?: 20f }
+    return verticalConstruction(request, glyphExtent, glyphWidth)
+}
 
 private fun <T> assertCompletesWithinOneSecond(block: () -> T): T {
     val executor = Executors.newSingleThreadExecutor { runnable ->

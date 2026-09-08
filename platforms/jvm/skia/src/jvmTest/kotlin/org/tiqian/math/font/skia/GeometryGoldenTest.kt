@@ -12,23 +12,36 @@ import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/** Reviewed structural snapshot; invariant tests remain the authority for correctness. */
+/**
+ * Reviewed platform snapshot: raster ink bounds are platform-specific even for identical fonts.
+ * Outline/oracle invariant tests remain the authority for platform-independent correctness.
+ */
 class GeometryGoldenTest {
     @Test
     fun twoFontGeometryAndDecisionSnapshotMatchesReviewedGolden() {
+        val goldenName = "geometry-v3-${platformId()}.txt"
         val actual = buildString {
-            appendLine("geometry-v2")
+            appendLine("geometry-v3")
             listOf(
                 "Lete Sans Math" to LeteSansMath.load(),
                 "STIX Two Math" to StixTwoMath.load(),
             ).forEach { (label, font) -> appendFace(label, font) }
-        }.trimEnd()
+        }.normalizedGoldenText()
         if (System.getenv("TIQIAN_UPDATE_GOLDEN") == "1") {
-            File("src/jvmTest/resources/goldens/geometry-v2.txt").writeText("$actual\n")
+            File("src/jvmTest/resources/goldens/$goldenName").writeText("$actual\n")
+            // The classpath still contains the previous resource until processTestResources runs.
+            // This explicit capture mode does not claim that the new snapshot has been reviewed.
+            println("Captured $goldenName; review it and rerun without TIQIAN_UPDATE_GOLDEN to verify.")
+            return
         }
-        val expected = checkNotNull(javaClass.getResourceAsStream("/goldens/geometry-v2.txt"))
-            .bufferedReader().use { it.readText() }.trimEnd()
-        assertEquals(expected, actual)
+        val expected = checkNotNull(javaClass.getResourceAsStream("/goldens/$goldenName")) {
+            "Missing reviewed platform golden: $goldenName. Capture explicitly with " +
+                "TIQIAN_UPDATE_GOLDEN=1 ./gradlew :platforms:jvm:skia:jvmTest " +
+                "--tests 'org.tiqian.math.font.skia.GeometryGoldenTest' --rerun-tasks, " +
+                "review the generated file against geometry-v2.txt and the outline/oracle tests, " +
+                "then rerun without TIQIAN_UPDATE_GOLDEN."
+        }.bufferedReader().use { it.readText() }.normalizedGoldenText()
+        assertEquals(expected, actual, goldenName)
     }
 
     private fun StringBuilder.appendFace(label: String, font: OpenTypeMathFont) {
@@ -209,7 +222,7 @@ class GeometryGoldenTest {
                                         "${decision.details["construction"]}/" +
                                         "${decision.details.getValue("displayOperatorMinHeightPx").toFloat().fmt()}/" +
                                         "${decision.details.getValue("achievedAdvancePx").toFloat().fmt()}/" +
-                                        "axis=${decision.details.getValue("inkCenterAfter").toFloat().fmt()}/" +
+                                        "axis=${decision.details.getValue("outlineCenterAfter").toFloat().fmt()}/" +
                                         "ic=${decision.details.getValue("italicCorrectionPx").toFloat().fmt()}/" +
                                         decision.details["italicCorrectionSource"]
                                 "TeXOperatorLimitsPolicy" ->
@@ -422,6 +435,18 @@ class GeometryGoldenTest {
     }
 
     private fun Float.fmt(): String = String.format(Locale.ROOT, "%.3f", this)
+
+    private fun String.normalizedGoldenText(): String = replace("\r\n", "\n").trimEnd()
+
+    private fun platformId(): String {
+        val name = System.getProperty("os.name").lowercase(Locale.ROOT)
+        return when {
+            name.startsWith("windows") -> "windows"
+            name.contains("mac") || name.contains("darwin") -> "macos"
+            name.contains("linux") -> "linux"
+            else -> error("No reviewed geometry golden platform for os.name=$name")
+        }
+    }
 
     private data class GoldenCase(val id: String, val source: String, val mode: MathMode, val size: Float)
 

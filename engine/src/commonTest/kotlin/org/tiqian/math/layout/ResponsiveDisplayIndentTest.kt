@@ -8,6 +8,7 @@ import org.tiqian.math.core.MathGlueAdjustment
 import org.tiqian.math.core.MathGlueKind
 import org.tiqian.math.core.MathInlineFragment
 import org.tiqian.math.core.MathRect
+import org.tiqian.math.core.MathResourceLimits
 import org.tiqian.math.core.SourceRange
 import kotlin.math.abs
 import kotlin.test.Test
@@ -22,6 +23,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 200f,
             defaultContinuationIndentPx = 80f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(ResponsiveContinuationIndentTier.DefaultIndent, resolution.indentTier)
@@ -39,6 +41,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 200f,
             defaultContinuationIndentPx = 80f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(
@@ -59,6 +62,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 170f,
             defaultContinuationIndentPx = 80f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(ResponsiveContinuationIndentTier.SemanticOperatorAnchor, resolution.indentTier)
@@ -73,6 +77,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 200f,
             defaultContinuationIndentPx = 80f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(ResponsiveContinuationIndentTier.DefaultIndent, resolution.indentTier)
@@ -88,6 +93,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 170f,
             defaultContinuationIndentPx = 40f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(ResponsiveContinuationIndentTier.DefaultIndent, resolution.indentTier)
@@ -111,6 +117,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 150f,
             defaultContinuationIndentPx = 40f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         // The continuation cannot fit at any indent, so a 100px anchor would only waste viewport
@@ -135,6 +142,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 150f,
             defaultContinuationIndentPx = 40f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         assertEquals(ResponsiveContinuationIndentTier.DefaultIndent, resolution.indentTier)
@@ -164,6 +172,7 @@ class ResponsiveDisplayIndentTest {
             lineMetrics = lineMetrics,
             maxWidthPx = 210f,
             defaultContinuationIndentPx = 40f,
+            resourceLimits = MathResourceLimits.Default,
         )
 
         // The first line shrinks 220 -> 210, moving the relation from its natural x=80 to a

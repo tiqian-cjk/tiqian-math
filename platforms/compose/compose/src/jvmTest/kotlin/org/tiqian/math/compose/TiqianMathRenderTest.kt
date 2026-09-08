@@ -50,7 +50,6 @@ import org.tiqian.math.layout.MathTextRunProvider
 import org.tiqian.math.layout.MathTextRunRequest
 import org.tiqian.math.layout.MathTextRunProviderResult
 import org.tiqian.math.layout.MeasuredMathRun
-import org.tiqian.math.layout.breakIntoLines
 import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
 import kotlin.math.ceil

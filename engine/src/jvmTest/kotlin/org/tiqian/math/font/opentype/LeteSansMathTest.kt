@@ -52,10 +52,10 @@ class LeteSansMathTest {
             listOf(96, 142, 76, 76, 276, -400, 64),
             font.constants.radicalValues(),
         )
-        assertTrue(font.verticalVariants.values.any { it.size > 1 })
+        assertTrue(font.verticalConstructions.values.any { it.variants.size > 1 })
         assertEquals(828, font.italicCorrections.size)
-        assertTrue(font.unsupportedItalicCorrectionAdjustments.isEmpty())
-        assertEquals(89, font.verticalVariants.size)
+        assertTrue(font.unsupportedItalicCorrectionVariationAdjustments.isEmpty())
+        assertEquals(89, font.verticalConstructions.size)
         assertEquals(44, font.horizontalConstructions.size)
         assertEquals(1519, font.topAccentAttachments.size)
         assertTrue(font.extendedShapeGlyphs.isNotEmpty())

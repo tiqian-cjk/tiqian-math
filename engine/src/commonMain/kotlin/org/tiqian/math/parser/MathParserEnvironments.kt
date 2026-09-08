@@ -173,7 +173,7 @@ internal fun ParserState.parseEnvironment(beginCommand: MathToken): MathNode {
                         horizontalRules += MathTableHorizontalRule(rows.size, command.range)
                     }
                 }
-                else -> parseAtomWithScripts()?.let { currentNodes.appendParsedNode(it) }
+                else -> parseAtomWithScripts()?.let { currentNodes += it }
             }
         }
     } finally {
@@ -247,7 +247,7 @@ private fun ParserState.parseSingleEquationEnvironment(
                     }
                     break
                 }
-                else -> parseAtomWithScripts()?.let { children.appendParsedNode(it) }
+                else -> parseAtomWithScripts()?.let { children += it }
             }
         }
     } finally {
