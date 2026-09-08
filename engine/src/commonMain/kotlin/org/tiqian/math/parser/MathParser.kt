@@ -342,7 +342,7 @@ internal class ParserState(
             return MathErrorNode(sourceSlice(first.range.cover(argument.range)), first.range.cover(argument.range))
         }
 
-        var base = parsePrimary() ?: return null
+        var base = parsePrimary(allowImplicitCjkRun = true) ?: return null
         if (
             base is MathStyleDeclaration || base is MathAlphabetDeclaration || base is MathVersionDeclaration ||
             base is MathExplicitRowBreak || base is MathEquationTag
@@ -444,7 +444,9 @@ internal class ParserState(
         return parsePrimary() ?: MathErrorNode("", next.range)
     }
 
-    internal fun parsePrimary(): MathNode? {
+    // Only list atoms may coalesce consecutive text. Unbraced command/script arguments
+    // consume one primary, even when it is a CJK scalar; groups parse their own list.
+    internal fun parsePrimary(allowImplicitCjkRun: Boolean = false): MathNode? {
         skipIgnored()
         val nextRange = peek().range
         return withResourceRecursion(nextRange) {
@@ -462,7 +464,7 @@ internal class ParserState(
                 // repeatedly copying the growing segment list makes a long CJK run quadratic.
                 val segments = mutableListOf(MathTextSegment(token.text, token.range))
                 var contentRange = token.range
-                while (true) {
+                while (allowImplicitCjkRun) {
                     val following = peek()
                     if (
                         following.kind != MathTokenKind.Symbol ||
