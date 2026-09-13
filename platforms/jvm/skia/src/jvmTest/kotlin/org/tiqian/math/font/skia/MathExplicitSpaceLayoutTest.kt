@@ -8,8 +8,38 @@ import org.tiqian.math.font.opentype.LeteSansMath
 import org.tiqian.math.font.stix.StixTwoMath
 import org.tiqian.math.layout.MathLayoutEngine
 import org.tiqian.math.layout.MathLayoutOptions
+import org.tiqian.math.layout.breakIntoLines
 
 class MathExplicitSpaceLayoutTest {
+    @Test
+    fun articleOperatorSpaceIsDiscardedAtWrapButRetainedInsideALine() {
+        val source = "\\frac{I}{H}\\;\\approx\\;\\frac{1.8\\times10^{-3}}{7.7}\\;\\approx\\;2.3\\times10^{-4}."
+        listOf(LeteSansMath.load(), StixTwoMath.load()).forEach { bytes ->
+            SkiaMathFontFace(bytes).use { face ->
+                for (spaces in listOf("\\;", "\\;\\,")) {
+                    val result = MathLayoutEngine(face).layout(source.replace("\\approx\\;", "\\approx$spaces"),
+                        MathLayoutOptions(fontSizePx = 36f))
+                    val operator = result.fragments.first { it.atomClass == MathAtomClass.Relation }
+                    val next = result.fragments[operator.index + 1]
+                    assertTrue(next.box.rules.isNotEmpty(), "A wrap after approx must start at the fraction, not a space box")
+                    assertTrue(operator.sourceRange.endExclusive == next.sourceRange.start)
+                    assertEquals(operator.trailingGlue, operator.breakAfter!!.discardedTrailingGlue)
+                    assertTrue(operator.trailingGlue.naturalPx >= 10f)
+                    val replayWidth = result.fragments.sumOf {
+                        (it.leadingKernPx + it.box.width + it.trailingAdvancePx).toDouble()
+                    }.toFloat()
+                    assertEquals(result.box.width, replayWidth, 0.002f)
+                    val firstLineWidth = result.fragments.take(operator.index + 1).sumOf {
+                        (it.leadingKernPx + it.box.width + it.trailingAdvancePx).toDouble()
+                    }.toFloat() - operator.trailingGlue.naturalPx
+                    val broken = result.breakIntoLines(firstLineWidth + 0.01f)
+                    assertEquals(next.index, broken.lines[1].fragments.first().fragmentIndex)
+                    assertEquals(0f, broken.lines[1].fragments.first().x, 0.001f)
+                }
+            }
+        }
+    }
+
     @Test
     fun negativeThinSpaceIsAFixedSignedThreeMuKernInBothRealFonts() {
         listOf(LeteSansMath.load(), StixTwoMath.load()).forEach { bytes ->

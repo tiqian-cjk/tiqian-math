@@ -12,6 +12,7 @@ import org.tiqian.math.core.MathDiagnostic
 import org.tiqian.math.core.MathFormulaLineMetrics
 import org.tiqian.math.core.MathGlueAdjustment
 import org.tiqian.math.core.MathGroup
+import org.tiqian.math.core.MathExplicitSpace
 import org.tiqian.math.core.MathInlineFragment
 import org.tiqian.math.core.MathLayoutResult
 import org.tiqian.math.core.MathList
@@ -42,33 +43,72 @@ internal fun unwrapWholeFormulaGroups(root: MathList): MathList {
 
 internal fun MathLayoutPass.inlineFragments(
     horizontal: MathLayoutPass.HorizontalLayout,
-): List<MathInlineFragment> = horizontal.items.mapIndexed { itemIndex, item ->
-    val trailingGlue = horizontal.items.getOrNull(itemIndex + 1)?.glueBefore ?: MathGlueAdjustment.Zero
-    val breakKind = when (item.atomClass) {
-        MathAtomClass.Punctuation -> MathBreakKind.PunctuationTrailing
-        MathAtomClass.Binary -> MathBreakKind.BinaryOperatorTrailing
-        MathAtomClass.Relation -> MathBreakKind.RelationTrailing
-        else -> null
-    }
-    val opportunity = breakKind?.let {
-        MathBreakOpportunity(
-            afterFragmentIndex = itemIndex,
-            sourceOffset = item.node.range.endExclusive,
-            kind = it,
-            discardedTrailingGlue = trailingGlue,
-            priority = adjustmentPriority(item.atomClass, null),
+): List<MathInlineFragment> {
+    val fragments = horizontal.items.mapIndexed { itemIndex, item ->
+        val trailingGlue = horizontal.items.getOrNull(itemIndex + 1)?.glueBefore ?: MathGlueAdjustment.Zero
+        val breakKind = when (item.atomClass) {
+            MathAtomClass.Punctuation -> MathBreakKind.PunctuationTrailing
+            MathAtomClass.Binary -> MathBreakKind.BinaryOperatorTrailing
+            MathAtomClass.Relation -> MathBreakKind.RelationTrailing
+            else -> null
+        }
+        val opportunity = breakKind?.let {
+            MathBreakOpportunity(
+                afterFragmentIndex = itemIndex,
+                sourceOffset = item.node.range.endExclusive,
+                kind = it,
+                discardedTrailingGlue = trailingGlue,
+                priority = adjustmentPriority(item.atomClass, null),
+            )
+        }
+        MathInlineFragment(
+            index = itemIndex,
+            sourceRange = item.node.range,
+            atomClass = item.atomClass,
+            box = item.laid.box,
+            leadingKernPx = item.leadingKernPx,
+            trailingItalicCorrectionPx = item.trailingItalicCorrectionPx,
+            trailingGlue = trailingGlue,
+            breakAfter = opportunity,
         )
     }
-    MathInlineFragment(
-        index = itemIndex,
-        sourceRange = item.node.range,
-        atomClass = item.atomClass,
-        box = item.laid.box,
-        leadingKernPx = item.leadingKernPx,
-        trailingItalicCorrectionPx = item.trailingItalicCorrectionPx,
-        trailingGlue = trailingGlue,
-        breakAfter = opportunity,
-    )
+    // OperatorTrailingExplicitGlue: a positive TeX space after a legal break belongs to
+    // that boundary, not to an empty atom at the next line head. Preserve its full advance
+    // in an unbroken replay; a taken break discards it with the other trailing glue.
+    // Signed kerns remain fixed placements and are deliberately not folded here.
+    val result = mutableListOf<MathInlineFragment>()
+    fragments.forEachIndexed { index, fragment ->
+        val previous = result.lastOrNull()
+        val space = horizontal.items[index].node as? MathExplicitSpace
+        if (space != null && space.mu > 0f && previous?.breakAfter != null) {
+            val before = previous.trailingGlue
+            val after = fragment.trailingGlue
+            val natural = before.naturalPx + fragment.box.width + after.naturalPx
+            val minimum = before.minimumPx + fragment.box.width + after.minimumPx
+            val maximum = before.maximumPx + fragment.box.width + after.maximumPx
+            val glue = (if (before == MathGlueAdjustment.Zero) after else before).copy(
+                naturalPx = natural, minimumPx = minimum, maximumPx = maximum,
+                shrinkPx = natural - minimum, stretchPx = maximum - natural,
+            )
+            val range = previous.sourceRange.cover(fragment.sourceRange)
+            result[result.lastIndex] = previous.copy(
+                sourceRange = range,
+                trailingGlue = glue,
+                breakAfter = previous.breakAfter.copy(
+                    sourceOffset = range.endExclusive, discardedTrailingGlue = glue,
+                ),
+            )
+            decision("OperatorTrailingExplicitGlue", fragment.sourceRange,
+                "ownerSourceStart" to previous.sourceRange.start,
+                "explicitAdvancePx" to fragment.box.width,
+                "discardedAtBreak" to true,
+            )
+        } else {
+            result += fragment.copy(index = result.size,
+                breakAfter = fragment.breakAfter?.copy(afterFragmentIndex = result.size))
+        }
+    }
+    return result
 }
 
 /**
