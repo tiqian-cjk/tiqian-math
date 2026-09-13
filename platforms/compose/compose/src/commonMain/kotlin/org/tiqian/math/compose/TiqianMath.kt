@@ -105,6 +105,14 @@ class TiqianMathFormula internal constructor(
         val plan = RenderPlan.fragmentRangeInkTight(result, fragmentIndices, leadingPx)
         return TiqianMathPresentationMetrics(plan.width, plan.height, plan.firstBaseline)
     }
+
+    /** Logical inline advance; ink may overhang it. The matching canvas replays without clipping. */
+    fun logicalFragmentMetrics(fragmentIndices: IntRange): TiqianMathPresentationMetrics? {
+        val result = layoutResult ?: return null
+        val plan = RenderPlan.fragmentRangeLogical(result, fragmentIndices,
+            InlineInkLeadingEm * resolved.resolvedFontSizePx)
+        return TiqianMathPresentationMetrics(plan.width, plan.height, plan.firstBaseline)
+    }
 }
 
 data class TiqianMathPresentationMetrics(
@@ -194,6 +202,24 @@ fun TiqianMathFormulaCanvas(
     val leadingPx = InlineInkLeadingEm * formula.resolved.resolvedFontSizePx
     FixedTiqianMathPlan(
         plan = RenderPlan.fragmentRangeInkTight(result, fragmentIndices, leadingPx),
+        modifier = modifier,
+        color = formula.resolved.color,
+        face = formula.resolved.face,
+        textRunProvider = formula.resolved.textRunProvider,
+    )
+}
+
+/** Replays logical fragment metrics. Negative kerns and ink overhang keep their layout coordinates. */
+@Composable
+fun TiqianMathLogicalFragmentCanvas(
+    formula: TiqianMathFormula,
+    fragmentIndices: IntRange,
+    modifier: Modifier = Modifier,
+) {
+    val result = formula.layoutResult ?: return
+    FixedTiqianMathPlan(
+        plan = RenderPlan.fragmentRangeLogical(result, fragmentIndices,
+            InlineInkLeadingEm * formula.resolved.resolvedFontSizePx),
         modifier = modifier,
         color = formula.resolved.color,
         face = formula.resolved.face,
@@ -895,6 +921,20 @@ internal data class RenderPlan(
                 width = visualRight - visualLeft,
                 height = ascent + descent,
                 firstBaseline = ascent,
+            )
+        }
+
+        fun fragmentRangeLogical(result: MathLayoutResult, range: IntRange, leadingPx: Float): RenderPlan {
+            val inkPlan = fragmentRangeInkTight(result, range, leadingPx)
+            val fragments = range.map { result.fragments[it] }
+            // Reuse the measured baseline and placements; undo only the ink-tight x normalization.
+            val originShift = fragments.first().leadingKernPx - inkPlan.boxes.first().x
+            val advance = fragments.sumOf {
+                (it.leadingKernPx + it.box.width + it.trailingAdvancePx).toDouble()
+            }.toFloat()
+            return inkPlan.copy(
+                width = advance.coerceAtLeast(0f),
+                boxes = inkPlan.boxes.map { it.copy(x = it.x + originShift) },
             )
         }
 
