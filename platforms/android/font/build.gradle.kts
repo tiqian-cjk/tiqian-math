@@ -82,7 +82,13 @@ preparedLeteAssets?.let { prepared ->
             assets.setSrcDirs(listOf(preparedLeteAssetsDirectory))
         }
     }
-    tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
+    // The asset source directory is a plain path, so every task that reads it
+    // depends on the prepared tree explicitly: the asset merges, and the lint
+    // model and analysis tasks that the demo application's release lint pulls in.
+    tasks.matching { task ->
+        (task.name.startsWith("merge") && task.name.endsWith("Assets")) ||
+            task.name.contains("lint", ignoreCase = true)
+    }.configureEach {
         dependsOn(prepared)
     }
 }
