@@ -1,0 +1,19 @@
+{
+  "description": "The Tiqian Math modules that registry.tiqian.org describes, one per entry of publishedModules in build.gradle.kts. The release workflow passes this file to tools/write-maven-registry-tree.py of tiqian-cjk/tiqian, which reads the Gradle unit of a release manifest, so the file keeps that shape.",
+  "units": [
+    {
+      "packageSource": {
+        "kind": "gradle"
+      },
+      "packages": [
+        "math-android-font",
+        "math-compose",
+        "math-engine",
+        "math-font-stix",
+        "math-font-tooling",
+        "math-gradle-plugin",
+        "math-jvm-skia"
+      ]
+    }
+  ]
+}
